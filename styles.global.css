@@ -163,6 +163,10 @@ nav {
     gap: 20px;
     max-width: 900px;
     margin: auto;
+
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }
 
 .experience-card {
@@ -205,6 +209,10 @@ nav {
     border-radius: 5px;
     margin-right: 5px;
     font-size: 0.9rem;
+
+    @media (max-width: 768px) {
+        margin: 5px;
+    }
 }
 
 
@@ -583,5 +591,98 @@ footer {
     
     .section {
         padding: 60px 0;
+    }
+}
+
+
+
+
+/* General Responsive Adjustments */
+@media (max-width: 1024px) {
+    .container {
+        padding: 10px 10px;
+    }
+
+    .section {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+
+    .container {
+        padding: 10px 10px;
+    }
+
+    /* Projects Section */
+    .projects-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+
+    .project-info h3 {
+        font-size: 18px;
+    }
+
+    .project-tech {
+        gap: 5px;
+        justify-content: center;
+    }
+
+    .project-links {
+        justify-content: center;
+    }
+
+    /* About Section */
+    .about-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    
+
+    /* Contact Section */
+    .contact-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .contact-info {
+        text-align: center;
+    }
+
+    .contact-item {
+        justify-content: center;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+
+    /* Footer */
+    footer {
+        padding: 15px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 20px;
+    }
+
+   
+
+    .tech-tag {
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+
+    .project-links a {
+        font-size: 14px;
     }
 }
