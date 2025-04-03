@@ -38,3 +38,42 @@ window.addEventListener("scroll", function () {
    header.style.boxShadow = "none";
  }
 });
+
+
+document.querySelector(".contact-form form").addEventListener("submit", async function (event) {
+  event.preventDefault();
+
+  const nameInput = document.getElementById("name");
+  const emailInput = document.getElementById("email");
+  const subjectInput = document.getElementById("subject");
+  const messageInput = document.getElementById("message");
+
+  const formData = {
+    name: nameInput.value,
+    email: emailInput.value,
+    subject: subjectInput.value,
+    message: messageInput.value,
+  };
+
+  try {
+    const response = await fetch("https://portfolio-backend-4hpl.onrender.com/send-email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const result = await response.json();
+    alert(result.message);
+
+    // Clear the form fields after successful submission
+    nameInput.value = "";
+    emailInput.value = "";
+    subjectInput.value = "";
+    messageInput.value = "";
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Failed to send message!");
+  }
+});
