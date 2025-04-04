@@ -508,6 +508,24 @@ nav {
     color: var(--secondary-color);
 }
 
+.contact-item-red {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.contact-item-red i {
+    width: 40px;
+    height: 40px;
+    background-color: rgb(167, 0, 0);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    color: white;
+}
+
 .social-links {
     display: flex;
     gap: 15px;
