@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://imprakhartripathi.github.io/Portfolio/sitemap.xml
