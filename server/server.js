@@ -8,6 +8,7 @@ app.use(express.json());
 
 const allowedOrigins = [
   "https://imprakhartripathi.github.io", 
+  "https://imprakhartripathi.netlify.app",
   // "http://localhost:3000",               
   // "http://127.0.0.1:5500",              
   // "http://localhost:5000"                
