@@ -7,10 +7,10 @@ const app = express();
 app.use(express.json());
 
 const allowedOrigins = [
-  "https://imprakhartripathi.github.io", // prod
-  "http://localhost:3000",               // React dev
-  "http://127.0.0.1:5500",               // plain HTML dev
-  "http://localhost:5000"                // direct backend test
+  "https://imprakhartripathi.github.io", 
+  // "http://localhost:3000",               
+  // "http://127.0.0.1:5500",              
+  // "http://localhost:5000"                
 ];
 
 const corsOptions = {
