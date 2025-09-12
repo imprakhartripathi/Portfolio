@@ -6,13 +6,30 @@ const cors = require("cors");
 const app = express();
 app.use(express.json());
 
+const allowedOrigins = [
+  "https://imprakhartripathi.github.io", // prod
+  "http://localhost:3000",               // React dev
+  "http://127.0.0.1:5500",               // plain HTML dev
+  "http://localhost:5000"                // direct backend test
+];
+
 const corsOptions = {
-  origin: "https://imprakhartripathi.github.io",
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like curl or Postman)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type"],
 };
 
 app.use(cors(corsOptions));
+
 
 app.post("/send-email", async (req, res) => {
   const { name, email, subject, message } = req.body;
