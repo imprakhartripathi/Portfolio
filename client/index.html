@@ -31,6 +31,7 @@
       content="https://imprakhartripathi.netlify.app"
     />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/120323432?v=4" />
     <link
       rel="canonical"
       href="https://imprakhartripathi.netlify.app"
@@ -59,8 +60,8 @@
           <div class="logo">Prakhar <span>Tripathi</span></div>
           <ul class="nav-links">
             <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
             <li><a href="#experience">Experience</a></li>
+            <li><a href="#about">About</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
@@ -184,7 +185,7 @@
               into tech tinkering just for fun.
             </p>
             <!-- Inline Projects under About-left column -->
-            <div class="about-projects">
+            <div id="projects" class="about-projects">
               <h3>My Projects</h3>
               <!-- Pharmetrix -->
               <div class="project-card">
@@ -466,9 +467,9 @@
                 ><i class="fab fa-linkedin-in"></i
               ></a>
               <a
-                href="https://imprakhartripathi.github.io/Portfolio"
+                href="https://instagram.com/imprakhartripathi"
                 target="_blank"
-                ><i class="fa-solid fa-globe"></i
+                ><i class="fab fa-instagram"></i
               ></a>
             </div>
           </div>
@@ -526,6 +527,37 @@
       </div>
     </footer>
 
+    <!-- Structured Data: Person + Website -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Prakhar Tripathi",
+      "url": "https://imprakhartripathi.netlify.app",
+      "image": "https://avatars.githubusercontent.com/u/120323432?v=4",
+      "sameAs": [
+        "https://github.com/imprakhartripathi",
+        "https://instagram.com/imprakhartripathi"
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Prakhar Tripathi Portfolio",
+      "url": "https://imprakhartripathi.netlify.app",
+      "publisher": {
+        "@type": "Person",
+        "name": "Prakhar Tripathi"
+      },
+      "image": "https://avatars.githubusercontent.com/u/120323432?v=4",
+      "sameAs": [
+        "https://github.com/imprakhartripathi",
+        "https://instagram.com/imprakhartripathi"
+      ]
+    }
+    </script>
     <script src="script.js"></script>
   </body>
 </html>
