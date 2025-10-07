@@ -179,11 +179,37 @@ nav {
 
   .nav-links li {
     margin: 20px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .nav-links a {
     font-size: 18px;
   }
+
+  /* Hide navbar iframe on mobile, show in drawer */
+  .sponsor-iframe.navbar {
+    display: none !important;
+  }
+  .nav-links .sponsor-iframe.drawer {
+    display: block !important;
+    margin: 0 auto !important;
+    width: 114px !important;
+    min-width: 114px !important;
+    max-width: 90vw;
+    height: 32px !important;
+    min-height: 32px !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+}
+
+/* By default, drawer iframe is hidden on desktop */
+.sponsor-iframe.drawer {
+  display: none;
 }
 
 /* Hero Section */
@@ -966,6 +992,28 @@ footer {
   .contact-content {
     flex-direction: column;
   }
+
+  /* Hide navbar iframe on mobile, show in drawer */
+  .sponsor-iframe.navbar {
+    display: none !important;
+  }
+  .nav-links .sponsor-iframe.drawer {
+    display: block !important;
+    margin: 0 auto !important;
+    width: 114px !important;
+    min-width: 114px !important;
+    max-width: 90vw;
+    height: 32px !important;
+    min-height: 32px !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+}
+
+/* By default, drawer iframe is hidden on desktop */
+.sponsor-iframe.drawer {
+  display: none;
 }
 
 @media (max-width: 480px) {
@@ -1020,9 +1068,61 @@ footer {
   box-shadow: var(--card-shadow);
 }
 
-@media (max-width: 768px) {
-  .contact-info iframe {
-    width: 100%;
-    max-width: 600px;
+/* Responsive GitHub Sponsor iframe styles */
+.sponsor-iframe {
+  display: inline-block;
+  width: 114px;
+  min-width: 90px;
+  max-width: 100%;
+  height: 32px;
+  min-height: 32px;
+  border: 0;
+  border-radius: 30px;
+  vertical-align: middle;
+  margin-left: 18px;
+  transition: all 0.3s;
+}
+
+@media (max-width: 992px) {
+  .sponsor-iframe {
+    width: 100px;
+    height: 32px;
+    margin-left: 10px;
   }
+}
+
+@media (max-width: 768px) {
+  /* Hide navbar iframe on mobile, show in drawer */
+  .sponsor-iframe.navbar {
+    display: none !important;
+  }
+  .nav-links .sponsor-iframe.drawer {
+    display: block !important;
+    margin: 0 auto !important;
+    width: 114px !important;
+    min-width: 114px !important;
+    max-width: 90vw;
+    height: 32px !important;
+    min-height: 32px !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    background: transparent !important;
+  }
+}
+
+/* By default, drawer iframe is hidden on desktop */
+.sponsor-iframe.drawer {
+  display: none;
+}
+
+/* Contact section sponsor card: increase height */
+.contact-info iframe {
+  display: block;
+  margin-top: 30px;
+  max-width: 100%;
+  min-height: 320px; /* increased from 225px */
+  height: 320px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: var(--card-shadow);
 }
