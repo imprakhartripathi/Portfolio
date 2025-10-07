@@ -11,6 +11,10 @@
   --transition-speed: 0.3s;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -503,6 +507,11 @@ nav {
   color: var(--primary-color);
   font-size: 0.95rem;
 }
+
+#projects {
+  scroll-margin-top: 1000px;
+}
+
 
 /* Projects Section */
 .projects-grid {
