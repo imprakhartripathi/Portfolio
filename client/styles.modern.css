@@ -142,6 +142,17 @@ nav {
   transition: all var(--transition-speed) ease;
 }
 
+.sponsor-frame {
+  height: 32px;
+  width: 114px;
+  border: 0;
+  border-radius: 8px;
+  margin-left: 18px;
+  vertical-align: middle;
+  border: 0.4px solid rgb(121, 121, 121);
+}
+
+
 @media (max-width: 768px) {
   .menu-toggle {
     display: block;
@@ -317,6 +328,72 @@ nav {
 .btn-outline:hover {
   background-color: var(--secondary-color);
   color: white;
+}
+
+/* Sponsor Button */
+.btn-sponsor {
+  background: #272c35;
+  color: #fff;
+  border: none;
+  border-radius: 30px; /* match .btn and .btn-outline */
+  padding: 12px 28px;  /* match .btn and .btn-outline */
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  box-shadow: 0 4px 15px rgba(234, 74, 170, 0.15);
+  transition: background 0.3s, box-shadow 0.2s, transform 0.1s;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.btn-sponsor::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.12);
+  transition: all 0.3s ease;
+  z-index: -1;
+}
+
+.btn-sponsor:hover,
+.btn-sponsor:focus {
+  background: linear-gradient(90deg, #ff7b72 0%, #ea4aaa 100%);
+  box-shadow: 0 8px 20px rgba(234, 74, 170, 0.22);
+  transform: translateY(-3px);
+  color: #fff;
+}
+
+.btn-sponsor:hover::before {
+  width: 100%;
+}
+
+.btn-sponsor i {
+  font-size: 1.1em;
+  margin-right: 8px;
+}
+
+/* Heart Icon */
+#heart {
+  color: #cc689f;
+  transition: color 0.3s ease;
+}
+
+/* Change heart color on hover of either the heart or the whole button */
+#heart:hover,
+#heart:focus,
+.btn-sponsor:hover #heart,
+.btn-sponsor:focus #heart {
+  color: white !important;
 }
 
 /* Section Styles */
@@ -895,22 +972,57 @@ footer {
   .hero-text h1 {
     font-size: 2.2rem;
   }
-  
+
   .btn {
     padding: 10px 20px;
     font-size: 0.9rem;
   }
-  
+
   .section-title h2 {
     font-size: 1.8rem;
   }
-  
+
   .experience-card, .project-card {
     padding: 20px;
   }
-  
+
   .tech-tag {
     font-size: 0.75rem;
     padding: 4px 10px;
+  }
+
+  .hero iframe {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  .contact-info iframe {
+    height: 180px;
+  }
+}
+
+/* GitHub Sponsor iframes */
+.hero iframe {
+  align-self: center;
+  margin-left: 15px;
+  height: 48px !important;
+  border-radius: 30px !important;
+  width: 114px;
+}
+
+.contact-info iframe {
+  display: block;
+  margin-top: 30px;
+  max-width: 100%;
+  height: 225px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: var(--card-shadow);
+}
+
+@media (max-width: 768px) {
+  .contact-info iframe {
+    width: 100%;
+    max-width: 600px;
   }
 }
