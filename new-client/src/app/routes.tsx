@@ -195,6 +195,12 @@ export function PortfolioRoutes() {
   }
 
   function closeProject() {
+    navigateTo('/projects', { replace: true })
+    setRoute({ page: 'projects' })
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  function goProjects() {
     navigateTo('/projects')
     setRoute({ page: 'projects' })
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -215,7 +221,7 @@ export function PortfolioRoutes() {
   }
 
   if (route.page === 'projects') {
-    return <SystemsDesignedSection onOpenProject={openProject} />
+    return <SystemsDesignedSection onOpenProject={openProject} onBackHome={goHome} titleAs="h1" mode="list" />
   }
 
   if (route.page === 'not-found') {
@@ -227,7 +233,7 @@ export function PortfolioRoutes() {
       <SystemOverviewSection />
       <CapabilityMatrixSection />
       <ProductionTimelineSection />
-      <SystemsDesignedSection onOpenProject={openProject} />
+      <SystemsDesignedSection onOpenProject={openProject} onOpenProjectsPage={goProjects} mode="cta" />
       <ContactEndpointSection />
     </>
   )

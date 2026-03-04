@@ -509,6 +509,50 @@
   gap: 14px;
 }
 
+.systems-designed__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.projects-cta-card {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 18px;
+  align-items: center;
+  border: 1px solid rgba(140, 163, 199, 0.26);
+  border-radius: 14px;
+  padding: 22px 20px;
+  background:
+    radial-gradient(circle at 20% 12%, rgba(103, 215, 245, 0.17), transparent 56%),
+    radial-gradient(circle at 88% 88%, rgba(103, 215, 245, 0.08), transparent 46%),
+    rgba(6, 16, 33, 0.8);
+}
+
+.projects-cta-card__copy {
+  display: grid;
+  gap: 10px;
+}
+
+.projects-cta-card__title {
+  margin: 0;
+  font-size: clamp(1.2rem, 2vw, 1.8rem);
+  line-height: 1.18;
+}
+
+.projects-cta-card__text {
+  margin: 0;
+  max-width: 62ch;
+  color: var(--text-muted);
+}
+
+.projects-cta-card__actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
 .case-study-card {
   display: grid;
   gap: 12px;
@@ -919,6 +963,15 @@
 @media (max-width: 1180px) {
   .capability-grid--flat {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .projects-cta-card {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .projects-cta-card__actions {
+    justify-content: flex-start;
   }
 
   .case-study-card__layout,
