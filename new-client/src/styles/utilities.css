@@ -188,6 +188,10 @@
   padding-bottom: 70px;
 }
 
+.deferred-section-anchor {
+  scroll-margin-top: 82px;
+}
+
 .section-wrapper {
   position: relative;
   scroll-margin-top: 82px;
@@ -356,8 +360,9 @@
   text-align: left;
   color: inherit;
   cursor: pointer;
-  transition: border-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+  transition: transform 160ms ease, opacity 160ms ease;
   box-shadow: inset 0 0 0 1px rgba(103, 215, 245, 0.04);
+  contain: layout paint;
 }
 
 .capability-category:hover {
@@ -410,6 +415,9 @@
     rgba(8, 18, 33, 0.92);
   color: #9adff7;
   box-shadow: inset 0 0 0 1px rgba(103, 215, 245, 0.08);
+  transition: transform 200ms ease, opacity 200ms ease;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .capability-icon-tile--desktop {
@@ -441,6 +449,10 @@
 
 .capability-icon-tile--placeholder {
   opacity: 0;
+  pointer-events: none;
+}
+
+.capability-icon-tile svg {
   pointer-events: none;
 }
 

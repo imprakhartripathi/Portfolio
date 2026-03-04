@@ -13,6 +13,7 @@ type SystemsDesignedSectionProps = {
   onBackHome?: () => void
   titleAs?: 'h1' | 'h2'
   mode?: 'list' | 'cta'
+  sectionId?: string
 }
 
 export function SystemsDesignedSection({
@@ -21,13 +22,14 @@ export function SystemsDesignedSection({
   onBackHome,
   titleAs = 'h2',
   mode = 'list',
+  sectionId = 'projects',
 }: SystemsDesignedSectionProps) {
   const { ref, inView } = useInViewReveal({ threshold: 0.12, once: true })
   const isCtaMode = mode === 'cta'
 
   return (
     <SectionWrapper
-      id="projects"
+      id={sectionId}
       eyebrow="Projects"
       title="Projects"
       description="Backend-focused systems delivered with production constraints and clear domain outcomes."

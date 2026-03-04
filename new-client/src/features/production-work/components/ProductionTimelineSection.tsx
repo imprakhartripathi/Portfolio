@@ -7,12 +7,16 @@ import { productionWorkEntries } from '../data'
 
 import { TimelineItem } from './TimelineItem'
 
-export function ProductionTimelineSection() {
+type ProductionTimelineSectionProps = {
+  sectionId?: string
+}
+
+export function ProductionTimelineSection({ sectionId = 'experience' }: ProductionTimelineSectionProps) {
   const { ref, inView } = useInViewReveal({ threshold: 0.15, once: true })
 
   return (
     <SectionWrapper
-      id="experience"
+      id={sectionId}
       eyebrow="Experience"
       title="Experience"
       description="Ferth internships with production-facing delivery outcomes."

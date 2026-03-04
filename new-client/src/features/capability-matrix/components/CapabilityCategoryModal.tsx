@@ -6,9 +6,10 @@ import type { CapabilityCategory } from '../types'
 type CapabilityCategoryModalProps = {
   category: CapabilityCategory | null
   onClose: () => void
+  renderIcons: boolean
 }
 
-export function CapabilityCategoryModal({ category, onClose }: CapabilityCategoryModalProps) {
+export function CapabilityCategoryModal({ category, onClose, renderIcons }: CapabilityCategoryModalProps) {
   if (!category) {
     return null
   }
@@ -80,9 +81,13 @@ export function CapabilityCategoryModal({ category, onClose }: CapabilityCategor
                 whileHover={{ y: -2, scale: 1.02 }}
                 transition={{ duration: 0.16 }}
               >
-                <span className="capability-icon-tile capability-icon-tile--modal" aria-hidden="true">
-                  <SkillIcon />
-                </span>
+                {renderIcons ? (
+                  <span className="capability-icon-tile capability-icon-tile--modal" aria-hidden="true">
+                    <SkillIcon />
+                  </span>
+                ) : (
+                  <span className="capability-icon-tile capability-icon-tile--modal capability-icon-tile--placeholder" aria-hidden="true" />
+                )}
                 <span className="capability-modal__skill-label">{skill.label}</span>
               </motion.span>
             )

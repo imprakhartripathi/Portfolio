@@ -1,14 +1,38 @@
-import { useEffect, useMemo, useState } from 'react'
+import { Suspense, lazy, useEffect, useMemo, useState } from 'react'
+import type { ReactNode } from 'react'
 
-import { CapabilityMatrixSection } from '../features/capability-matrix'
 import { ContactEndpointSection } from '../features/contact-endpoint'
-import { ProductionTimelineSection } from '../features/production-work'
 import { SystemOverviewSection } from '../features/system-overview'
-import { ProjectDetailsPage, systemsDesignedCases, SystemsDesignedSection } from '../features/systems-designed'
+import { systemsDesignedCases } from '../features/systems-designed/data'
 import { SectionWrapper } from '../layout/SectionWrapper'
+import { useInViewport } from '../shared/hooks/useInViewport'
 
 import { buildProjectPath, navigateTo, PORTFOLIO_ROUTE_EVENT, readRouteFromLocation, type PortfolioRoute } from './navigation'
 import { applySeo, seoConstants } from './seo'
+
+const LazyCapabilityMatrixSection = lazy(() =>
+  import('../features/capability-matrix/components/CapabilityMatrixSection').then((module) => ({
+    default: module.CapabilityMatrixSection,
+  })),
+)
+
+const LazyProductionTimelineSection = lazy(() =>
+  import('../features/production-work/components/ProductionTimelineSection').then((module) => ({
+    default: module.ProductionTimelineSection,
+  })),
+)
+
+const LazySystemsDesignedSection = lazy(() =>
+  import('../features/systems-designed/components/SystemsDesignedSection').then((module) => ({
+    default: module.SystemsDesignedSection,
+  })),
+)
+
+const LazyProjectDetailsPage = lazy(() =>
+  import('../features/systems-designed/components/ProjectDetailsPage').then((module) => ({
+    default: module.ProjectDetailsPage,
+  })),
+)
 
 const homeDescription =
   'Backend-focused full-stack engineer designing production-grade backend systems with transactional safety, role-aware access boundaries, and reliable deployments.'
@@ -19,6 +43,32 @@ const projectsDescription =
 type NotFoundPageProps = {
   pathname: string
   onGoHome: () => void
+}
+
+type DeferredViewportMountProps = {
+  anchorId: string
+  children: ReactNode
+  rootMargin?: string
+  minHeight?: number
+}
+
+function DeferredViewportMount({ anchorId, children, rootMargin = '260px 0px', minHeight = 180 }: DeferredViewportMountProps) {
+  const { ref, isInViewport } = useInViewport<HTMLDivElement>({
+    rootMargin,
+    threshold: 0.01,
+    once: true,
+  })
+
+  return (
+    <div
+      id={anchorId}
+      ref={ref}
+      className="deferred-section-anchor"
+      style={isInViewport ? undefined : { minHeight }}
+    >
+      {isInViewport ? children : null}
+    </div>
+  )
 }
 
 function NotFoundPage({ pathname, onGoHome }: NotFoundPageProps) {
@@ -213,7 +263,11 @@ export function PortfolioRoutes() {
   }
 
   if (route.page === 'project-detail' && activeProject) {
-    return <ProjectDetailsPage study={activeProject} onBack={closeProject} />
+    return (
+      <Suspense fallback={null}>
+        <LazyProjectDetailsPage study={activeProject} onBack={closeProject} />
+      </Suspense>
+    )
   }
 
   if (route.page === 'project-detail' && !activeProject) {
@@ -221,7 +275,17 @@ export function PortfolioRoutes() {
   }
 
   if (route.page === 'projects') {
-    return <SystemsDesignedSection onOpenProject={openProject} onBackHome={goHome} titleAs="h1" mode="list" />
+    return (
+      <Suspense fallback={null}>
+        <LazySystemsDesignedSection
+          onOpenProject={openProject}
+          onBackHome={goHome}
+          titleAs="h1"
+          mode="list"
+          sectionId="projects"
+        />
+      </Suspense>
+    )
   }
 
   if (route.page === 'not-found') {
@@ -231,9 +295,26 @@ export function PortfolioRoutes() {
   return (
     <>
       <SystemOverviewSection />
-      <CapabilityMatrixSection />
-      <ProductionTimelineSection />
-      <SystemsDesignedSection onOpenProject={openProject} onOpenProjectsPage={goProjects} mode="cta" />
+      <DeferredViewportMount anchorId="technical-expertise" minHeight={480}>
+        <Suspense fallback={null}>
+          <LazyCapabilityMatrixSection sectionId="technical-expertise-content" />
+        </Suspense>
+      </DeferredViewportMount>
+      <DeferredViewportMount anchorId="experience" minHeight={320}>
+        <Suspense fallback={null}>
+          <LazyProductionTimelineSection sectionId="experience-content" />
+        </Suspense>
+      </DeferredViewportMount>
+      <DeferredViewportMount anchorId="projects" minHeight={280}>
+        <Suspense fallback={null}>
+          <LazySystemsDesignedSection
+            onOpenProject={openProject}
+            onOpenProjectsPage={goProjects}
+            mode="cta"
+            sectionId="projects-content"
+          />
+        </Suspense>
+      </DeferredViewportMount>
       <ContactEndpointSection />
     </>
   )

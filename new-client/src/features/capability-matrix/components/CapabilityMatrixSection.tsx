@@ -9,9 +9,35 @@ import { capabilityCategories } from '../data'
 import { CapabilityCategoryCard } from './CapabilityCategoryCard'
 import { CapabilityCategoryModal } from './CapabilityCategoryModal'
 
-export function CapabilityMatrixSection() {
+type CapabilityMatrixSectionProps = {
+  sectionId?: string
+}
+
+type IdleRenderCallback = () => void
+type IdleLikeCallback = (cb: () => void, options?: { timeout?: number }) => number
+
+function requestIdleRender(callback: IdleRenderCallback) {
+  if (typeof window === 'undefined') {
+    callback()
+    return () => undefined
+  }
+
+  const requestIdle = window.requestIdleCallback as IdleLikeCallback | undefined
+  const cancelIdle = window.cancelIdleCallback as ((id: number) => void) | undefined
+
+  if (requestIdle) {
+    const id = requestIdle(() => callback(), { timeout: 1200 })
+    return () => cancelIdle?.(id)
+  }
+
+  const timeoutId = window.setTimeout(callback, 100)
+  return () => window.clearTimeout(timeoutId)
+}
+
+export function CapabilityMatrixSection({ sectionId = 'technical-expertise' }: CapabilityMatrixSectionProps) {
   const { ref, inView } = useInViewReveal({ threshold: 0.18, once: true })
   const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null)
+  const [renderIcons, setRenderIcons] = useState(false)
 
   const activeCategory = useMemo(
     () => capabilityCategories.find((category) => category.id === activeCategoryId) ?? null,
@@ -45,9 +71,14 @@ export function CapabilityMatrixSection() {
     }
   }, [activeCategoryId])
 
+  useEffect(() => {
+    const cleanup = requestIdleRender(() => setRenderIcons(true))
+    return cleanup
+  }, [])
+
   return (
     <SectionWrapper
-      id="technical-expertise"
+      id={sectionId}
       eyebrow="Skills"
       title="Technical Expertise"
       description="Category-based stack overview. Open any category to view the complete skill list."
@@ -62,13 +93,15 @@ export function CapabilityMatrixSection() {
       >
         <motion.div variants={revealItem} className="capability-drawer">
           {capabilityCategories.map((category) => (
-            <CapabilityCategoryCard key={category.id} category={category} onOpen={setActiveCategoryId} />
+            <CapabilityCategoryCard key={category.id} category={category} onOpen={setActiveCategoryId} renderIcons={renderIcons} />
           ))}
         </motion.div>
       </motion.div>
 
       <AnimatePresence>
-        {activeCategory ? <CapabilityCategoryModal category={activeCategory} onClose={() => setActiveCategoryId(null)} /> : null}
+        {activeCategory ? (
+          <CapabilityCategoryModal category={activeCategory} onClose={() => setActiveCategoryId(null)} renderIcons={renderIcons} />
+        ) : null}
       </AnimatePresence>
     </SectionWrapper>
   )
