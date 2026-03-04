@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://imprakhartripathi.in/sitemap.xml
