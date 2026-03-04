@@ -1,132 +1,129 @@
-import {
-  FaCloud,
-  FaCodeBranch,
-  FaDatabase,
-  FaMobileAlt,
-  FaSatelliteDish,
-  FaUserShield,
-} from "react-icons/fa";
-import {
-  FaArrowsRotate,
-  FaBolt,
-  FaBoxesStacked,
-  FaCubesStacked,
-  FaHardDrive,
-  FaLayerGroup,
-} from "react-icons/fa6";
+import { FaCode, FaDatabase } from 'react-icons/fa'
 import {
   SiAngular,
+  SiApachemaven,
+  SiC,
   SiDeno,
   SiDocker,
   SiDotnet,
   SiExpress,
-  SiGithubactions,
+  SiFramer,
+  SiGit,
+  SiGithub,
+  SiGnubash,
+  SiHono,
+  SiIntellijidea,
   SiJavascript,
-  SiLinux,
+  SiJunit5,
   SiMongodb,
   SiMysql,
-  SiNetlify,
   SiNextdotjs,
   SiNginx,
   SiNodedotjs,
-  SiOpenapiinitiative,
+  SiNpm,
+  SiOpenjdk,
   SiPostgresql,
+  SiPostman,
   SiPython,
-  SiRaspberrypi,
+  SiR,
+  SiRazorpay,
   SiReact,
+  SiRstudioide,
   SiRust,
+  SiSass,
+  SiSpringboot,
+  SiSupabase,
+  SiTailwindcss,
   SiTypescript,
-  SiVercel,
-} from "react-icons/si";
-import { TbSql } from "react-icons/tb";
+  SiVscodium,
+} from 'react-icons/si'
+import { TbBrandCSharp, TbBrandVisualStudio, TbBrandVscode, TbMathFunction, TbSql } from 'react-icons/tb'
 
-import type { CapabilityMatrixItem } from "./types";
+import type { CapabilityCategory } from './types'
 
-export const capabilityMatrixRows: CapabilityMatrixItem[] = [
-  // ==============================
-  // PROGRAMMING LANGUAGES
-  // ==============================
-  { id: "javascript", label: "JavaScript", icon: SiJavascript },
-  { id: "typescript", label: "TypeScript", icon: SiTypescript },
-  { id: "python", label: "Python", icon: SiPython },
-  { id: "rust", label: "Rust", icon: SiRust },
-  { id: "sql", label: "SQL", icon: TbSql },
-
-  // ==============================
-  // FRAMEWORKS & RUNTIMES
-  // ==============================
-  { id: "nodejs", label: "Node.js", icon: SiNodedotjs },
-  { id: "express", label: "Express.js", icon: SiExpress },
-  { id: "aspnet", label: "ASP.NET Core", icon: SiDotnet },
-  { id: "deno", label: "Deno", icon: SiDeno },
-  { id: "react", label: "React", icon: SiReact },
-  { id: "angular", label: "Angular", icon: SiAngular },
-  { id: "nextjs", label: "Next.js", icon: SiNextdotjs },
-
-  // ==============================
-  // COMPUTER SCIENCE CORE
-  // ==============================
-  { id: "dsa", label: "Data Structures & Algorithms", icon: FaBolt },
-  { id: "oop", label: "Object-Oriented Programming", icon: FaBoxesStacked },
-
-  // ==============================
-  // BACKEND ARCHITECTURE & SECURITY
-  // ==============================
-  { id: "rest", label: "REST Architecture", icon: SiOpenapiinitiative },
-  { id: "jwt", label: "JWT Authentication", icon: FaUserShield },
-  { id: "rbac", label: "RBAC Policy Systems", icon: FaLayerGroup },
-
-  // ==============================
-  // FRONTEND ARCHITECTURE
-  // ==============================
-  { id: "responsive-ui", label: "Responsive UI Design", icon: FaMobileAlt },
-  { id: "state-driven-ui", label: "State-driven UI", icon: FaCubesStacked },
-
-  // ==============================
-  // DATABASE SYSTEMS
-  // ==============================
-  { id: "mongodb", label: "MongoDB", icon: SiMongodb },
-  { id: "postgresql", label: "PostgreSQL", icon: SiPostgresql },
-  { id: "mysql", label: "MySQL", icon: SiMysql },
-  { id: "databases", label: "Database Systems", icon: FaDatabase },
-
-  // ==============================
-  // INFRASTRUCTURE & DEVOPS
-  // ==============================
-  { id: "docker", label: "Docker", icon: SiDocker },
-  { id: "nginx", label: "Nginx", icon: SiNginx },
-  { id: "linux", label: "Linux", icon: SiLinux },
-  { id: "github-actions", label: "GitHub Actions", icon: SiGithubactions },
-  { id: "netlify", label: "Netlify", icon: SiNetlify },
-  { id: "vercel", label: "Vercel", icon: SiVercel },
-
-  // ==============================
-  // SYSTEM DESIGN (LONG LABELS → LOWER)
-  // ==============================
+export const capabilityCategories: CapabilityCategory[] = [
   {
-    id: "transactional",
-    label: "Transactional Service Design",
-    icon: FaCodeBranch,
+    id: 'programming-languages',
+    title: 'Programming Languages',
+    icon: FaCode,
+    skillRows: [
+      [
+        { id: 'typescript', label: 'TypeScript', icon: SiTypescript },
+        { id: 'javascript', label: 'JavaScript', icon: SiJavascript },
+        { id: 'java', label: 'Java', icon: SiOpenjdk },
+        { id: 'csharp', label: 'C#', icon: TbBrandCSharp },
+        { id: 'rust', label: 'Rust', icon: SiRust },
+        { id: 'python', label: 'Python', icon: SiPython },
+      ],
+      [
+        { id: 'c', label: 'C', icon: SiC },
+        { id: 'shell-script', label: 'Shell Script', icon: SiGnubash },
+        { id: 'sql', label: 'SQL', icon: TbSql },
+        { id: 'r', label: 'R', icon: SiR },
+        { id: 'nosql', label: 'NoSQL', icon: SiMongodb },
+      ],
+    ],
   },
   {
-    id: "sync-models",
-    label: "System-aware Backend Services",
-    icon: FaArrowsRotate,
+    id: 'frameworks-libraries',
+    title: 'Frameworks & Libraries',
+    icon: SiReact,
+    skillRows: [
+      [
+        { id: 'react', label: 'React', icon: SiReact },
+        { id: 'nextjs', label: 'Next.js', icon: SiNextdotjs },
+        { id: 'angular', label: 'Angular', icon: SiAngular },
+        { id: 'nodejs', label: 'Node.js', icon: SiNodedotjs },
+        { id: 'express', label: 'Express.js', icon: SiExpress },
+        { id: 'deno', label: 'Deno', icon: SiDeno },
+      ],
+      [
+        { id: 'hono', label: 'Hono', icon: SiHono },
+        { id: 'aspnet-core', label: 'ASP.NET Core', icon: SiDotnet },
+        { id: 'spring-boot', label: 'Spring Boot', icon: SiSpringboot },
+        { id: 'tailwind-css', label: 'Tailwind CSS', icon: SiTailwindcss },
+        { id: 'sass', label: 'Sass', icon: SiSass },
+        { id: 'framer-motion', label: 'Framer Motion', icon: SiFramer },
+      ],
+    ],
   },
-
-  // ==============================
-  // EDGE / IoT (LONGEST → BOTTOM)
-  // ==============================
-  { id: "raspberry-pi", label: "Raspberry Pi", icon: SiRaspberrypi },
   {
-    id: "edge-sync",
-    label: "Edge-first synchronization",
-    icon: FaSatelliteDish,
+    id: 'databases',
+    title: 'Databases',
+    icon: FaDatabase,
+    skillRows: [
+      [
+        { id: 'postgresql', label: 'PostgreSQL', icon: SiPostgresql },
+        { id: 'mysql', label: 'MySQL', icon: SiMysql },
+        { id: 'mongodb', label: 'MongoDB', icon: SiMongodb },
+        { id: 'supabase', label: 'Supabase', icon: SiSupabase },
+      ],
+    ],
   },
   {
-    id: "offline-queue",
-    label: "Offline queueing patterns",
-    icon: FaHardDrive,
+    id: 'tools-platforms',
+    title: 'Tools & Platforms',
+    icon: SiGithub,
+    skillRows: [
+      [
+        { id: 'git', label: 'Git', icon: SiGit },
+        { id: 'github', label: 'GitHub', icon: SiGithub },
+        { id: 'npm', label: 'npm', icon: SiNpm },
+        { id: 'vs-code', label: 'VS Code', icon: TbBrandVscode },
+        { id: 'vscodium', label: 'VSCodium', icon: SiVscodium },
+        { id: 'visual-studio', label: 'Visual Studio', icon: TbBrandVisualStudio },
+        { id: 'intellij-idea', label: 'IntelliJ IDEA', icon: SiIntellijidea },
+        { id: 'maven', label: 'Maven', icon: SiApachemaven },
+      ],
+      [
+        { id: 'junit', label: 'JUnit', icon: SiJunit5 },
+        { id: 'postman', label: 'Postman', icon: SiPostman },
+        { id: 'docker', label: 'Docker', icon: SiDocker },
+        { id: 'nginx', label: 'Nginx', icon: SiNginx },
+        { id: 'razorpay', label: 'Razorpay', icon: SiRazorpay },
+        { id: 'rstudio', label: 'RStudio', icon: SiRstudioide },
+        { id: 'matlab', label: 'MATLAB', icon: TbMathFunction },
+      ],
+    ],
   },
-  { id: "cloud-sync", label: "Cloud sync architecture", icon: FaCloud },
-];
+]

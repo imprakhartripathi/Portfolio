@@ -1,4 +1,5 @@
-export { CapabilityCell } from './components/CapabilityCell'
+export { CapabilityCategoryCard } from './components/CapabilityCategoryCard'
+export { CapabilityCategoryModal } from './components/CapabilityCategoryModal'
 export { CapabilityMatrixSection } from './components/CapabilityMatrixSection'
-export { capabilityMatrixRows } from './data'
-export type { CapabilityMatrixItem } from './types'
+export { capabilityCategories } from './data'
+export type { CapabilityCategory, CapabilityMatrixItem } from './types'

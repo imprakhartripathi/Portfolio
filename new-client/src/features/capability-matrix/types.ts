@@ -5,3 +5,10 @@ export type CapabilityMatrixItem = {
   label: string
   icon: IconType
 }
+
+export type CapabilityCategory = {
+  id: string
+  title: string
+  icon: IconType
+  skillRows: CapabilityMatrixItem[][]
+}
