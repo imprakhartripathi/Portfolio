@@ -16,7 +16,7 @@ type CapabilityMatrixSectionProps = {
 type IdleRenderCallback = () => void
 type IdleLikeCallback = (cb: () => void, options?: { timeout?: number }) => number
 
-function requestIdleRender(callback: IdleRenderCallback) {
+function requestIdleRender(callback: IdleRenderCallback, timeout = 220) {
   if (typeof window === 'undefined') {
     callback()
     return () => undefined
@@ -26,26 +26,16 @@ function requestIdleRender(callback: IdleRenderCallback) {
   const cancelIdle = window.cancelIdleCallback as ((id: number) => void) | undefined
 
   if (requestIdle) {
-    const id = requestIdle(() => callback(), { timeout: 1200 })
+    const id = requestIdle(() => callback(), { timeout })
     return () => cancelIdle?.(id)
   }
 
-  const timeoutId = window.setTimeout(callback, 100)
-  return () => window.clearTimeout(timeoutId)
-}
-
-function scheduleTimeout(callback: IdleRenderCallback, delay: number) {
-  if (typeof window === 'undefined') {
-    callback()
-    return () => undefined
-  }
-
-  const timeoutId = window.setTimeout(callback, delay)
+  const timeoutId = window.setTimeout(callback, 60)
   return () => window.clearTimeout(timeoutId)
 }
 
 export function CapabilityMatrixSection({ sectionId = 'technical-expertise' }: CapabilityMatrixSectionProps) {
-  const { ref, inView } = useInViewReveal({ threshold: 0.08, once: true })
+  const { ref, inView } = useInViewReveal({ threshold: 0.01, once: true })
   const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null)
   const [renderIcons, setRenderIcons] = useState(false)
   const [isMobileViewport, setIsMobileViewport] = useState(() => {
@@ -90,23 +80,7 @@ export function CapabilityMatrixSection({ sectionId = 'technical-expertise' }: C
 
   useEffect(() => {
     const cleanupIdle = requestIdleRender(() => setRenderIcons(true))
-    const cleanupTimeout = scheduleTimeout(() => setRenderIcons(true), 1800)
-
-    const onFirstInteraction = () => {
-      setRenderIcons(true)
-      window.removeEventListener('scroll', onFirstInteraction)
-      window.removeEventListener('touchstart', onFirstInteraction)
-    }
-
-    window.addEventListener('scroll', onFirstInteraction, { passive: true })
-    window.addEventListener('touchstart', onFirstInteraction, { passive: true })
-
-    return () => {
-      cleanupIdle()
-      cleanupTimeout()
-      window.removeEventListener('scroll', onFirstInteraction)
-      window.removeEventListener('touchstart', onFirstInteraction)
-    }
+    return cleanupIdle
   }, [])
 
   useEffect(() => {

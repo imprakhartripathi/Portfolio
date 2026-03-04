@@ -295,7 +295,7 @@ export function PortfolioRoutes() {
   return (
     <>
       <SystemOverviewSection />
-      <DeferredViewportMount anchorId="technical-expertise" minHeight={480} rootMargin="0px 0px">
+      <DeferredViewportMount anchorId="technical-expertise" minHeight={480} rootMargin="220px 0px">
         <Suspense fallback={null}>
           <LazyCapabilityMatrixSection sectionId="technical-expertise-content" />
         </Suspense>
