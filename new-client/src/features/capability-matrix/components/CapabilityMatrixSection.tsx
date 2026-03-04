@@ -34,15 +34,32 @@ function requestIdleRender(callback: IdleRenderCallback) {
   return () => window.clearTimeout(timeoutId)
 }
 
+function scheduleTimeout(callback: IdleRenderCallback, delay: number) {
+  if (typeof window === 'undefined') {
+    callback()
+    return () => undefined
+  }
+
+  const timeoutId = window.setTimeout(callback, delay)
+  return () => window.clearTimeout(timeoutId)
+}
+
 export function CapabilityMatrixSection({ sectionId = 'technical-expertise' }: CapabilityMatrixSectionProps) {
-  const { ref, inView } = useInViewReveal({ threshold: 0.18, once: true })
+  const { ref, inView } = useInViewReveal({ threshold: 0.08, once: true })
   const [activeCategoryId, setActiveCategoryId] = useState<string | null>(null)
   const [renderIcons, setRenderIcons] = useState(false)
+  const [isMobileViewport, setIsMobileViewport] = useState(() => {
+    if (typeof window === 'undefined') {
+      return false
+    }
+    return window.matchMedia('(max-width: 900px)').matches
+  })
 
   const activeCategory = useMemo(
     () => capabilityCategories.find((category) => category.id === activeCategoryId) ?? null,
     [activeCategoryId],
   )
+  const shouldRenderIcons = renderIcons || inView
 
   useEffect(() => {
     if (!activeCategoryId) {
@@ -72,8 +89,38 @@ export function CapabilityMatrixSection({ sectionId = 'technical-expertise' }: C
   }, [activeCategoryId])
 
   useEffect(() => {
-    const cleanup = requestIdleRender(() => setRenderIcons(true))
-    return cleanup
+    const cleanupIdle = requestIdleRender(() => setRenderIcons(true))
+    const cleanupTimeout = scheduleTimeout(() => setRenderIcons(true), 1800)
+
+    const onFirstInteraction = () => {
+      setRenderIcons(true)
+      window.removeEventListener('scroll', onFirstInteraction)
+      window.removeEventListener('touchstart', onFirstInteraction)
+    }
+
+    window.addEventListener('scroll', onFirstInteraction, { passive: true })
+    window.addEventListener('touchstart', onFirstInteraction, { passive: true })
+
+    return () => {
+      cleanupIdle()
+      cleanupTimeout()
+      window.removeEventListener('scroll', onFirstInteraction)
+      window.removeEventListener('touchstart', onFirstInteraction)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return
+    }
+
+    const mediaQuery = window.matchMedia('(max-width: 900px)')
+    const syncViewport = (event: MediaQueryListEvent) => {
+      setIsMobileViewport(event.matches)
+    }
+
+    mediaQuery.addEventListener('change', syncViewport)
+    return () => mediaQuery.removeEventListener('change', syncViewport)
   }, [])
 
   return (
@@ -93,14 +140,24 @@ export function CapabilityMatrixSection({ sectionId = 'technical-expertise' }: C
       >
         <motion.div variants={revealItem} className="capability-drawer">
           {capabilityCategories.map((category) => (
-            <CapabilityCategoryCard key={category.id} category={category} onOpen={setActiveCategoryId} renderIcons={renderIcons} />
+            <CapabilityCategoryCard
+              key={category.id}
+              category={category}
+              onOpen={setActiveCategoryId}
+              renderIcons={shouldRenderIcons}
+              isMobileViewport={isMobileViewport}
+            />
           ))}
         </motion.div>
       </motion.div>
 
       <AnimatePresence>
         {activeCategory ? (
-          <CapabilityCategoryModal category={activeCategory} onClose={() => setActiveCategoryId(null)} renderIcons={renderIcons} />
+          <CapabilityCategoryModal
+            category={activeCategory}
+            onClose={() => setActiveCategoryId(null)}
+            renderIcons={shouldRenderIcons}
+          />
         ) : null}
       </AnimatePresence>
     </SectionWrapper>

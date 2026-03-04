@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
 
 import type { CapabilityCategory } from '../types'
 
@@ -7,9 +6,10 @@ type CapabilityCategoryCardProps = {
   category: CapabilityCategory
   onOpen: (categoryId: string) => void
   renderIcons: boolean
+  isMobileViewport: boolean
 }
 
-export function CapabilityCategoryCard({ category, onOpen, renderIcons }: CapabilityCategoryCardProps) {
+export function CapabilityCategoryCard({ category, onOpen, renderIcons, isMobileViewport }: CapabilityCategoryCardProps) {
   const CategoryIcon = category.icon
   const skills = category.skillRows.flat()
   const drawerPrimary = skills.slice(0, 4)
@@ -18,46 +18,6 @@ export function CapabilityCategoryCard({ category, onOpen, renderIcons }: Capabi
   const drawerSecondarySlots = [...drawerSecondary, ...Array.from({ length: Math.max(0, 4 - drawerSecondary.length) }, () => null)]
   const renderedPrimarySlots = renderIcons ? drawerPrimarySlots : drawerPrimarySlots.map(() => null)
   const renderedSecondarySlots = renderIcons ? drawerSecondarySlots : drawerSecondarySlots.map(() => null)
-  const [isMobileViewport, setIsMobileViewport] = useState(() => {
-    if (typeof window === 'undefined') {
-      return false
-    }
-    return window.matchMedia('(max-width: 900px)').matches
-  })
-
-  useEffect(() => {
-    if (typeof window === 'undefined') {
-      return
-    }
-
-    const mediaQuery = window.matchMedia('(max-width: 900px)')
-    const syncViewport = (event: MediaQueryListEvent) => {
-      setIsMobileViewport(event.matches)
-    }
-
-    mediaQuery.addEventListener('change', syncViewport)
-    return () => mediaQuery.removeEventListener('change', syncViewport)
-  }, [])
-
-  const iconGridVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.03,
-        delayChildren: 0.06,
-      },
-    },
-  }
-
-  const iconItemVariants = {
-    hidden: { opacity: 0, y: 8, scale: 0.94 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { duration: 0.22, ease: 'easeOut' as const },
-    },
-  }
 
   return (
     <motion.button
@@ -79,28 +39,21 @@ export function CapabilityCategoryCard({ category, onOpen, renderIcons }: Capabi
       </div>
 
       {!isMobileViewport ? (
-        <motion.div
+        <div
           className="capability-category__desktop-icons"
           aria-hidden="true"
-          variants={iconGridVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
         >
           {renderIcons
             ? skills.map((skill) => {
                 const SkillIcon = skill.icon
                 return (
-                  <motion.span
+                  <span
                     key={skill.id}
                     className="capability-icon-tile capability-icon-tile--desktop"
                     title={skill.label}
-                    variants={iconItemVariants}
-                    whileHover={{ y: -2, scale: 1.06 }}
-                    transition={{ duration: 0.14 }}
                   >
                     <SkillIcon />
-                  </motion.span>
+                  </span>
                 )
               })
             : skills.map((skill) => (
@@ -110,18 +63,12 @@ export function CapabilityCategoryCard({ category, onOpen, renderIcons }: Capabi
                   aria-hidden="true"
                 />
               ))}
-        </motion.div>
+        </div>
       ) : null}
 
       {isMobileViewport ? (
         <div className="capability-category__drawer" aria-hidden="true">
-          <motion.div
-            className="capability-category__drawer-grid"
-            variants={iconGridVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
+          <div className="capability-category__drawer-grid">
             {renderedPrimarySlots.map((skill, index) => {
               if (!skill) {
                 return (
@@ -135,26 +82,17 @@ export function CapabilityCategoryCard({ category, onOpen, renderIcons }: Capabi
 
               const SkillIcon = skill.icon
               return (
-                <motion.span
+                <span
                   key={skill.id}
                   className="capability-icon-tile capability-icon-tile--drawer-lg"
                   title={skill.label}
-                  variants={iconItemVariants}
-                  whileHover={{ y: -1, scale: 1.04 }}
-                  whileTap={{ scale: 0.97 }}
                 >
                   <SkillIcon />
-                </motion.span>
+                </span>
               )
             })}
-          </motion.div>
-          <motion.div
-            className="capability-category__drawer-mini-grid"
-            variants={iconGridVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
+          </div>
+          <div className="capability-category__drawer-mini-grid">
             {renderedSecondarySlots.map((skill, index) => {
               if (!skill) {
                 return (
@@ -168,19 +106,16 @@ export function CapabilityCategoryCard({ category, onOpen, renderIcons }: Capabi
 
               const SkillIcon = skill.icon
               return (
-                <motion.span
+                <span
                   key={skill.id}
                   className="capability-icon-tile capability-icon-tile--drawer-sm"
                   title={skill.label}
-                  variants={iconItemVariants}
-                  whileHover={{ y: -1, scale: 1.04 }}
-                  whileTap={{ scale: 0.97 }}
                 >
                   <SkillIcon />
-                </motion.span>
+                </span>
               )
             })}
-          </motion.div>
+          </div>
         </div>
       ) : null}
     </motion.button>

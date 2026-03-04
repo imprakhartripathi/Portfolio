@@ -52,7 +52,7 @@ type DeferredViewportMountProps = {
   minHeight?: number
 }
 
-function DeferredViewportMount({ anchorId, children, rootMargin = '260px 0px', minHeight = 180 }: DeferredViewportMountProps) {
+function DeferredViewportMount({ anchorId, children, rootMargin = '0px 0px', minHeight = 180 }: DeferredViewportMountProps) {
   const { ref, isInViewport } = useInViewport<HTMLDivElement>({
     rootMargin,
     threshold: 0.01,
@@ -295,17 +295,17 @@ export function PortfolioRoutes() {
   return (
     <>
       <SystemOverviewSection />
-      <DeferredViewportMount anchorId="technical-expertise" minHeight={480}>
+      <DeferredViewportMount anchorId="technical-expertise" minHeight={480} rootMargin="0px 0px">
         <Suspense fallback={null}>
           <LazyCapabilityMatrixSection sectionId="technical-expertise-content" />
         </Suspense>
       </DeferredViewportMount>
-      <DeferredViewportMount anchorId="experience" minHeight={320}>
+      <DeferredViewportMount anchorId="experience" minHeight={320} rootMargin="0px 0px">
         <Suspense fallback={null}>
           <LazyProductionTimelineSection sectionId="experience-content" />
         </Suspense>
       </DeferredViewportMount>
-      <DeferredViewportMount anchorId="projects" minHeight={280}>
+      <DeferredViewportMount anchorId="projects" minHeight={280} rootMargin="0px 0px">
         <Suspense fallback={null}>
           <LazySystemsDesignedSection
             onOpenProject={openProject}

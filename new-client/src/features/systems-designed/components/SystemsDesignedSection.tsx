@@ -1,11 +1,15 @@
 import { motion } from 'framer-motion'
+import { Suspense, lazy } from 'react'
 
 import { SectionWrapper } from '../../../layout/SectionWrapper'
 import { useInViewReveal } from '../../../shared/hooks/useInViewReveal'
 import { revealContainer, revealItem } from '../../../shared/motion/variants'
-import { systemsDesignedCases } from '../data'
 
-import { CaseStudyCard } from './CaseStudyCard'
+const LazyCaseStudyList = lazy(() =>
+  import('./CaseStudyList').then((module) => ({
+    default: module.CaseStudyList,
+  })),
+)
 
 type SystemsDesignedSectionProps = {
   onOpenProject: (projectId: string) => void
@@ -79,11 +83,9 @@ export function SystemsDesignedSection({
         ) : null}
 
         {!isCtaMode ? (
-          <motion.div variants={revealItem} className="case-study-grid">
-            {systemsDesignedCases.map((study) => (
-              <CaseStudyCard key={study.id} study={study} onOpenProject={onOpenProject} />
-            ))}
-          </motion.div>
+          <Suspense fallback={null}>
+            <LazyCaseStudyList onOpenProject={onOpenProject} />
+          </Suspense>
         ) : null}
       </motion.div>
     </SectionWrapper>

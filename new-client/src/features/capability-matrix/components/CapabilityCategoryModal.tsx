@@ -16,26 +16,6 @@ export function CapabilityCategoryModal({ category, onClose, renderIcons }: Capa
 
   const skills = category.skillRows.flat()
 
-  const gridVariants = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.03,
-        delayChildren: 0.05,
-      },
-    },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 10, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { duration: 0.2, ease: 'easeOut' as const },
-    },
-  }
-
   return (
     <motion.div
       className="capability-modal"
@@ -70,17 +50,11 @@ export function CapabilityCategoryModal({ category, onClose, renderIcons }: Capa
           </button>
         </header>
 
-        <motion.div className="capability-modal__skills-grid" variants={gridVariants} initial="hidden" animate="visible">
+        <div className="capability-modal__skills-grid">
           {skills.map((skill) => {
             const SkillIcon = skill.icon
             return (
-              <motion.span
-                key={skill.id}
-                className="capability-modal__skill-card"
-                variants={itemVariants}
-                whileHover={{ y: -2, scale: 1.02 }}
-                transition={{ duration: 0.16 }}
-              >
+              <span key={skill.id} className="capability-modal__skill-card">
                 {renderIcons ? (
                   <span className="capability-icon-tile capability-icon-tile--modal" aria-hidden="true">
                     <SkillIcon />
@@ -89,10 +63,10 @@ export function CapabilityCategoryModal({ category, onClose, renderIcons }: Capa
                   <span className="capability-icon-tile capability-icon-tile--modal capability-icon-tile--placeholder" aria-hidden="true" />
                 )}
                 <span className="capability-modal__skill-label">{skill.label}</span>
-              </motion.span>
+              </span>
             )
           })}
-        </motion.div>
+        </div>
       </motion.article>
     </motion.div>
   )
