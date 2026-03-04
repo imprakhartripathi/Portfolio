@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Host: imprakhartripathi.in
 
 Sitemap: https://imprakhartripathi.in/sitemap.xml

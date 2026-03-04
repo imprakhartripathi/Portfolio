@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import type { MouseEvent, PropsWithChildren } from 'react'
 import { FaMicrochip, FaXmark } from 'react-icons/fa6'
 
+import { PORTFOLIO_ROUTE_EVENT } from '../app/navigation'
 import { GridOverlay } from './GridOverlay'
 import { NoiseLayer } from './NoiseLayer'
 
@@ -14,7 +15,7 @@ const sectionLinks = [
 ]
 
 function isProjectViewFromLocation() {
-  return new URLSearchParams(window.location.search).has('project')
+  return window.location.pathname.startsWith('/projects/')
 }
 
 function scrollToSection(href: string) {
@@ -47,12 +48,12 @@ export function MainShell({ children }: PropsWithChildren) {
     }
 
     window.addEventListener('popstate', syncRouteState)
-    window.addEventListener('portfolio:routechange', syncRouteState as EventListener)
+    window.addEventListener(PORTFOLIO_ROUTE_EVENT, syncRouteState as EventListener)
     window.addEventListener('keydown', onEscapeClose)
 
     return () => {
       window.removeEventListener('popstate', syncRouteState)
-      window.removeEventListener('portfolio:routechange', syncRouteState as EventListener)
+      window.removeEventListener(PORTFOLIO_ROUTE_EVENT, syncRouteState as EventListener)
       window.removeEventListener('keydown', onEscapeClose)
     }
   }, [])
@@ -61,15 +62,12 @@ export function MainShell({ children }: PropsWithChildren) {
     event.preventDefault()
     setIsPortalOpen(false)
 
-    const url = new URL(window.location.href)
-    const hadProject = url.searchParams.has('project')
-    url.searchParams.delete('project')
-
-    const nextUrl = `${url.pathname}${url.search}${href}`
+    const isAwayFromHome = window.location.pathname !== '/'
+    const nextUrl = `/${href}`
     window.history.pushState({}, '', nextUrl)
-    window.dispatchEvent(new Event('portfolio:routechange'))
+    window.dispatchEvent(new Event(PORTFOLIO_ROUTE_EVENT))
 
-    if (hadProject) {
+    if (isAwayFromHome) {
       requestAnimationFrame(() => {
         requestAnimationFrame(() => scrollToSection(href))
       })

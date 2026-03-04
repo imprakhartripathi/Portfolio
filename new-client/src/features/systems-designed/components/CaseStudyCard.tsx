@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion'
+import type { MouseEvent } from 'react'
 import { FaArrowRightLong, FaGithub } from 'react-icons/fa6'
 import { MdLaunch } from 'react-icons/md'
 
+import { buildProjectPath } from '../../../app/navigation'
 import { getTechIcon } from '../../../shared/lib/tech-icons'
 import type { SystemCaseStudy } from '../types'
 
@@ -11,6 +13,18 @@ type CaseStudyCardProps = {
 }
 
 export function CaseStudyCard({ study, onOpenProject }: CaseStudyCardProps) {
+  const projectPath = buildProjectPath(study.id)
+
+  function onProjectLinkClick(event: MouseEvent<HTMLElement>) {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+      return
+    }
+
+    event.preventDefault()
+    event.stopPropagation()
+    onOpenProject(study.id)
+  }
+
   return (
     <motion.article
       className="case-study-card case-study-card--clickable"
@@ -47,16 +61,13 @@ export function CaseStudyCard({ study, onOpenProject }: CaseStudyCardProps) {
           <p className="case-study-card__short">{study.shortSummary}</p>
 
           <div className="case-study-card__links">
-            <button
-              type="button"
+            <a
+              href={projectPath}
               className="link-btn"
-              onClick={(event) => {
-                event.stopPropagation()
-                onOpenProject(study.id)
-              }}
+              onClick={(event) => onProjectLinkClick(event)}
             >
               Full Details <FaArrowRightLong />
-            </button>
+            </a>
             <a
               href={study.githubUrl}
               target="_blank"
