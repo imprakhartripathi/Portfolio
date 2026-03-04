@@ -439,6 +439,11 @@
   font-size: 26px;
 }
 
+.capability-icon-tile--placeholder {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .capability-category__drawer {
   display: none;
 }
@@ -987,12 +992,20 @@
   align-items: center;
   gap: 8px;
   color: var(--accent-cyan);
-  word-break: break-word;
+  max-width: 100%;
   font-family: 'JetBrains Mono', monospace;
+  white-space: nowrap;
 }
 
 .endpoint-row__icon {
+  flex: 0 0 auto;
   font-size: 14px;
+}
+
+.endpoint-row__value {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .contact-endpoint__form-card {
@@ -1170,8 +1183,16 @@
 
   .capability-category__top {
     order: 2;
+    min-height: 74px;
     justify-content: center;
+    align-items: center;
     text-align: center;
+  }
+
+  .capability-category__titles {
+    min-height: 74px;
+    display: grid;
+    align-content: center;
   }
 
   .capability-category__group-icon,
@@ -1182,6 +1203,11 @@
   .capability-category__title {
     font-size: 1.04rem;
     line-height: 1.2;
+    min-height: calc(1.2em * 2);
+    display: grid;
+    align-content: center;
+    justify-items: center;
+    text-wrap: balance;
   }
 
   .capability-category__drawer {
@@ -1260,6 +1286,11 @@
 
   .app-footer {
     flex-direction: column;
+  }
+
+  .endpoint-row__target {
+    gap: 7px;
+    font-size: 0.84rem;
   }
 }
 

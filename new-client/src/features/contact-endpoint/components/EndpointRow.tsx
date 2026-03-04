@@ -25,9 +25,10 @@ export function EndpointRow({ endpoint }: EndpointRowProps) {
         href={endpoint.href}
         target={isExternal ? '_blank' : undefined}
         rel={isExternal ? 'noreferrer' : undefined}
+        title={endpoint.value}
       >
         {getEndpointIcon(endpoint.id)}
-        <span>{endpoint.value}</span>
+        <span className="endpoint-row__value">{endpoint.value}</span>
       </a>
     </article>
   )

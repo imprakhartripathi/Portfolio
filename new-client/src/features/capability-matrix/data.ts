@@ -1,4 +1,5 @@
-import { FaCode, FaDatabase } from 'react-icons/fa'
+import { FaCode, FaDatabase, FaLayerGroup } from 'react-icons/fa'
+import { FaBolt, FaBoxesStacked, FaBuilding, FaDiagramProject, FaUserShield } from 'react-icons/fa6'
 import {
   SiAngular,
   SiApachemaven,
@@ -21,6 +22,7 @@ import {
   SiNginx,
   SiNodedotjs,
   SiNpm,
+  SiOpenapiinitiative,
   SiOpenjdk,
   SiPostgresql,
   SiPostman,
@@ -43,8 +45,8 @@ import type { CapabilityCategory } from './types'
 
 export const capabilityCategories: CapabilityCategory[] = [
   {
-    id: 'programming-languages',
-    title: 'Programming Languages',
+    id: 'core-programming',
+    title: 'Core Programming',
     icon: FaCode,
     skillRows: [
       [
@@ -54,33 +56,53 @@ export const capabilityCategories: CapabilityCategory[] = [
         { id: 'csharp', label: 'C#', icon: TbBrandCSharp },
         { id: 'rust', label: 'Rust', icon: SiRust },
         { id: 'python', label: 'Python', icon: SiPython },
-      ],
-      [
         { id: 'c', label: 'C', icon: SiC },
         { id: 'shell-script', label: 'Shell Script', icon: SiGnubash },
-        { id: 'sql', label: 'SQL', icon: TbSql },
         { id: 'r', label: 'R', icon: SiR },
-        { id: 'nosql', label: 'NoSQL', icon: SiMongodb },
       ],
     ],
   },
   {
-    id: 'frameworks-libraries',
-    title: 'Frameworks & Libraries',
+    id: 'engineering-paradigms',
+    title: 'Engineering Paradigms',
+    icon: FaLayerGroup,
+    skillRows: [
+      [
+        { id: 'dsa', label: 'Data Structures & Algorithms', icon: FaBolt },
+        { id: 'oops', label: 'OOPS', icon: FaBoxesStacked },
+        { id: 'rest-architecture', label: 'REST Architecture', icon: SiOpenapiinitiative },
+        { id: 'rbac', label: 'RBAC', icon: FaLayerGroup },
+        { id: 'jwt', label: 'JWT', icon: FaUserShield },
+        { id: 'layered-architecture', label: 'Layered Architecture', icon: FaLayerGroup },
+        { id: 'microservices', label: 'Microservices', icon: FaDiagramProject },
+        { id: 'monolithic', label: 'Monolithic Architecture', icon: FaBuilding },
+      ],
+    ],
+  },
+  {
+    id: 'backend-runtime-systems',
+    title: 'Backend & Runtime Systems',
+    icon: SiNodedotjs,
+    skillRows: [
+      [
+        { id: 'nodejs', label: 'Node.js', icon: SiNodedotjs },
+        { id: 'express', label: 'Express.js', icon: SiExpress },
+        { id: 'deno', label: 'Deno', icon: SiDeno },
+        { id: 'hono', label: 'Hono', icon: SiHono },
+        { id: 'aspnet-core', label: 'ASP.NET Core', icon: SiDotnet },
+        { id: 'spring-boot', label: 'Spring Boot', icon: SiSpringboot },
+      ],
+    ],
+  },
+  {
+    id: 'frontend-frameworks-ui',
+    title: 'Frontend Frameworks & UI',
     icon: SiReact,
     skillRows: [
       [
         { id: 'react', label: 'React', icon: SiReact },
         { id: 'nextjs', label: 'Next.js', icon: SiNextdotjs },
         { id: 'angular', label: 'Angular', icon: SiAngular },
-        { id: 'nodejs', label: 'Node.js', icon: SiNodedotjs },
-        { id: 'express', label: 'Express.js', icon: SiExpress },
-        { id: 'deno', label: 'Deno', icon: SiDeno },
-      ],
-      [
-        { id: 'hono', label: 'Hono', icon: SiHono },
-        { id: 'aspnet-core', label: 'ASP.NET Core', icon: SiDotnet },
-        { id: 'spring-boot', label: 'Spring Boot', icon: SiSpringboot },
         { id: 'tailwind-css', label: 'Tailwind CSS', icon: SiTailwindcss },
         { id: 'sass', label: 'Sass', icon: SiSass },
         { id: 'framer-motion', label: 'Framer Motion', icon: SiFramer },
@@ -88,8 +110,8 @@ export const capabilityCategories: CapabilityCategory[] = [
     ],
   },
   {
-    id: 'databases',
-    title: 'Databases',
+    id: 'data-storage',
+    title: 'Data & Storage',
     icon: FaDatabase,
     skillRows: [
       [
@@ -97,32 +119,50 @@ export const capabilityCategories: CapabilityCategory[] = [
         { id: 'mysql', label: 'MySQL', icon: SiMysql },
         { id: 'mongodb', label: 'MongoDB', icon: SiMongodb },
         { id: 'supabase', label: 'Supabase', icon: SiSupabase },
+        { id: 'sql', label: 'SQL', icon: TbSql },
+        { id: 'nosql', label: 'NoSQL', icon: SiMongodb },
       ],
     ],
   },
   {
-    id: 'tools-platforms',
-    title: 'Tools & Platforms',
-    icon: SiGithub,
+    id: 'infrastructure-deployment',
+    title: 'Infrastructure & Deployment',
+    icon: SiDocker,
     skillRows: [
       [
+        { id: 'docker', label: 'Docker', icon: SiDocker },
+        { id: 'nginx', label: 'Nginx', icon: SiNginx },
         { id: 'git', label: 'Git', icon: SiGit },
         { id: 'github', label: 'GitHub', icon: SiGithub },
-        { id: 'npm', label: 'npm', icon: SiNpm },
+        { id: 'npm', label: 'NPM', icon: SiNpm },
+      ],
+    ],
+  },
+  {
+    id: 'developer-tooling',
+    title: 'Developer Tooling',
+    icon: TbBrandVscode,
+    skillRows: [
+      [
         { id: 'vs-code', label: 'VS Code', icon: TbBrandVscode },
         { id: 'vscodium', label: 'VSCodium', icon: SiVscodium },
         { id: 'visual-studio', label: 'Visual Studio', icon: TbBrandVisualStudio },
         { id: 'intellij-idea', label: 'IntelliJ IDEA', icon: SiIntellijidea },
+        { id: 'postman', label: 'Postman', icon: SiPostman },
+        { id: 'junit', label: 'JUnit', icon: SiJunit5 },
         { id: 'maven', label: 'Maven', icon: SiApachemaven },
       ],
+    ],
+  },
+  {
+    id: 'integrations-platforms',
+    title: 'Integrations & Platforms',
+    icon: SiRazorpay,
+    skillRows: [
       [
-        { id: 'junit', label: 'JUnit', icon: SiJunit5 },
-        { id: 'postman', label: 'Postman', icon: SiPostman },
-        { id: 'docker', label: 'Docker', icon: SiDocker },
-        { id: 'nginx', label: 'Nginx', icon: SiNginx },
         { id: 'razorpay', label: 'Razorpay', icon: SiRazorpay },
-        { id: 'rstudio', label: 'RStudio', icon: SiRstudioide },
-        { id: 'matlab', label: 'MATLAB', icon: TbMathFunction },
+        { id: 'r-studio', label: 'R Studio', icon: SiRstudioide },
+        { id: 'matlab', label: 'Matlab', icon: TbMathFunction },
       ],
     ],
   },

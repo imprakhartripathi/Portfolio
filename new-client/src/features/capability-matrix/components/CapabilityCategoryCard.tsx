@@ -12,6 +12,8 @@ export function CapabilityCategoryCard({ category, onOpen }: CapabilityCategoryC
   const skills = category.skillRows.flat()
   const drawerPrimary = skills.slice(0, 4)
   const drawerSecondary = skills.slice(4, 8)
+  const drawerPrimarySlots = [...drawerPrimary, ...Array.from({ length: Math.max(0, 4 - drawerPrimary.length) }, () => null)]
+  const drawerSecondarySlots = [...drawerSecondary, ...Array.from({ length: Math.max(0, 4 - drawerSecondary.length) }, () => null)]
 
   const iconGridVariants = {
     hidden: {},
@@ -85,7 +87,17 @@ export function CapabilityCategoryCard({ category, onOpen }: CapabilityCategoryC
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
         >
-          {drawerPrimary.map((skill) => {
+          {drawerPrimarySlots.map((skill, index) => {
+            if (!skill) {
+              return (
+                <span
+                  key={`drawer-primary-placeholder-${category.id}-${index}`}
+                  className="capability-icon-tile capability-icon-tile--drawer-lg capability-icon-tile--placeholder"
+                  aria-hidden="true"
+                />
+              )
+            }
+
             const SkillIcon = skill.icon
             return (
               <motion.span
@@ -101,31 +113,39 @@ export function CapabilityCategoryCard({ category, onOpen }: CapabilityCategoryC
             )
           })}
         </motion.div>
-        {drawerSecondary.length ? (
-          <motion.div
-            className="capability-category__drawer-mini-grid"
-            variants={iconGridVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            {drawerSecondary.map((skill) => {
-              const SkillIcon = skill.icon
+        <motion.div
+          className="capability-category__drawer-mini-grid"
+          variants={iconGridVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          {drawerSecondarySlots.map((skill, index) => {
+            if (!skill) {
               return (
-                <motion.span
-                  key={skill.id}
-                  className="capability-icon-tile capability-icon-tile--drawer-sm"
-                  title={skill.label}
-                  variants={iconItemVariants}
-                  whileHover={{ y: -1, scale: 1.04 }}
-                  whileTap={{ scale: 0.97 }}
-                >
-                  <SkillIcon />
-                </motion.span>
+                <span
+                  key={`drawer-secondary-placeholder-${category.id}-${index}`}
+                  className="capability-icon-tile capability-icon-tile--drawer-sm capability-icon-tile--placeholder"
+                  aria-hidden="true"
+                />
               )
-            })}
-          </motion.div>
-        ) : null}
+            }
+
+            const SkillIcon = skill.icon
+            return (
+              <motion.span
+                key={skill.id}
+                className="capability-icon-tile capability-icon-tile--drawer-sm"
+                title={skill.label}
+                variants={iconItemVariants}
+                whileHover={{ y: -1, scale: 1.04 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                <SkillIcon />
+              </motion.span>
+            )
+          })}
+        </motion.div>
       </div>
     </motion.button>
   )
