@@ -60,6 +60,7 @@ export const systemsDesignedCases: SystemCaseStudy[] = [
     skillTags: ["RBAC", "JWT", "Transactional integrity"],
     outcome: "Reduced manual logging by ~80%",
     githubUrl: "https://github.com/imprakhartripathi/Spendly",
+    liveUrl: "https://ispendly.netlify.app",
   },
   {
     id: "sahyogi",
