@@ -68,15 +68,18 @@ export function CaseStudyCard({ study, onOpenProject }: CaseStudyCardProps) {
             >
               Full Details <FaArrowRightLong />
             </a>
-            <a
-              href={study.githubUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="link-btn link-btn--ghost"
-              onClick={(event) => event.stopPropagation()}
-            >
-              <FaGithub /> GitHub
-            </a>
+            {study.githubUrl ? (
+              <a
+                href={study.githubUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="link-btn link-btn--ghost"
+                onClick={(event) => event.stopPropagation()}
+              >
+                <FaGithub /> GitHub
+              </a>
+            ) : null}
+          
             {study.liveUrl ? (
               <a
                 href={study.liveUrl}

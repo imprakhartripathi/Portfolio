@@ -37,9 +37,12 @@ export function ProjectDetailsPage({ study, onBack }: ProjectDetailsPageProps) {
             <FaArrowLeftLong /> Back to Projects
           </button>
           <div className="project-detail__external-links">
-            <a href={study.githubUrl} target="_blank" rel="noreferrer" className="link-btn link-btn--ghost">
-              <FaGithub /> GitHub
-            </a>
+            
+            {study.githubUrl ? (
+              <a href={study.githubUrl} target="_blank" rel="noreferrer" className="link-btn link-btn--ghost">
+                <FaGithub /> GitHub
+              </a>
+            ) : null}
             {study.liveUrl ? (
               <a href={study.liveUrl} target="_blank" rel="noreferrer" className="link-btn link-btn--ghost">
                 <MdLaunch /> Live
