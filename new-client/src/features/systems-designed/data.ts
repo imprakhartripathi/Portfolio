@@ -35,8 +35,8 @@ export const systemsDesignedCases: SystemCaseStudy[] = [
       "Offline-first flow",
       "System-aware backend services",
     ],
-    outcome: "Actively building production-ready architecture",
-    githubUrl: "https://github.com/imprakhartripathi/Pharmetrix",
+    outcome: "Actively building production-ready architecture (Repository is private due to ongoing development of proprietary features).",
+    // githubUrl: "https://github.com/imprakhartripathi/Pharmetrix",
     liveUrl: "https://pharmetrix.imprakhartripathi.in",
   },
   {

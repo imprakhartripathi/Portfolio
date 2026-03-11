@@ -11,6 +11,6 @@ export type SystemCaseStudy = {
   techStack: string[]
   skillTags: string[]
   outcome: string
-  githubUrl: string
+  githubUrl?: string
   liveUrl?: string
 }
