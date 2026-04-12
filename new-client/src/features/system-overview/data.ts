@@ -1,5 +1,7 @@
 import type { SystemOverviewContent } from './types'
 
+export const resumeversion = 20260413; // Increment this value (yyyymmdd) to force browsers to fetch the latest version of the resume PDF instead of using a cached version.
+
 export const systemOverviewContent: SystemOverviewContent = {
   name: "PRAKHAR TRIPATHI",
   title: "Backend-Focused Full-Stack Engineer",
@@ -10,7 +12,7 @@ export const systemOverviewContent: SystemOverviewContent = {
     {
       id: "resume",
       label: "Resume",
-      href: "/Prakhar-Tripathi-Resume.pdf",
+      href: `/Prakhar-Tripathi-Resume.pdf?u=${resumeversion}`,
       external: true,
     },
     {
