@@ -12,6 +12,12 @@
   status = 301
   force = true
 
+# Missing certification PDFs should resolve to a dedicated fallback page (existing files shadow this rule).
+[[redirects]]
+  from = "/certifications/*.pdf"
+  to = "/certifications-pdf-not-found.html"
+  status = 404
+
 # SPA fallback: serve index.html for direct deep links like /projects
 [[redirects]]
   from = "/*"

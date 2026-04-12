@@ -2,16 +2,25 @@ import { useEffect, useState } from 'react'
 import type { MouseEvent, PropsWithChildren } from 'react'
 import { FaMicrochip, FaXmark } from 'react-icons/fa6'
 
-import { PORTFOLIO_ROUTE_EVENT } from '../app/navigation'
+import { navigateTo, PORTFOLIO_ROUTE_EVENT } from '../app/navigation'
 import { GridOverlay } from './GridOverlay'
 import { NoiseLayer } from './NoiseLayer'
 
-const sectionLinks = [
-  { href: '#system-overview', label: 'Overview' },
-  { href: '#technical-expertise', label: 'Technical Expertise' },
-  { href: '#experience', label: 'Experience' },
-  { href: '#projects', label: 'Projects' },
-  { href: '#contact', label: 'Contact' },
+type NavigationLink = {
+  href: string
+  label: string
+  kind: 'section' | 'route'
+}
+
+const sectionLinks: NavigationLink[] = [
+  { href: '#system-overview', label: 'Overview', kind: 'section' },
+  { href: '#sculptor-spotlight', label: 'Sculptor TS', kind: 'section' },
+  { href: '#technical-expertise', label: 'Technical Expertise', kind: 'section' },
+  { href: '#experience', label: 'Experience', kind: 'section' },
+  { href: '#projects', label: 'Projects', kind: 'section' },
+  // { href: '/certifications', label: 'Certifications', kind: 'route' },
+  // { href: '/contributions', label: 'My Contributions', kind: 'route' },
+  { href: '#contact', label: 'Contact', kind: 'section' },
 ]
 
 function isProjectViewFromLocation() {
@@ -58,23 +67,28 @@ export function MainShell({ children }: PropsWithChildren) {
     }
   }, [])
 
-  function handleNavClick(event: MouseEvent<HTMLAnchorElement>, href: string) {
+  function handleNavClick(event: MouseEvent<HTMLAnchorElement>, link: NavigationLink) {
     event.preventDefault()
     setIsPortalOpen(false)
 
+    if (link.kind === 'route') {
+      navigateTo(link.href)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      return
+    }
+
     const isAwayFromHome = window.location.pathname !== '/'
-    const nextUrl = `/${href}`
-    window.history.pushState({}, '', nextUrl)
-    window.dispatchEvent(new Event(PORTFOLIO_ROUTE_EVENT))
+    const nextUrl = `/${link.href}`
+    navigateTo(nextUrl)
 
     if (isAwayFromHome) {
       requestAnimationFrame(() => {
-        requestAnimationFrame(() => scrollToSection(href))
+        requestAnimationFrame(() => scrollToSection(link.href))
       })
       return
     }
 
-    scrollToSection(href)
+    scrollToSection(link.href)
   }
 
   return (
@@ -94,7 +108,7 @@ export function MainShell({ children }: PropsWithChildren) {
                     key={item.href}
                     href={item.href}
                     className="topbar__link"
-                    onClick={(event) => handleNavClick(event, item.href)}
+                    onClick={(event) => handleNavClick(event, item)}
                   >
                     {item.label}
                   </a>
@@ -142,7 +156,7 @@ export function MainShell({ children }: PropsWithChildren) {
                     key={`portal-${item.href}`}
                     href={item.href}
                     className="portal-nav__link"
-                    onClick={(event) => handleNavClick(event, item.href)}
+                    onClick={(event) => handleNavClick(event, item)}
                   >
                     {item.label}
                   </a>
@@ -164,6 +178,9 @@ export function MainShell({ children }: PropsWithChildren) {
             <a href="https://www.linkedin.com/in/imprakhartripathi" target="_blank" rel="noreferrer">
               LinkedIn
             </a>
+            <a href="https://www.npmjs.com/~imprakhartripathi" target="_blank" rel="noreferrer">npm</a>
+            <a href="/certifications">Certifications</a>
+            <a href="/contributions">My Contributions</a>
           </div>
         </footer>
       </div>

@@ -1,6 +1,8 @@
 export const PORTFOLIO_ROUTE_EVENT = 'portfolio:routechange'
 
 const PROJECTS_BASE_PATH = '/projects'
+const CERTIFICATIONS_BASE_PATH = '/certifications'
+const CONTRIBUTIONS_BASE_PATH = '/contributions'
 
 function normalizePathname(pathname: string) {
   if (!pathname) {
@@ -18,10 +20,22 @@ export type PortfolioRoute =
   | { page: 'home' }
   | { page: 'projects' }
   | { page: 'project-detail'; projectId: string }
+  | { page: 'certifications' }
+  | { page: 'certification-detail'; certificationSlug: string }
+  | { page: 'contributions' }
+  | { page: 'contribution-detail'; contributionSlug: string }
   | { page: 'not-found'; pathname: string }
 
 export function buildProjectPath(projectId: string) {
   return `${PROJECTS_BASE_PATH}/${encodeURIComponent(projectId)}`
+}
+
+export function buildCertificationPath(certificationSlug: string) {
+  return `${CERTIFICATIONS_BASE_PATH}/${encodeURIComponent(certificationSlug)}`
+}
+
+export function buildContributionPath(contributionSlug: string) {
+  return `${CONTRIBUTIONS_BASE_PATH}/${encodeURIComponent(contributionSlug)}`
 }
 
 export function readRouteFromLocation(locationRef: Pick<Location, 'pathname'> = window.location): PortfolioRoute {
@@ -41,6 +55,30 @@ export function readRouteFromLocation(locationRef: Pick<Location, 'pathname'> = 
       return { page: 'project-detail', projectId }
     }
     return { page: 'projects' }
+  }
+
+  if (pathname === CERTIFICATIONS_BASE_PATH) {
+    return { page: 'certifications' }
+  }
+
+  if (pathname.startsWith(`${CERTIFICATIONS_BASE_PATH}/`)) {
+    const certificationSlug = decodeURIComponent(pathname.slice(CERTIFICATIONS_BASE_PATH.length + 1))
+    if (certificationSlug) {
+      return { page: 'certification-detail', certificationSlug }
+    }
+    return { page: 'certifications' }
+  }
+
+  if (pathname === CONTRIBUTIONS_BASE_PATH) {
+    return { page: 'contributions' }
+  }
+
+  if (pathname.startsWith(`${CONTRIBUTIONS_BASE_PATH}/`)) {
+    const contributionSlug = decodeURIComponent(pathname.slice(CONTRIBUTIONS_BASE_PATH.length + 1))
+    if (contributionSlug) {
+      return { page: 'contribution-detail', contributionSlug }
+    }
+    return { page: 'contributions' }
   }
 
   return { page: 'not-found', pathname }

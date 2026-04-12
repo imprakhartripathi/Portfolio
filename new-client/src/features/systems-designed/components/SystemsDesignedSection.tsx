@@ -14,6 +14,7 @@ const LazyCaseStudyList = lazy(() =>
 type SystemsDesignedSectionProps = {
   onOpenProject: (projectId: string) => void
   onOpenProjectsPage?: () => void
+  onOpenCertificationsPage?: () => void
   onBackHome?: () => void
   titleAs?: 'h1' | 'h2'
   mode?: 'list' | 'cta'
@@ -23,6 +24,7 @@ type SystemsDesignedSectionProps = {
 export function SystemsDesignedSection({
   onOpenProject,
   onOpenProjectsPage,
+  // onOpenCertificationsPage,
   onBackHome,
   titleAs = 'h2',
   mode = 'list',
@@ -62,6 +64,11 @@ export function SystemsDesignedSection({
                   Open Projects Page
                 </button>
               ) : null}
+              {/* {onOpenCertificationsPage ? (
+                <button type="button" className="link-btn link-btn--ghost" onClick={onOpenCertificationsPage}>
+                  Open Certifications
+                </button>
+              ) : null} */}
             </div>
           </motion.article>
         ) : null}

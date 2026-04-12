@@ -1,13 +1,23 @@
 import { Suspense, lazy, useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 
+import { certifications, getCertificationBySlug, getCertificationPdfPath } from '../features/certifications'
+import { contributionItems, getContributionBySlug, npmProfileUrl } from '../features/contributions'
 import { ContactEndpointSection } from '../features/contact-endpoint'
 import { SystemOverviewSection } from '../features/system-overview'
 import { systemsDesignedCases } from '../features/systems-designed/data'
 import { SectionWrapper } from '../layout/SectionWrapper'
 import { useInViewport } from '../shared/hooks/useInViewport'
 
-import { buildProjectPath, navigateTo, PORTFOLIO_ROUTE_EVENT, readRouteFromLocation, type PortfolioRoute } from './navigation'
+import {
+  buildContributionPath,
+  buildCertificationPath,
+  buildProjectPath,
+  navigateTo,
+  PORTFOLIO_ROUTE_EVENT,
+  readRouteFromLocation,
+  type PortfolioRoute,
+} from './navigation'
 import { applySeo, seoConstants } from './seo'
 
 const LazyCapabilityMatrixSection = lazy(() =>
@@ -34,11 +44,53 @@ const LazyProjectDetailsPage = lazy(() =>
   })),
 )
 
+const LazyCertificationsPage = lazy(() =>
+  import('../features/certifications/components/CertificationsPage').then((module) => ({
+    default: module.CertificationsPage,
+  })),
+)
+
+const LazyCertificationDetailsPage = lazy(() =>
+  import('../features/certifications/components/CertificationDetailsPage').then((module) => ({
+    default: module.CertificationDetailsPage,
+  })),
+)
+
+const LazyContributionsPage = lazy(() =>
+  import('../features/contributions/components/ContributionsPage').then((module) => ({
+    default: module.ContributionsPage,
+  })),
+)
+
+const LazyContributionDetailsPage = lazy(() =>
+  import('../features/contributions/components/ContributionDetailsPage').then((module) => ({
+    default: module.ContributionDetailsPage,
+  })),
+)
+
+const LazySculptorProductPage = lazy(() =>
+  import('../features/contributions/components/SculptorProductPage').then((module) => ({
+    default: module.SculptorProductPage,
+  })),
+)
+
+const LazySculptorSpotlightSection = lazy(() =>
+  import('../features/contributions/components/SculptorSpotlightSection').then((module) => ({
+    default: module.SculptorSpotlightSection,
+  })),
+)
+
 const homeDescription =
   'Backend-focused full-stack engineer designing production-grade backend systems with transactional safety, role-aware access boundaries, and reliable deployments.'
 
 const projectsDescription =
   'Domain-driven backend project portfolio covering Pharmetrix, Riwayat, Spendly, and Sahyogi with architecture decisions, outcomes, and production-focused stacks.'
+
+const certificationsDescription =
+  'Professional certifications from Google, DataCamp, Six Sigma, and Great Learning with credential IDs, verification links, and in-page PDF records.'
+
+const contributionsDescription =
+  'Open-source npm contributions including backend and frontend scaffolding CLIs and the upcoming Sculptor TS framework direction.'
 
 type NotFoundPageProps = {
   pathname: string
@@ -93,6 +145,12 @@ function NotFoundPage({ pathname, onGoHome }: NotFoundPageProps) {
             <a href="/projects" className="link-btn link-btn--ghost">
               View Projects
             </a>
+            <a href="/certifications" className="link-btn link-btn--ghost">
+              View Certifications
+            </a>
+            <a href="/contributions" className="link-btn link-btn--ghost">
+              View Contributions
+            </a>
           </div>
         </article>
       </div>
@@ -117,6 +175,16 @@ export function PortfolioRoutes() {
 
   const activeProject = useMemo(
     () => (route.page === 'project-detail' ? systemsDesignedCases.find((project) => project.id === route.projectId) ?? null : null),
+    [route],
+  )
+
+  const activeCertification = useMemo(
+    () => (route.page === 'certification-detail' ? getCertificationBySlug(route.certificationSlug) : null),
+    [route],
+  )
+
+  const activeContribution = useMemo(
+    () => (route.page === 'contribution-detail' ? getContributionBySlug(route.contributionSlug) : null),
     [route],
   )
 
@@ -163,6 +231,211 @@ export function PortfolioRoutes() {
             })),
           },
         ],
+      })
+      return
+    }
+
+    if (route.page === 'certifications') {
+      applySeo({
+        title: 'Certifications | Prakhar Tripathi',
+        description: certificationsDescription,
+        path: '/certifications',
+        keywords:
+          'Prakhar Tripathi certifications, Google AI certificates, Coursera certificates, DataCamp certification, Six Sigma, Great Learning',
+        structuredData: [
+          {
+            '@type': 'CollectionPage',
+            '@id': `${seoConstants.siteUrl}/certifications#collection`,
+            name: 'Certifications | Prakhar Tripathi',
+            url: `${seoConstants.siteUrl}/certifications`,
+            description: certificationsDescription,
+            inLanguage: 'en-IN',
+            about: {
+              '@type': 'Person',
+              name: 'Prakhar Tripathi',
+              url: seoConstants.siteUrl,
+            },
+          },
+          {
+            '@type': 'ItemList',
+            itemListElement: certifications.map((certification, index) => ({
+              '@type': 'ListItem',
+              position: index + 1,
+              name: certification.title,
+              url: `${seoConstants.siteUrl}${buildCertificationPath(certification.slug)}`,
+            })),
+          },
+        ],
+      })
+      return
+    }
+
+    if (route.page === 'contributions') {
+      applySeo({
+        title: 'My Contributions | Prakhar Tripathi',
+        description: contributionsDescription,
+        path: '/contributions',
+        keywords:
+          'Prakhar Tripathi npm, scafollder, reactron, sculptor ts, routesculpt, express framework, open source contributions',
+        structuredData: [
+          {
+            '@type': 'CollectionPage',
+            '@id': `${seoConstants.siteUrl}/contributions#collection`,
+            name: 'My Contributions | Prakhar Tripathi',
+            url: `${seoConstants.siteUrl}/contributions`,
+            description: contributionsDescription,
+            inLanguage: 'en-IN',
+            about: {
+              '@type': 'Person',
+              name: 'Prakhar Tripathi',
+              url: seoConstants.siteUrl,
+              sameAs: [npmProfileUrl],
+            },
+          },
+          {
+            '@type': 'ItemList',
+            itemListElement: contributionItems.map((item, index) => ({
+              '@type': 'ListItem',
+              position: index + 1,
+              name: item.title,
+              url: `${seoConstants.siteUrl}${buildContributionPath(item.slug)}`,
+            })),
+          },
+        ],
+      })
+      return
+    }
+
+    if (route.page === 'contribution-detail' && activeContribution) {
+      const contributionPath = buildContributionPath(activeContribution.slug)
+
+      applySeo({
+        title: `${activeContribution.title} | My Contributions`,
+        description: activeContribution.shortSummary,
+        path: contributionPath,
+        type: 'article',
+        keywords: `${activeContribution.title}, ${activeContribution.packageName}, ${activeContribution.keywords.join(', ')}`,
+        structuredData: [
+          {
+            '@type': 'SoftwareSourceCode',
+            name: activeContribution.title,
+            description: activeContribution.description,
+            url: `${seoConstants.siteUrl}${contributionPath}`,
+            codeRepository: activeContribution.npmUrl ?? npmProfileUrl,
+            programmingLanguage: activeContribution.techStack,
+            author: {
+              '@type': 'Person',
+              name: 'Prakhar Tripathi',
+              url: seoConstants.siteUrl,
+            },
+            keywords: activeContribution.keywords.join(', '),
+          },
+          {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: seoConstants.siteUrl,
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'My Contributions',
+                item: `${seoConstants.siteUrl}/contributions`,
+              },
+              {
+                '@type': 'ListItem',
+                position: 3,
+                name: activeContribution.title,
+                item: `${seoConstants.siteUrl}${contributionPath}`,
+              },
+            ],
+          },
+        ],
+      })
+      return
+    }
+
+    if (route.page === 'contribution-detail') {
+      applySeo({
+        title: 'Contribution Not Found | Prakhar Tripathi',
+        description: 'The requested contribution page does not exist.',
+        path: `/contributions/${route.contributionSlug}`,
+        noindex: true,
+      })
+      return
+    }
+
+    if (route.page === 'certification-detail' && activeCertification) {
+      const certificationPath = buildCertificationPath(activeCertification.slug)
+      const pdfPath = getCertificationPdfPath(activeCertification)
+
+      applySeo({
+        title: `${activeCertification.title} | Certification`,
+        description: `${activeCertification.title} by ${activeCertification.provider}${activeCertification.credentialId ? `. Credential ID: ${activeCertification.credentialId}.` : '.'}`,
+        path: certificationPath,
+        type: 'article',
+        keywords: `${activeCertification.title}, ${activeCertification.provider}, credential, certification, Prakhar Tripathi`,
+        structuredData: [
+          {
+            '@type': 'EducationalOccupationalCredential',
+            name: activeCertification.title,
+            credentialCategory: 'Professional Certification',
+            recognizedBy: {
+              '@type': 'Organization',
+              name: activeCertification.provider,
+            },
+            identifier: activeCertification.credentialId,
+            url: activeCertification.credentialUrl ?? `${seoConstants.siteUrl}${certificationPath}`,
+            inLanguage: 'en-IN',
+          },
+          {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: seoConstants.siteUrl,
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Certifications',
+                item: `${seoConstants.siteUrl}/certifications`,
+              },
+              {
+                '@type': 'ListItem',
+                position: 3,
+                name: activeCertification.title,
+                item: `${seoConstants.siteUrl}${certificationPath}`,
+              },
+            ],
+          },
+          {
+            '@type': 'WebPage',
+            '@id': `${seoConstants.siteUrl}${certificationPath}#webpage`,
+            url: `${seoConstants.siteUrl}${certificationPath}`,
+            name: `${activeCertification.title} | Certification`,
+            isPartOf: {
+              '@type': 'WebSite',
+              url: seoConstants.siteUrl,
+            },
+            primaryImageOfPage: pdfPath ? `${seoConstants.siteUrl}${pdfPath}` : undefined,
+          },
+        ],
+      })
+      return
+    }
+
+    if (route.page === 'certification-detail') {
+      applySeo({
+        title: 'Certification Not Found | Prakhar Tripathi',
+        description: 'The requested certification page does not exist.',
+        path: `/certifications/${route.certificationSlug}`,
+        noindex: true,
       })
       return
     }
@@ -236,7 +509,7 @@ export function PortfolioRoutes() {
       path: route.page === 'not-found' ? route.pathname : '/',
       noindex: true,
     })
-  }, [route, activeProject])
+  }, [route, activeProject, activeCertification, activeContribution])
 
   function openProject(projectId: string) {
     navigateTo(buildProjectPath(projectId))
@@ -256,6 +529,42 @@ export function PortfolioRoutes() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
+  function goCertifications() {
+    navigateTo('/certifications')
+    setRoute({ page: 'certifications' })
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  function goContributions() {
+    navigateTo('/contributions')
+    setRoute({ page: 'contributions' })
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  function openCertification(certificationSlug: string) {
+    navigateTo(buildCertificationPath(certificationSlug))
+    setRoute({ page: 'certification-detail', certificationSlug })
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  function closeCertification() {
+    navigateTo('/certifications', { replace: true })
+    setRoute({ page: 'certifications' })
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  function openContribution(contributionSlug: string) {
+    navigateTo(buildContributionPath(contributionSlug))
+    setRoute({ page: 'contribution-detail', contributionSlug })
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  function closeContribution() {
+    navigateTo('/contributions', { replace: true })
+    setRoute({ page: 'contributions' })
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   function goHome() {
     navigateTo('/')
     setRoute({ page: 'home' })
@@ -272,6 +581,50 @@ export function PortfolioRoutes() {
 
   if (route.page === 'project-detail' && !activeProject) {
     return <NotFoundPage pathname={`/projects/${route.projectId}`} onGoHome={goHome} />
+  }
+
+  if (route.page === 'certification-detail' && activeCertification) {
+    return (
+      <Suspense fallback={null}>
+        <LazyCertificationDetailsPage certification={activeCertification} onBack={closeCertification} />
+      </Suspense>
+    )
+  }
+
+  if (route.page === 'certification-detail' && !activeCertification) {
+    return <NotFoundPage pathname={`/certifications/${route.certificationSlug}`} onGoHome={goHome} />
+  }
+
+  if (route.page === 'contribution-detail' && activeContribution) {
+    return (
+      <Suspense fallback={null}>
+        {activeContribution.slug === 'sculptor-ts' ? (
+          <LazySculptorProductPage onBack={closeContribution} onOpenContributions={goContributions} />
+        ) : (
+          <LazyContributionDetailsPage item={activeContribution} onBack={closeContribution} />
+        )}
+      </Suspense>
+    )
+  }
+
+  if (route.page === 'contribution-detail' && !activeContribution) {
+    return <NotFoundPage pathname={`/contributions/${route.contributionSlug}`} onGoHome={goHome} />
+  }
+
+  if (route.page === 'contributions') {
+    return (
+      <Suspense fallback={null}>
+        <LazyContributionsPage onOpenContribution={openContribution} />
+      </Suspense>
+    )
+  }
+
+  if (route.page === 'certifications') {
+    return (
+      <Suspense fallback={null}>
+        <LazyCertificationsPage onOpenCertification={openCertification} />
+      </Suspense>
+    )
   }
 
   if (route.page === 'projects') {
@@ -295,6 +648,11 @@ export function PortfolioRoutes() {
   return (
     <>
       <SystemOverviewSection />
+      <DeferredViewportMount anchorId="sculptor-spotlight" minHeight={240} rootMargin="140px 0px">
+        <Suspense fallback={null}>
+          <LazySculptorSpotlightSection onOpenSculptorPage={() => openContribution('sculptor-ts')} sectionId="sculptor-spotlight-content" />
+        </Suspense>
+      </DeferredViewportMount>
       <DeferredViewportMount anchorId="technical-expertise" minHeight={480} rootMargin="220px 0px">
         <Suspense fallback={null}>
           <LazyCapabilityMatrixSection sectionId="technical-expertise-content" />
@@ -310,6 +668,7 @@ export function PortfolioRoutes() {
           <LazySystemsDesignedSection
             onOpenProject={openProject}
             onOpenProjectsPage={goProjects}
+            onOpenCertificationsPage={goCertifications}
             mode="cta"
             sectionId="projects-content"
           />
