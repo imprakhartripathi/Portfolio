@@ -40,7 +40,7 @@ export function ContributionsPage({ onOpenContribution }: ContributionsPageProps
               <p className="contributions-spotlight__text">
                 {spotlight.shortSummary}
               </p>
-              <p className="contributions-spotlight__status">Coming soon as a dedicated framework product in my Express ecosystem.</p>
+              <p className="contributions-spotlight__status">Beta framework product with a dedicated guide and package-level docs.</p>
             </div>
 
             <div className="contributions-spotlight__actions">

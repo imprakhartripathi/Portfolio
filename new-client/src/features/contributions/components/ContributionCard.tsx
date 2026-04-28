@@ -15,7 +15,11 @@ export function ContributionCard({ item, onOpen }: ContributionCardProps) {
           <h3 className="contribution-card__title">{item.title}</h3>
           <p className="contribution-card__package">{item.packageName}</p>
         </div>
-        <span className={`contribution-card__status contribution-card__status--${item.status === 'Coming Soon' ? 'coming' : 'live'}`}>
+        <span
+          className={`contribution-card__status contribution-card__status--${
+            item.status === 'Coming Soon' ? 'coming' : item.status === 'Beta' ? 'beta' : 'live'
+          }`}
+        >
           {item.status}
         </span>
       </header>

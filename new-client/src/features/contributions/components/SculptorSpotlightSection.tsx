@@ -8,10 +8,11 @@ import { contributionItems } from '../data'
 
 type SculptorSpotlightSectionProps = {
   onOpenSculptorPage: () => void
+  onOpenSculptorGuide: () => void
   sectionId?: string
 }
 
-export function SculptorSpotlightSection({ onOpenSculptorPage, sectionId = 'sculptor-spotlight' }: SculptorSpotlightSectionProps) {
+export function SculptorSpotlightSection({ onOpenSculptorPage, onOpenSculptorGuide, sectionId = 'sculptor-spotlight' }: SculptorSpotlightSectionProps) {
   const { ref, inView } = useInViewReveal({ threshold: 0.12, once: true })
   const sculptor = contributionItems.find((item) => item.slug === 'sculptor-ts')
 
@@ -36,15 +37,18 @@ export function SculptorSpotlightSection({ onOpenSculptorPage, sectionId = 'scul
       >
         <motion.article variants={revealItem} className="sculptor-spotlight__card">
           <div className="sculptor-spotlight__copy">
-            <p className="sculptor-spotlight__status">Coming Soon</p>
+            <p className="sculptor-spotlight__status sculptor-spotlight__status--beta">Beta</p>
             <h3 className="sculptor-spotlight__title">{sculptor.shortSummary}</h3>
             <p className="sculptor-spotlight__text">
-              Read the complete product definition including architecture packages, config model, routing modes, and platform capabilities.
+              Read the complete product definition including package docs, runtime flow, routing modes, config model, and the guide built from the framework docs.
             </p>
           </div>
           <div className="sculptor-spotlight__actions">
             <button type="button" className="link-btn" onClick={onOpenSculptorPage}>
               Open Product Page <FaArrowRightLong />
+            </button>
+            <button type="button" className="link-btn link-btn--ghost" onClick={onOpenSculptorGuide}>
+              Read Guide <FaArrowRightLong />
             </button>
           </div>
         </motion.article>
@@ -52,4 +56,3 @@ export function SculptorSpotlightSection({ onOpenSculptorPage, sectionId = 'scul
     </SectionWrapper>
   )
 }
-

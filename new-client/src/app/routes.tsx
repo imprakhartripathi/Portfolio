@@ -11,6 +11,7 @@ import { useInViewport } from '../shared/hooks/useInViewport'
 
 import {
   buildContributionPath,
+  buildContributionGuidePath,
   buildCertificationPath,
   buildProjectPath,
   navigateTo,
@@ -74,6 +75,12 @@ const LazySculptorProductPage = lazy(() =>
   })),
 )
 
+const LazySculptorGuidePage = lazy(() =>
+  import('../features/contributions/components/SculptorGuidePage').then((module) => ({
+    default: module.SculptorGuidePage,
+  })),
+)
+
 const LazySculptorSpotlightSection = lazy(() =>
   import('../features/contributions/components/SculptorSpotlightSection').then((module) => ({
     default: module.SculptorSpotlightSection,
@@ -91,6 +98,9 @@ const certificationsDescription =
 
 const contributionsDescription =
   'Open-source npm contributions including backend and frontend scaffolding CLIs and the upcoming Sculptor TS framework direction.'
+
+const sculptorDescription =
+  'Sculptor TS is a beta Express framework with a compact package split, config-driven runtime behavior, and a practical CLI workflow.'
 
 type NotFoundPageProps = {
   pathname: string
@@ -184,9 +194,13 @@ export function PortfolioRoutes() {
   )
 
   const activeContribution = useMemo(
-    () => (route.page === 'contribution-detail' ? getContributionBySlug(route.contributionSlug) : null),
+    () =>
+      route.page === 'contribution-detail' || route.page === 'contribution-guide'
+        ? getContributionBySlug(route.contributionSlug)
+        : null,
     [route],
   )
+  const isSculptorContribution = activeContribution?.slug === 'sculptor-ts'
 
   useEffect(() => {
     if (route.page === 'home') {
@@ -354,6 +368,79 @@ export function PortfolioRoutes() {
             ],
           },
         ],
+      })
+      return
+    }
+
+    if (route.page === 'contribution-guide' && activeContribution && isSculptorContribution) {
+      const contributionPath = buildContributionPath(activeContribution.slug)
+      const guidePath = buildContributionGuidePath(activeContribution.slug)
+
+      applySeo({
+        title: `${activeContribution.title} Guide | My Contributions`,
+        description: sculptorDescription,
+        path: guidePath,
+        type: 'article',
+        keywords: `${activeContribution.title} guide, Sculptor TS, @sculptor/core, @sculptor/router, @sculptor/config, @sculptor/cli, Express framework, TypeScript`,
+        structuredData: [
+          {
+            '@type': 'TechArticle',
+            name: `${activeContribution.title} Guide`,
+            description: sculptorDescription,
+            url: `${seoConstants.siteUrl}${guidePath}`,
+            author: {
+              '@type': 'Person',
+              name: 'Prakhar Tripathi',
+              url: seoConstants.siteUrl,
+            },
+            about: {
+              '@type': 'SoftwareApplication',
+              name: activeContribution.title,
+              applicationCategory: 'DeveloperApplication',
+              operatingSystem: 'Cross-platform',
+              url: `${seoConstants.siteUrl}${contributionPath}`,
+            },
+          },
+          {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: seoConstants.siteUrl,
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'My Contributions',
+                item: `${seoConstants.siteUrl}/contributions`,
+              },
+              {
+                '@type': 'ListItem',
+                position: 3,
+                name: activeContribution.title,
+                item: `${seoConstants.siteUrl}${contributionPath}`,
+              },
+              {
+                '@type': 'ListItem',
+                position: 4,
+                name: 'Guide',
+                item: `${seoConstants.siteUrl}${guidePath}`,
+              },
+            ],
+          },
+        ],
+      })
+      return
+    }
+
+    if (route.page === 'contribution-guide') {
+      applySeo({
+        title: 'Guide Not Found | Prakhar Tripathi',
+        description: 'The requested Sculptor guide page does not exist.',
+        path: `/contributions/${route.contributionSlug}/guide`,
+        noindex: true,
       })
       return
     }
@@ -559,9 +646,21 @@ export function PortfolioRoutes() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
+  function openContributionGuide(contributionSlug: string) {
+    navigateTo(buildContributionGuidePath(contributionSlug))
+    setRoute({ page: 'contribution-guide', contributionSlug })
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   function closeContribution() {
     navigateTo('/contributions', { replace: true })
     setRoute({ page: 'contributions' })
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  function openContributionProduct(contributionSlug: string) {
+    navigateTo(buildContributionPath(contributionSlug))
+    setRoute({ page: 'contribution-detail', contributionSlug })
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -598,13 +697,33 @@ export function PortfolioRoutes() {
   if (route.page === 'contribution-detail' && activeContribution) {
     return (
       <Suspense fallback={null}>
-        {activeContribution.slug === 'sculptor-ts' ? (
-          <LazySculptorProductPage onBack={closeContribution} onOpenContributions={goContributions} />
+        {isSculptorContribution ? (
+          <LazySculptorProductPage
+            onBack={closeContribution}
+            onOpenContributions={goContributions}
+            onOpenGuide={() => openContributionGuide(activeContribution.slug)}
+          />
         ) : (
           <LazyContributionDetailsPage item={activeContribution} onBack={closeContribution} />
         )}
       </Suspense>
     )
+  }
+
+  if (route.page === 'contribution-guide' && activeContribution && isSculptorContribution) {
+    return (
+      <Suspense fallback={null}>
+        <LazySculptorGuidePage
+          contribution={activeContribution}
+          onBackProduct={() => openContributionProduct(activeContribution.slug)}
+          onOpenContributions={goContributions}
+        />
+      </Suspense>
+    )
+  }
+
+  if (route.page === 'contribution-guide') {
+    return <NotFoundPage pathname={`/contributions/${route.contributionSlug}/guide`} onGoHome={goHome} />
   }
 
   if (route.page === 'contribution-detail' && !activeContribution) {
@@ -650,7 +769,11 @@ export function PortfolioRoutes() {
       <SystemOverviewSection />
       <DeferredViewportMount anchorId="sculptor-spotlight" minHeight={240} rootMargin="140px 0px">
         <Suspense fallback={null}>
-          <LazySculptorSpotlightSection onOpenSculptorPage={() => openContribution('sculptor-ts')} sectionId="sculptor-spotlight-content" />
+          <LazySculptorSpotlightSection
+            onOpenSculptorPage={() => openContribution('sculptor-ts')}
+            onOpenSculptorGuide={() => openContributionGuide('sculptor-ts')}
+            sectionId="sculptor-spotlight-content"
+          />
         </Suspense>
       </DeferredViewportMount>
       <DeferredViewportMount anchorId="technical-expertise" minHeight={480} rootMargin="220px 0px">

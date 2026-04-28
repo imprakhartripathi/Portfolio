@@ -24,6 +24,7 @@ export type PortfolioRoute =
   | { page: 'certification-detail'; certificationSlug: string }
   | { page: 'contributions' }
   | { page: 'contribution-detail'; contributionSlug: string }
+  | { page: 'contribution-guide'; contributionSlug: string }
   | { page: 'not-found'; pathname: string }
 
 export function buildProjectPath(projectId: string) {
@@ -36,6 +37,10 @@ export function buildCertificationPath(certificationSlug: string) {
 
 export function buildContributionPath(contributionSlug: string) {
   return `${CONTRIBUTIONS_BASE_PATH}/${encodeURIComponent(contributionSlug)}`
+}
+
+export function buildContributionGuidePath(contributionSlug: string) {
+  return `${CONTRIBUTIONS_BASE_PATH}/${encodeURIComponent(contributionSlug)}/guide`
 }
 
 export function readRouteFromLocation(locationRef: Pick<Location, 'pathname'> = window.location): PortfolioRoute {
@@ -74,7 +79,17 @@ export function readRouteFromLocation(locationRef: Pick<Location, 'pathname'> = 
   }
 
   if (pathname.startsWith(`${CONTRIBUTIONS_BASE_PATH}/`)) {
-    const contributionSlug = decodeURIComponent(pathname.slice(CONTRIBUTIONS_BASE_PATH.length + 1))
+    const contributionPath = decodeURIComponent(pathname.slice(CONTRIBUTIONS_BASE_PATH.length + 1))
+
+    if (contributionPath.endsWith('/guide')) {
+      const contributionSlug = contributionPath.slice(0, -'/guide'.length)
+      if (contributionSlug) {
+        return { page: 'contribution-guide', contributionSlug }
+      }
+      return { page: 'contributions' }
+    }
+
+    const contributionSlug = contributionPath
     if (contributionSlug) {
       return { page: 'contribution-detail', contributionSlug }
     }

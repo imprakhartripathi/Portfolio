@@ -4,11 +4,12 @@ import { FaArrowLeftLong, FaArrowRightLong, FaNpm } from 'react-icons/fa6'
 import { SectionWrapper } from '../../../layout/SectionWrapper'
 import { useInViewReveal } from '../../../shared/hooks/useInViewReveal'
 import { revealContainer, revealItem } from '../../../shared/motion/variants'
-import { npmProfileUrl, sculptorProductSpec } from '../data'
+import { sculptorNpmOrgUrl, sculptorProductSpec } from '../data'
 
 type SculptorProductPageProps = {
   onBack: () => void
   onOpenContributions: () => void
+  onOpenGuide: () => void
 }
 
 type CodeEditorBlockProps = {
@@ -42,7 +43,7 @@ function CodeEditorBlock({ filename, lines, language = 'json' }: CodeEditorBlock
   )
 }
 
-export function SculptorProductPage({ onBack, onOpenContributions }: SculptorProductPageProps) {
+export function SculptorProductPage({ onBack, onOpenContributions, onOpenGuide }: SculptorProductPageProps) {
   const { ref, inView } = useInViewReveal({ threshold: 0.1, once: true })
   const spec = sculptorProductSpec
 
@@ -65,19 +66,22 @@ export function SculptorProductPage({ onBack, onOpenContributions }: SculptorPro
       >
         <motion.article variants={revealItem} className="sculptor-product__hero">
           <div className="sculptor-product__hero-copy">
-            <p className="sculptor-product__status">Coming Soon</p>
-            <h2 className="sculptor-product__hero-title">Spring Boot comfort. Express freedom. TypeScript elegance.</h2>
+            <p className="sculptor-product__status sculptor-product__status--beta">{spec.betaNote}</p>
+            <h2 className="sculptor-product__hero-title">{spec.positioning}</h2>
             <p className="sculptor-product__hero-text">
-              {spec.vision.join(' ')}
+              {spec.overview}
             </p>
-            <p className="sculptor-product__hero-note">{spec.philosophy}</p>
+            <p className="sculptor-product__hero-note">{spec.cli} keeps the workflow small enough to memorize and strict enough to trust.</p>
           </div>
           <div className="sculptor-product__hero-actions">
+            <button type="button" className="link-btn" onClick={onOpenGuide}>
+              Open Guide <FaArrowRightLong />
+            </button>
             <button type="button" className="link-btn" onClick={onOpenContributions}>
               View All Contributions <FaArrowRightLong />
             </button>
-            <a href={npmProfileUrl} target="_blank" rel="noreferrer" className="link-btn link-btn--ghost">
-              npm Profile <FaNpm />
+            <a href={sculptorNpmOrgUrl} target="_blank" rel="noreferrer" className="link-btn link-btn--ghost">
+              npm Org <FaNpm />
             </a>
             <button type="button" className="link-btn link-btn--ghost" onClick={onBack}>
               <FaArrowLeftLong /> Back
@@ -91,6 +95,7 @@ export function SculptorProductPage({ onBack, onOpenContributions }: SculptorPro
             {spec.packageModules.map((module) => (
               <article key={module.name} className="sculptor-product__module-card">
                 <h4>{module.name}</h4>
+                <p className="sculptor-product__module-summary">{module.summary}</p>
                 <div className="sculptor-product__pill-list">
                   {module.responsibilities.map((responsibility) => (
                     <span key={responsibility} className="certification-skill-pill">
@@ -101,6 +106,28 @@ export function SculptorProductPage({ onBack, onOpenContributions }: SculptorPro
               </article>
             ))}
           </div>
+        </motion.section>
+
+        <motion.section variants={revealItem} className="sculptor-product__section">
+          <h3>Docs Map</h3>
+          <div className="sculptor-product__modules">
+            {spec.packageDocs.map((doc) => (
+              <article key={doc.title} className="sculptor-product__module-card">
+                <h4>{doc.title}</h4>
+                <p className="sculptor-product__module-summary">{doc.summary}</p>
+                <code className="sculptor-product__doc-path">{doc.path}</code>
+              </article>
+            ))}
+          </div>
+        </motion.section>
+
+        <motion.section variants={revealItem} className="sculptor-product__section">
+          <h3>Runtime Flow</h3>
+          <ol className="sculptor-product__flow-list">
+            {spec.runtimeFlow.map((step) => (
+              <li key={step}>{step}</li>
+            ))}
+          </ol>
         </motion.section>
 
         <motion.section variants={revealItem} className="sculptor-product__section">
@@ -139,6 +166,18 @@ export function SculptorProductPage({ onBack, onOpenContributions }: SculptorPro
         </motion.section>
 
         <motion.section variants={revealItem} className="sculptor-product__section">
+          <h3>Command Sheet</h3>
+          <div className="sculptor-product__command-grid">
+            {spec.commandSheet.map((command) => (
+              <article key={command.command} className="sculptor-product__command-card">
+                <code>{command.command}</code>
+                <p>{command.summary}</p>
+              </article>
+            ))}
+          </div>
+        </motion.section>
+
+        <motion.section variants={revealItem} className="sculptor-product__section">
           <h3>Platform Capabilities</h3>
           <div className="sculptor-product__pill-list">
             {spec.platformCapabilities.map((capability) => (
@@ -154,6 +193,15 @@ export function SculptorProductPage({ onBack, onOpenContributions }: SculptorPro
           <ul className="sculptor-product__success-list">
             {spec.successCriteria.map((criterion) => (
               <li key={criterion}>{criterion}</li>
+            ))}
+          </ul>
+        </motion.section>
+
+        <motion.section variants={revealItem} className="sculptor-product__section">
+          <h3>Beta Notes</h3>
+          <ul className="sculptor-product__success-list">
+            {spec.betaCautions.map((warning) => (
+              <li key={warning}>{warning}</li>
             ))}
           </ul>
         </motion.section>
