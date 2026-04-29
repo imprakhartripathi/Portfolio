@@ -143,6 +143,11 @@ export const sculptorProductSpec: SculptorProductSpec = {
       path: 'packages/cli/README.md',
       summary: 'Create apps, run them, generate resources, and keep generated tests in sync.',
     },
+    {
+      title: '@sculptor/paws',
+      path: 'packages/paws/README.md',
+      summary: 'Structured logging and expressive dog mode for clear runtime feedback.',
+    },
   ],
   packageModules: [
     {
