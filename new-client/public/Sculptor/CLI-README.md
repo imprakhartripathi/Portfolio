@@ -177,7 +177,7 @@ sc test
 ```
 
 Behavior:
-- If `src/tests/runner.ts` exists, runs `vitest run src/tests/runner.ts`
+- If `src/tests/runner.spec.ts` exists, runs `vitest run src/tests/runner.spec.ts`
 - If the runner does not exist, falls back to `vitest run`
 
 What it solves:
@@ -413,6 +413,7 @@ Default scaffold test files:
 - `src/tests/health.routes.spec.ts`
 - `src/tests/registry.ts`
 - `src/tests/runner.ts`
+- `src/tests/runner.spec.ts`
 
 ## Test Harness Behavior
 
@@ -420,6 +421,7 @@ What it does:
 - Discovers every `*.spec.ts` file under `src/tests`
 - Writes `src/tests/registry.ts`
 - Writes `src/tests/runner.ts`
+- Writes `src/tests/runner.spec.ts`
 
 How it is used:
 - `sc test` runs the registry runner when it exists

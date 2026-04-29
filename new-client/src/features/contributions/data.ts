@@ -309,31 +309,40 @@ export const sculptorProductSpec: SculptorProductSpec = {
 
 export const sculptorGuideDocs: SculptorDocMapEntry[] = [
   {
-    title: 'Framework Overview',
-    path: '/Sculptor/readme.md',
-    summary: 'Start here for the package map, runtime behavior, startup output, and app root rules.',
+    title: "Framework Overview",
+    path: "/Sculptor/readme.md",
+    summary:
+      "Start here for the package map, runtime behavior, startup output, and app root rules.",
   },
   {
-    title: '@sculptor/cli',
-    path: '/Sculptor/CLI-README.md',
-    summary: 'Command reference for scaffolding, dev, start, build, lint, test, and generators.',
+    title: "@sculptor/cli",
+    path: "/Sculptor/CLI-README.md",
+    summary:
+      "Command reference for scaffolding, dev, start, build, lint, test, and generators.",
   },
   {
-    title: '@sculptor/core',
-    path: '/Sculptor/CORE-README.md',
-    summary: 'Runtime startup, config resolution, port handling, and registry behavior.',
+    title: "@sculptor/core",
+    path: "/Sculptor/CORE-README.md",
+    summary:
+      "Runtime startup, config resolution, port handling, and registry behavior.",
   },
   {
-    title: '@sculptor/config',
-    path: '/Sculptor/CONFIG-README.md',
-    summary: 'Config file format, merge rules, cache behavior, and runtime lookup helpers.',
+    title: "@sculptor/config",
+    path: "/Sculptor/CONFIG-README.md",
+    summary:
+      "Config file format, merge rules, cache behavior, and runtime lookup helpers.",
   },
   {
-    title: '@sculptor/router',
-    path: '/Sculptor/ROUTER-README.md',
-    summary: 'Decorator API, prefix handling, and Express router assembly.',
+    title: "@sculptor/router",
+    path: "/Sculptor/ROUTER-README.md",
+    summary: "Decorator API, prefix handling, and Express router assembly.",
   },
-]
+  {
+    title: "@sculptor/paws",
+    path: "/Sculptor/PAWS-README.md",
+    summary: "Lightweight logger with a standard mode and a more expressive dog mode.",
+  },
+];
 
 export function getContributionBySlug(slug: string) {
   return contributionItems.find((item) => item.slug === slug) ?? null

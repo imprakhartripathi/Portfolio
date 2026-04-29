@@ -7,6 +7,7 @@ The framework is split into small packages:
 - `@sculptor/core` for runtime startup
 - `@sculptor/router` for decorators and route assembly
 - `@sculptor/config` for config loading
+- `@sculptor/paws` for logging with dog mode personalities
 - `@sculptor/cli` for scaffolding, generation, and app commands
 
 If you are new to the framework, read this file first, then move into the package docs linked below.
@@ -19,6 +20,7 @@ If you are new to the framework, read this file first, then move into the packag
 | `@sculptor/core` | App bootstrap, registry wiring, and runtime server startup | [packages/core/README.md](packages/core/README.md) |
 | `@sculptor/router` | Controller decorators, method decorators, and Express router assembly | [packages/router/README.md](packages/router/README.md) |
 | `@sculptor/config` | Framework and runtime config loading | [packages/config/README.md](packages/config/README.md) |
+| `@sculptor/paws` | Logger utility with standard and dog mode output | [packages/paws/README.md](packages/paws/README.md) |
 
 ## How The Framework Is Structured
 
@@ -81,6 +83,27 @@ This solves:
 You will find it here:
 - [packages/config/README.md](packages/config/README.md)
 - [packages/config/src/config.ts](packages/config/src/config.ts)
+
+### `@sculptor/paws` This is the logger
+What it does:
+- Prints standard logs, system logs, warnings, and errors
+- Supports dog mode with Bruno, Coki, and Dodie personalities
+- Reads `logging.enabled` and `logging.dogMode` from `sculptor.json`
+
+How it is used:
+- `paws.log()` for regular logs
+- `paws.system()` for system messages
+- `paws.warn()` for warnings
+- `paws.error()` for errors
+- `paws.boot()` for the dog-mode boot message
+
+This solves:
+- App output stays consistent and lightweight
+- Logging can feel expressive without turning noisy
+
+You will find it here:
+- [packages/paws/README.md](packages/paws/README.md)
+- [packages/paws/src/paws.ts](packages/paws/src/paws.ts)
 
 ### `@sculptor/cli` This is the CLI
 What it does:
@@ -272,6 +295,7 @@ If you want to learn the framework in depth:
 2. Read [packages/core/README.md](packages/core/README.md) for runtime behavior.
 3. Read [packages/router/README.md](packages/router/README.md) for decorator and router behavior.
 4. Read [packages/config/README.md](packages/config/README.md) for config semantics.
+5. Read [packages/paws/README.md](packages/paws/README.md) for logger behavior and dog mode output.
 
 ## License
 
