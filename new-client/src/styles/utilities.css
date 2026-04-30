@@ -1473,6 +1473,79 @@
   padding-inline: 12px;
 }
 
+@media (max-height: 900px) {
+  .sculptor-guide-page__sidebar {
+    top: 76px;
+    height: calc(100vh - 88px);
+    max-height: calc(100vh - 88px);
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .sculptor-guide-page__sidebar-main {
+    gap: 8px;
+  }
+
+  .sculptor-guide-page__sidebar-section {
+    gap: 7px;
+  }
+
+  .sculptor-guide-page__sidebar-section h3 {
+    font-size: 0.88rem;
+  }
+
+  .sculptor-guide-page__sidebar-section p {
+    font-size: 0.84rem;
+    line-height: 1.45;
+  }
+
+  .sculptor-guide-page__map-links {
+    gap: 6px;
+  }
+
+  .sculptor-guide-page__map-link {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  .sculptor-guide-page__stats {
+    gap: 6px;
+  }
+
+  .sculptor-guide-page__stats > div {
+    padding: 8px;
+    gap: 2px;
+  }
+
+  .sculptor-guide-page__stat-label {
+    font-size: 10px;
+  }
+
+  .sculptor-guide-page__stats strong {
+    font-size: 0.94rem;
+  }
+
+  .sculptor-guide-page__sidebar-footer {
+    gap: 8px;
+    padding-top: 2px;
+  }
+
+  .sculptor-guide-page__sidebar-footer p {
+    font-size: 0.84rem;
+    line-height: 1.45;
+  }
+
+  .sculptor-guide-page__bottom-links {
+    gap: 6px;
+  }
+
+  .sculptor-guide-page__bottom-links .link-btn {
+    min-height: 34px;
+    padding-inline: 10px;
+    font-size: 0.85rem;
+  }
+}
+
 .sculptor-guide-page__hero {
   display: grid;
   grid-template-columns: 1.35fr 0.65fr;
