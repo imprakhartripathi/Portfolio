@@ -9,7 +9,7 @@ The framework is split into small packages:
 - `@sculptor/config` for config loading
 - `@sculptor/template-registry` for scaffold templates and generator assets
 - `@sculptor/paws` for logging with dog mode personalities
-- `@sculptor/cli` for scaffolding, generation, and app commands
+- `@sculptor/cli` for scaffolding, generation, app commands, `sc install deps`, and `sc update`
 
 If you are new to the framework, read this file first, then move into the package docs linked below.
 
@@ -21,8 +21,8 @@ Current stable package line:
 - `@sculptor/paws` `0.2.1`
 - `@sculptor/router` `0.2.5`
 - `@sculptor/core` `0.2.3`
-- `@sculptor/cli` `0.2.2`
-- `@sculptor/template-registry` `0.1.5`
+- `@sculptor/cli` `0.2.4`
+- `@sculptor/template-registry` `0.1.6`
 
 Deprecated ranges are documented in [CHANGELOG.md](CHANGELOG.md). The older releases remain listed for reference, but the stable line above is the recommended baseline for new apps.
 
@@ -126,9 +126,13 @@ You will find it here:
 What it does:
 - Creates new apps
 - Runs dev, build, lint, test, and generate commands
+- Replays scaffold dependency installs with `sc install deps` / `sc i deps`
+- Updates global Sculptor packages with `sc update` outside app roots
 - Reads and writes config with `sc config get`, `sc config set`, and `sc config list`
 - Writes the scaffolded app files
+- Writes a scaffolded `.gitignore` with common Node and TypeScript ignores
 - Generates matching test files when TDD generation is enabled
+- Loads `@sculptor/template-registry` lazily at runtime and can recover by prompting to install it when global installs are incomplete
 
 How it is used:
 - Run `sc new <app>`
@@ -138,6 +142,8 @@ How it is used:
 This solves:
 - New apps start with a consistent file structure
 - Generated code and generated tests stay aligned
+- App setup can be repaired if `npm i` was interrupted
+- Global CLI maintenance stays separate from app-local commands
 
 You will find it here:
 - [packages/cli/README.md](packages/cli/README.md)
@@ -231,6 +237,8 @@ You will find it here:
 | If you do this | SculptorTS does this |
 | --- | --- |
 | Run `sc new <app>` | Creates a new scaffolded app and installs dependencies |
+| Run `sc install deps` | Replays the app dependency install sequence after an interrupted setup |
+| Run `sc update` outside an app | Updates globally installed Sculptor packages |
 | Run `sc dev` inside an app root | Starts the app from source |
 | Run `sc start` with a build present | Uses `dist/main.js` unless `--watch` is set |
 | Run `sc start --watch` | Switches to the dev path |

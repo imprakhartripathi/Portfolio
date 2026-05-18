@@ -27,17 +27,19 @@ Reason:
 ### `@sculptor/cli`
 
 - Deprecated: `0.2.0`
-- Current stable: `0.2.2`
+- Current stable: `0.2.4`
 
 Reason:
 
 - The older CLI release predates the current config command set and the updated route/handler generation contract.
 - It also assumes the older template layout, which can break installs and scaffold output in current workspaces.
+- The current release adds runtime recovery for missing template-registry installs and avoids exposing raw module-resolution failures.
+- The current release also adds `sc install deps`, `sc i deps`, `sc update`, and scaffolded `.gitignore` generation.
 
 ### `@sculptor/template-registry`
 
-- Deprecated: `0.1.0` through `0.1.4`
-- Current stable: `0.1.5`
+- Deprecated: `0.1.0` through `0.1.5`
+- Current stable: `0.1.6`
 
 Reason:
 
@@ -50,8 +52,8 @@ Reason:
 - `@sculptor/paws` `0.2.1` is the supported logger line.
 - `@sculptor/router` `0.2.5` is the supported router line.
 - `@sculptor/core` `0.2.3` is the supported runtime line.
-- `@sculptor/cli` `0.2.2` is the supported CLI line.
-- `@sculptor/template-registry` `0.1.5` is the supported template line.
+- `@sculptor/cli` `0.2.4` is the supported CLI line.
+- `@sculptor/template-registry` `0.1.6` is the supported template line.
 
 ## Notable Stable Features
 
@@ -65,3 +67,7 @@ Reason:
 - Controller-first scaffolding with explicit functional opt-in
 - Paired `*.route.ts` and `*.route.handler.ts` generation
 - Registry-backed template organization
+- Runtime recovery for missing CLI template-registry dependencies
+- `sc install deps` and `sc i deps` for app dependency recovery
+- `sc update` for global package refreshes outside app roots
+- Scaffolded `.gitignore` generation

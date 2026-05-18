@@ -4,9 +4,9 @@ The SculptorTS template-registry package hosts scaffold and generator templates 
 
 ## Version Notes
 
-- Deprecated range: `0.1.0` through `0.1.4`
-- Current stable: `0.1.5`
-- Reason: the earlier releases predate the registry split, the typed template files under `src/registry/`, and the current route/handler scaffold layout.
+- Deprecated range: `0.1.0` through `0.1.5`
+- Current stable: `0.1.6`
+- Reason: the earlier releases predate the registry split, the typed template files under `src/registry/`, the scaffolded `.gitignore`, and the current route/handler scaffold layout.
 
 ## What This Package Does
 
@@ -27,8 +27,11 @@ The CLI consumes this package through the same generator helpers it used before:
 - `controllerHelp`
 - `generateHelp`
 
+When the CLI loads these helpers at runtime, it now does so lazily so global installs can recover if this package is missing.
+
 Route generation now emits paired `*.route.ts` and `*.route.handler.ts` files by default.
 Controller generation stays controller-first by default and can opt into paired functional files when requested.
+Scaffolded apps now also receive a standard `.gitignore` with common Node and TypeScript ignores.
 
 ## Why It Exists
 

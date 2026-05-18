@@ -9,12 +9,15 @@ It handles:
 - Test generation and registry syncing
 - Dev and production startup paths
 - Help and version output
+- App dependency recovery with `sc install deps`
+- Global package refresh with `sc update`
+- Scaffolded `.gitignore` generation
 
 ## Version Policy
 
-- Deprecated range: `0.2.0` through `0.2.1`
-- Current stable: `0.2.2`
-- Reason: the earlier release predates the current template-registry layout, the `sc config` command set, and the route/handler generation contract used by the current CLI.
+- Deprecated range: `0.2.0` through `0.2.3`
+- Current stable: `0.2.4`
+- Reason: the earlier release predates the current template-registry layout, the `sc config` command set, the `sc install deps` and `sc update` commands, and the route/handler generation contract used by the current CLI.
 
 ## Quick Command Sheet
 
@@ -29,6 +32,9 @@ It handles:
 | `sc config get <path>` | Reads a config value |
 | `sc config set <path=value>` | Writes a config value |
 | `sc config list` | Lists the merged config |
+| `sc install deps` | Replays app dependency installs inside a Sculptor app |
+| `sc i deps` | Alias for `sc install deps` |
+| `sc update` | Updates globally installed Sculptor packages outside an app |
 | `sc generate` / `sc g` | Generates framework resources |
 | `sc g c user` | Generates a controller resource |
 | `sc g r user` | Generates a functional route and handler pair |
@@ -95,6 +101,7 @@ What it solves:
 You will find it here:
 - [packages/cli/src/cli.ts](src/cli.ts)
 - [packages/cli/src/scaffold.ts](src/scaffold.ts)
+- [packages/cli/src/runtime-dependencies.ts](src/runtime-dependencies.ts)
 
 ### `sc dev`
 
@@ -214,6 +221,40 @@ Behavior:
 - `set` writes a dot-path assignment while preserving JSON formatting when possible
 - `list` prints the flattened merged config
 - `sculptor` supports the same command set as `sc`
+
+### `sc install deps` and `sc i deps`
+
+What it does:
+- Replays the standard Sculptor app dependency installation sequence
+- Runs inside an existing Sculptor app root
+- Helps recover after an interrupted `npm i` during setup
+
+How it is used:
+```bash
+sc install deps
+sc i deps
+```
+
+Behavior:
+- Uses `npm i` for the app package.json dependencies first
+- Installs the Sculptor runtime dependencies next
+- Reinstalls the Sculptor CLI/config/router dev dependencies last
+- Refuses to run outside a Sculptor app root
+
+### `sc update`
+
+What it does:
+- Updates globally installed Sculptor packages to their latest versions
+
+How it is used:
+```bash
+sc update
+```
+
+Behavior:
+- Works only outside a Sculptor app root
+- Uses the active package manager when possible
+- Updates the global Sculptor package set in one pass
 
 ### `sc generate` and `sc g`
 
@@ -476,6 +517,9 @@ Only these commands work from outside a Sculptor app root:
 - `sc new`
 - `sc help`
 - `sc version`
+- `sc update`
+
+`sc install deps` and `sc i deps` require a Sculptor app root.
 
 Everything else requires `sculptor.json` in the current directory.
 
@@ -507,11 +551,21 @@ await runCli(["node", "sc", "help"]);
 - `syncTestHarness`
 - the scaffold help strings
 
+These generator helpers now resolve `@sculptor/template-registry` at runtime and can prompt to install it if the package is missing.
+Call them with `await` when using the package programmatically.
+
 ## Package Scripts
 
 - `npm run cli` runs the CLI source with `tsx`
 - `npm run build` compiles the package
 - `npm run prepack` builds before packaging
+
+## Runtime Boundaries
+
+- `@sculptor/template-registry` is a runtime dependency, not a dev-only helper
+- the CLI loads it lazily so global installs can recover cleanly when the package is missing
+- future plugin/template loaders should follow the same pattern: detect, explain, recover, then retry
+- publish `@sculptor/template-registry` before `@sculptor/cli` so global installs never see a missing runtime dependency during rollout
 
 ## If You Only Remember One Thing
 
