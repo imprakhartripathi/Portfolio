@@ -7,10 +7,24 @@ The framework is split into small packages:
 - `@sculptor/core` for runtime startup
 - `@sculptor/router` for decorators and route assembly
 - `@sculptor/config` for config loading
+- `@sculptor/template-registry` for scaffold templates and generator assets
 - `@sculptor/paws` for logging with dog mode personalities
 - `@sculptor/cli` for scaffolding, generation, and app commands
 
 If you are new to the framework, read this file first, then move into the package docs linked below.
+
+## Release Notes
+
+Current stable package line:
+
+- `@sculptor/config` `0.2.1`
+- `@sculptor/paws` `0.2.1`
+- `@sculptor/router` `0.2.5`
+- `@sculptor/core` `0.2.3`
+- `@sculptor/cli` `0.2.2`
+- `@sculptor/template-registry` `0.1.5`
+
+Deprecated ranges are documented in [CHANGELOG.md](CHANGELOG.md). The older releases remain listed for reference, but the stable line above is the recommended baseline for new apps.
 
 ## Documentation Map
 
@@ -18,8 +32,9 @@ If you are new to the framework, read this file first, then move into the packag
 | --- | --- | --- |
 | `@sculptor/cli` | Commands, scaffolding, generators, and test harness management | [packages/cli/README.md](packages/cli/README.md) |
 | `@sculptor/core` | App bootstrap, registry wiring, and runtime server startup | [packages/core/README.md](packages/core/README.md) |
-| `@sculptor/router` | Controller decorators, method decorators, and Express router assembly | [packages/router/README.md](packages/router/README.md) |
-| `@sculptor/config` | Framework and runtime config loading | [packages/config/README.md](packages/config/README.md) |
+| `@sculptor/router` | Controller decorators, PATCH support, functional router scopes, and Express router assembly | [packages/router/README.md](packages/router/README.md) |
+| `@sculptor/config` | Framework and runtime config loading, `.env` interpolation, and redaction | [packages/config/README.md](packages/config/README.md) |
+| `@sculptor/template-registry` | Template metadata, registry-backed templates, and generator assets | [packages/template-registry/README.md](packages/template-registry/README.md) |
 | `@sculptor/paws` | Logger utility with standard and dog mode output | [packages/paws/README.md](packages/paws/README.md) |
 
 ## How The Framework Is Structured
@@ -27,8 +42,9 @@ If you are new to the framework, read this file first, then move into the packag
 ### `@sculptor/core` This is the core runtime
 What it does:
 - Starts the Express server
-- Loads config from `sculptor.json` and `props.json`
+- Loads config from `sculptor.json`, `props.json`, and `.env`
 - Mounts controllers and routers from the registry
+- Exposes request context, framework error hooks, and `bootstrapApp({ listen: false })`
 - Prints the listening port and a localhost URL
 
 How it is used:
@@ -47,9 +63,9 @@ You will find it here:
 
 ### `@sculptor/router` This is the router layer
 What it does:
-- Provides `@Controller`, `@Get`, `@Post`, `@Put`, `@Delete`, and `@Use`
+- Provides `@Controller`, `@Get`, `@Patch`, `@Post`, `@Put`, `@Delete`, and `@Use`
 - Turns decorated classes into Express routes
-- Supports controller-based and hybrid routing
+- Supports controller-based, hybrid, and Sculptor-native functional routing
 
 How it is used:
 - Decorate a class with `@Controller("/health")`
@@ -69,7 +85,8 @@ You will find it here:
 What it does:
 - Reads `sculptor.json` for framework behavior
 - Reads `props.json` for runtime settings
-- Merges both configs
+- Loads `.env` values, resolves `${VAR}` interpolation, and redacts sensitive config when needed
+- Merges framework defaults, project config, runtime config, and overrides in a predictable order
 - Exposes direct lookup helpers
 
 How it is used:
@@ -109,6 +126,7 @@ You will find it here:
 What it does:
 - Creates new apps
 - Runs dev, build, lint, test, and generate commands
+- Reads and writes config with `sc config get`, `sc config set`, and `sc config list`
 - Writes the scaffolded app files
 - Generates matching test files when TDD generation is enabled
 
@@ -219,8 +237,11 @@ You will find it here:
 | Run `sc build` | Compiles the app with the app-local TypeScript config |
 | Run `sc lint` | Runs ESLint from the app root |
 | Run `sc test` | Runs the generated test suite if present |
-| Run `sc generate controller user` | Writes the controller or the functional equivalent depending on routing mode |
-| Run `sc generate route user` in decorator mode | Refuses, because routes only make sense in functional or hybrid mode |
+| Run `sc generate controller user` | Writes a controller by default and can opt into paired functional files with `--functional` |
+| Run `sc generate route user` | Writes paired `*.route.ts` and `*.route.handler.ts` files |
+| Run `sc config get logging` | Prints a config value |
+| Run `sc config set logging.dogMode=false` | Updates the app config while preserving formatting when possible |
+| Run `sc config list` | Prints the flattened merged config |
 | Set `testing.generate` to `true` | New generated resources also get test files |
 | Set `testing.generate` to `false` | New generated resources only get source files |
 | Set `PORT=4000` | The runtime uses `4000` unless you override it explicitly |
@@ -247,7 +268,7 @@ When TDD generation is enabled, a new scaffold includes:
 
 - `src/tests/main.spec.ts`
 - `src/tests/health.controller.spec.ts` in decorator or hybrid mode
-- `src/tests/health.routes.spec.ts` in functional or hybrid mode
+- `src/tests/health.route.spec.ts` in functional or hybrid mode
 - `src/tests/registry.ts`
 - `src/tests/runner.ts`
 

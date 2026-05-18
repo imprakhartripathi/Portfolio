@@ -2,6 +2,12 @@
 
 Lightweight SculptorTS logger with a standard mode and a more expressive dog mode.
 
+## Version Notes
+
+This package is on the current stable line. No deprecated range is called out here.
+
+Current stable: `0.2.1`
+
 ## Config
 
 The logger reads `logging` from `sculptor.json`:

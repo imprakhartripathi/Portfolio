@@ -115,200 +115,240 @@ export const contributionItems: ContributionItem[] = [
 export const spotlightContributionSlug = 'sculptor-ts'
 
 export const sculptorProductSpec: SculptorProductSpec = {
-  brand: 'Sculptor TS',
-  namespace: '@sculptor/*',
-  cli: 'sc',
-  betaNote: 'Beta',
-  positioning: 'A TypeScript-first Express framework with disciplined runtime startup, config-driven behavior, and a CLI that keeps the app lifecycle predictable.',
+  brand: "Sculptor TS",
+  namespace: "@sculptor/*",
+  cli: "sc",
+  betaNote: "Beta",
+  positioning:
+    "A TypeScript-first Express framework with disciplined runtime startup, config-driven behavior, and a CLI that keeps the app lifecycle predictable.",
   overview:
-    'Sculptor TS is designed to make Express feel structured instead of ad hoc. The framework keeps the moving parts small, names the responsibilities clearly, and lets you choose between class-based decorators, functional routers, or a hybrid of both.',
+    "Sculptor TS is designed to make Express feel structured instead of ad hoc. The framework keeps the moving parts small, names the responsibilities clearly, and lets you choose between class-based decorators, functional routers, or a hybrid of both.",
   packageDocs: [
     {
-      title: '@sculptor/core',
-      path: 'packages/core/README.md',
-      summary: 'Boot the app, resolve config, and mount the registry into a running HTTP server.',
+      title: "@sculptor/core",
+      path: "packages/core/README.md",
+      summary:
+        "Boot the app, resolve config, and mount the registry into a running HTTP server.",
     },
     {
-      title: '@sculptor/router',
-      path: 'packages/router/README.md',
-      summary: 'Decorators and router assembly for controller-based, functional, or hybrid route styles.',
+      title: "@sculptor/router",
+      path: "packages/router/README.md",
+      summary:
+        "Decorators and router assembly for controller-based, functional, or hybrid route styles.",
     },
     {
-      title: '@sculptor/config',
-      path: 'packages/config/README.md',
-      summary: 'Load sculptor.json and props.json, merge them, and expose path-based lookups.',
+      title: "@sculptor/config",
+      path: "packages/config/README.md",
+      summary:
+        "Load sculptor.json and props.json, merge them, and expose path-based lookups.",
     },
     {
-      title: '@sculptor/cli',
-      path: 'packages/cli/README.md',
-      summary: 'Create apps, run them, generate resources, and keep generated tests in sync.',
+      title: "@sculptor/cli",
+      path: "packages/cli/README.md",
+      summary:
+        "Create apps, run them, generate resources, and keep generated tests in sync.",
     },
     {
-      title: '@sculptor/paws',
-      path: 'packages/paws/README.md',
-      summary: 'Structured logging and expressive dog mode for clear runtime feedback.',
+      title: "@sculptor/paws",
+      path: "packages/paws/README.md",
+      summary:
+        "Structured logging and expressive dog mode for clear runtime feedback.",
+    },
+    {
+      title: "@sculptor/template-registry",
+      path: "packages/template-registry/README.md",
+      summary:
+        "Template registry for managing and resolving templates in the app.",
     },
   ],
   packageModules: [
     {
-      name: '@sculptor/core',
-      summary: 'Runtime bootstrap and server startup.',
+      name: "@sculptor/core",
+      summary: "Runtime bootstrap and server startup.",
       responsibilities: [
-        'Loads framework and runtime config',
-        'Starts the Express server from the registry',
-        'Prints the listening port and localhost URL',
+        "Loads framework and runtime config",
+        "Starts the Express server from the registry",
+        "Prints the listening port and localhost URL",
       ],
     },
     {
-      name: '@sculptor/router',
-      summary: 'Decorators and router assembly.',
+      name: "@sculptor/router",
+      summary: "Decorators and router assembly.",
       responsibilities: [
-        'Controller decorators and HTTP method decorators',
-        'Middleware attachment at class or method level',
-        'Controller and route registration into one router',
+        "Controller decorators and HTTP method decorators",
+        "Middleware attachment at class or method level",
+        "Controller and route registration into one router",
       ],
     },
     {
-      name: '@sculptor/config',
-      summary: 'Framework and runtime config loading.',
+      name: "@sculptor/config",
+      summary: "Framework and runtime config loading.",
       responsibilities: [
-        'Reads sculptor.json and props.json',
-        'Deep-merges runtime values into framework config',
-        'Provides getConfig() lookups by dot path',
+        "Reads sculptor.json and props.json",
+        "Deep-merges runtime values into framework config",
+        "Provides getConfig() lookups by dot path",
       ],
     },
     {
-      name: '@sculptor/cli',
-      summary: 'App creation and command orchestration.',
+      name: "@sculptor/cli",
+      summary: "App creation and command orchestration.",
       responsibilities: [
-        'Creates new apps with the framework defaults',
-        'Runs dev, build, lint, test, and generate commands',
-        'Generates source files and test harness updates',
+        "Creates new apps with the framework defaults",
+        "Runs dev, build, lint, test, and generate commands",
+        "Generates source files and test harness updates",
+      ],
+    },
+    {
+      name: "@sculptor/paws",
+      summary:
+        "Structured logging and expressive dog mode for clear runtime feedback.",
+      responsibilities: [
+        "Provides structured logging capabilities",
+        "Enables expressive dog mode for clear runtime feedback",
+        "Integrates with the framework's config system",
+      ],
+    },
+    {
+      name: "@sculptor/template-registry",
+      summary:
+        "Template registry for managing and resolving templates in the app.",
+      responsibilities: [
+        "Creates new apps with the framework defaults",
+        "Resolves and manages templates in the app",
+        "Generates source files and test harness updates",
       ],
     },
   ],
   routingModes: [
     {
-      name: 'Class-based Controller Mode',
-      summary: 'Decorator-driven controllers when you want module-oriented structure and explicit route groupings.',
+      name: "Class-based Controller Mode",
+      summary:
+        "Decorator-driven controllers when you want module-oriented structure and explicit route groupings.",
       example: [
         "@Controller('/users')",
-        'class UserController {',
+        "class UserController {",
         '  @Get("/")',
-        '  getAll() { return [] }',
-        '}',
+        "  getAll() { return [] }",
+        "}",
       ],
     },
     {
-      name: 'Functional Route Mode',
-      summary: 'Direct router registration when you want the route map to stay explicit and lightweight.',
+      name: "Functional Route Mode",
+      summary:
+        "Direct router registration when you want the route map to stay explicit and lightweight.",
       example: [
-        'export const userRoutes = (router) => {',
+        "export const userRoutes = (router) => {",
         '  router.get("/", getUsers)',
         '  router.post("/", createUser)',
-        '}',
+        "}",
       ],
     },
     {
-      name: 'Hybrid Mode',
-      summary: 'Mix controllers and direct routers when one feature set benefits from each style.',
+      name: "Hybrid Mode",
+      summary:
+        "Mix controllers and direct routers when one feature set benefits from each style.",
       example: [
-        'createRouter({',
-        '  controllers: [UserController],',
-        '  routes: [userRoutes],',
+        "createRouter({",
+        "  controllers: [UserController],",
+        "  routes: [userRoutes],",
         '  prefix: "/api"',
-        '})',
+        "})",
       ],
     },
   ],
   configuration: [
     {
-      file: 'sculptor.json',
-      purpose: 'Framework behavior, source layout, and generation defaults.',
+      file: "sculptor.json",
+      purpose: "Framework behavior, source layout, and generation defaults.",
       highlights: [
-        'Project metadata and source root',
-        'Routing style: decorator, functional, or hybrid',
-        'Testing generation and framework lock',
+        "Project metadata and source root",
+        "Routing style: decorator, functional, or hybrid",
+        "Testing generation and framework lock",
       ],
       snippet: [
-        '{',
+        "{",
         '  "project": { "srcRoot": "src", "entryFile": "main.ts", "devServer": "tsx" },',
         '  "routing": { "style": "hybrid" },',
         '  "testing": { "generate": true }',
-        '}',
+        "}",
       ],
     },
     {
-      file: 'props.json',
-      purpose: 'Runtime settings such as port, prefix, and deploy-time overrides.',
+      file: "props.json",
+      purpose:
+        "Runtime settings such as port, prefix, and deploy-time overrides.",
       highlights: [
-        'App port and router prefix',
-        'Runtime defaults that can be overridden at startup',
-        'Values the runtime reads without touching source code',
+        "App port and router prefix",
+        "Runtime defaults that can be overridden at startup",
+        "Values the runtime reads without touching source code",
       ],
-      snippet: [
-        '{',
-        '  "app": { "port": 3000, "prefix": "/api" }',
-        '}',
-      ],
+      snippet: ["{", '  "app": { "port": 3000, "prefix": "/api" }', "}"],
     },
   ],
   runtimeFlow: [
-    'Load sculptor.json and props.json from the app root.',
-    'Resolve the port from startApp(), PORT, props.json, or the 3000 default.',
-    'Attach Express middleware and build the router from the registry.',
-    'Mount controllers and routes under the configured prefix.',
-    'Start listening and print the port plus localhost URL.',
+    "Load sculptor.json and props.json from the app root.",
+    "Resolve the port from startApp(), PORT, props.json, or the 3000 default.",
+    "Attach Express middleware and build the router from the registry.",
+    "Mount controllers and routes under the configured prefix.",
+    "Start listening and print the port plus localhost URL.",
   ],
   commandSheet: [
     {
-      command: 'sc new demo-app',
-      summary: 'Create a new app with the current framework defaults.',
+      command: "sc new demo-app",
+      summary: "Create a new app with the current framework defaults.",
     },
     {
-      command: 'sc dev',
-      summary: 'Run the app from source with the CLI banner suppressed in the runtime.',
+      command: "sc dev",
+      summary:
+        "Run the app from source with the CLI banner suppressed in the runtime.",
     },
     {
-      command: 'sc start',
-      summary: 'Start production-style mode from dist/ when the build output exists.',
+      command: "sc start",
+      summary:
+        "Start production-style mode from dist/ when the build output exists.",
     },
     {
-      command: 'sc build',
-      summary: 'Compile the app with the app-local TypeScript config.',
+      command: "sc build",
+      summary: "Compile the app with the app-local TypeScript config.",
     },
     {
-      command: 'sc lint',
-      summary: 'Run ESLint from the app root.',
+      command: "sc lint",
+      summary: "Run ESLint from the app root.",
     },
     {
-      command: 'sc test',
-      summary: 'Run the generated or standard test suite.',
+      command: "sc test",
+      summary: "Run the generated or standard test suite.",
     },
     {
-      command: 'sc generate controller user',
-      summary: 'Create a controller resource and refresh the generated test registry.',
+      command: "sc generate controller user",
+      summary:
+        "Create a controller resource and refresh the generated test registry.",
+    },
+    {
+      command: "sc config get app.port",
+      summary:
+        "Get a runtime config value by its dot path without importing code or reading files.",
     },
   ],
   platformCapabilities: [
-    'Startup banner suppression in dev',
-    'App-root guardrails for lifecycle commands',
-    'Generated spec registry when testing is enabled',
-    'Config caching by root directory',
-    'Controller and router coexistence',
-    'Prefix normalization for mounted routers',
+    "Startup banner suppression in dev",
+    "App-root guardrails for lifecycle commands",
+    "Generated spec registry when testing is enabled",
+    "Config caching by root directory",
+    "Controller and router coexistence",
+    "Prefix normalization for mounted routers",
   ],
   successCriteria: [
-    'A new app can be created, run, and built with one command family.',
-    'Routing style stays explicit even as the app grows.',
-    'Runtime behavior is declared in config instead of scattered through code.',
-    'Generated tests stay aligned with generated resources.',
-    'The framework stays understandable from the README and package docs alone.',
+    "A new app can be created, run, and built with one command family.",
+    "Routing style stays explicit even as the app grows.",
+    "Runtime behavior is declared in config instead of scattered through code.",
+    "Generated tests stay aligned with generated resources.",
+    "The framework stays understandable from the README and package docs alone.",
   ],
   betaCautions: [
-    'Expect small API shifts before v1.',
-    'Treat the README and package docs as the current source of truth.',
-    'Prefer the guide page when you need the practical workflow, not just the package names.',
+    "Expect small API shifts before v1.",
+    "Treat the README and package docs as the current source of truth.",
+    "Prefer the guide page when you need the practical workflow, not just the package names.",
   ],
 };
 
@@ -318,6 +358,12 @@ export const sculptorGuideDocs: SculptorDocMapEntry[] = [
     path: "/Sculptor/readme.md",
     summary:
       "Start here for the package map, runtime behavior, startup output, and app root rules.",
+  },
+  {
+    title: "Changelog",
+    path: "/Sculptor/changelog.md",
+    summary:
+      "Changelog with versioned entries for new features, improvements, and fixes across all packages.",
   },
   {
     title: "@sculptor/cli",
@@ -345,7 +391,14 @@ export const sculptorGuideDocs: SculptorDocMapEntry[] = [
   {
     title: "@sculptor/paws",
     path: "/Sculptor/PAWS-README.md",
-    summary: "Lightweight logger with a standard mode and a more expressive dog mode.",
+    summary:
+      "Lightweight logger with a standard mode and a more expressive dog mode.",
+  },
+  {
+    title: "@sculptor/template-registry",
+    path: "/Sculptor/TEMPLATE-REGISTRY-README.md",
+    summary:
+      "Template registry for managing and resolving templates in the app.",
   },
 ];
 
