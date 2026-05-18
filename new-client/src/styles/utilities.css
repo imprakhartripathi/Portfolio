@@ -1118,6 +1118,11 @@
   background: rgba(10, 22, 42, 0.84);
   border-color: rgba(140, 163, 199, 0.35);
 }
+.link-btn--warning {
+  border: 1px solid rgba(255, 214, 122, 0.45);
+  color: #ffd67a;
+  background: rgba(255, 214, 122, 0.11);
+}
 
 .link-btn:hover {
   border-color: var(--line-strong);

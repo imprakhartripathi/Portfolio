@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion'
-import { FaArrowLeftLong, FaArrowRightLong, FaNpm } from 'react-icons/fa6'
+import { FaArrowLeftLong, FaArrowRightLong, FaBug, FaNpm } from 'react-icons/fa6'
 
 import { SectionWrapper } from '../../../layout/SectionWrapper'
 import { useInViewReveal } from '../../../shared/hooks/useInViewReveal'
 import { revealContainer, revealItem } from '../../../shared/motion/variants'
-import { sculptorNpmOrgUrl, sculptorProductSpec } from '../data'
+import { sculptorNpmOrgUrl, sculptorProductSpec, sculptorRepoUrl } from '../data'
 
 type SculptorProductPageProps = {
   onBack: () => void
@@ -86,6 +86,9 @@ export function SculptorProductPage({ onBack, onOpenContributions, onOpenGuide }
             <button type="button" className="link-btn link-btn--ghost" onClick={onBack}>
               <FaArrowLeftLong /> Back
             </button>
+            <a href={`${sculptorRepoUrl}/issues`} target="_blank" rel="noreferrer" className="link-btn link-btn--warning">
+              <FaBug /> Report Bug
+            </a>
           </div>
         </motion.article>
 

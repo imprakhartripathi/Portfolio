@@ -2,6 +2,7 @@ import type { ContributionItem, SculptorDocMapEntry, SculptorProductSpec } from 
 
 export const npmProfileUrl = 'https://www.npmjs.com/~imprakhartripathi'
 export const sculptorNpmOrgUrl = 'https://www.npmjs.com/org/sculptor'
+export const sculptorRepoUrl = "https://github.com/imprakhartripathi/Sculptor";
 
 export const contributionItems: ContributionItem[] = [
   {
@@ -237,10 +238,10 @@ export const sculptorProductSpec: SculptorProductSpec = {
       summary:
         "Direct router registration when you want the route map to stay explicit and lightweight.",
       example: [
-        "export const userRoutes = (router) => {",
-        '  router.get("/", getUsers)',
-        '  router.post("/", createUser)',
-        "}",
+        "export const health = FunctionalRouter('/health');",
+        "health.get(healthHandler);",
+        'health.at("/ping").get(healthHandler);',
+        "health.use(healthErrorHandler);",
       ],
     },
     {
@@ -253,6 +254,17 @@ export const sculptorProductSpec: SculptorProductSpec = {
         "  routes: [userRoutes],",
         '  prefix: "/api"',
         "})",
+      ],
+    },
+    {
+      name: "Typed Request/Response and Error Handling for Functional Routes",
+      summary:
+        "Typed request/response handling with built-in error normalization and framework-level error middleware support",
+      example: [
+        'import { normalizeError } from "@sculptor/core"',
+        'import type { Req, Res, Nxt } from "@sculptor/core"',
+        'import type { FrameworkErrorHandler } from "@sculptor/core"',
+        'import type { SculptorError } from "@sculptor/core"',
       ],
     },
   ],
@@ -282,7 +294,13 @@ export const sculptorProductSpec: SculptorProductSpec = {
         "Runtime defaults that can be overridden at startup",
         "Values the runtime reads without touching source code",
       ],
-      snippet: ["{", '  "app": { "port": 3000, "prefix": "/api" }', "}"],
+      snippet: [
+        "{",
+        '  "app": { ',
+        '     "port": 3000, "prefix": "/api"',
+        "   }",
+        "}",
+      ],
     },
   ],
   runtimeFlow: [
