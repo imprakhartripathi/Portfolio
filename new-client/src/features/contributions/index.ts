@@ -1,4 +1,13 @@
-export { contributionItems, getContributionBySlug, npmProfileUrl, sculptorGuideDocs, sculptorNpmOrgUrl, spotlightContributionSlug, sculptorProductSpec } from './data'
+export {
+  contributionItems,
+  getContributionBySlug,
+  npmProfileUrl,
+  sculptorGuideDocs,
+  sculptorNpmOrgUrl,
+  sculptorRepoUrl,
+  spotlightContributionSlug,
+  sculptorProductSpec,
+} from './data'
 export type { ContributionItem, SculptorProductSpec, SculptorPackageModule } from './types'
 export type { SculptorDocMapEntry, SculptorGuideDoc } from './types'
 export { ContributionsPage } from './components/ContributionsPage'

@@ -10,6 +10,7 @@ type SeoPayload = {
   keywords?: string
   type?: 'website' | 'article'
   noindex?: boolean
+  priority?: 'high' | 'medium' | 'low'
   structuredData?: Record<string, unknown> | Array<Record<string, unknown>>
 }
 
@@ -23,6 +24,11 @@ function upsertMetaByName(name: string, content: string) {
   }
 
   element.setAttribute('content', content)
+}
+
+function removeMetaByName(name: string) {
+  const element = document.head.querySelector(`meta[name="${name}"]`)
+  element?.remove()
 }
 
 function upsertMetaByProperty(property: string, content: string) {
@@ -85,6 +91,11 @@ export function applySeo(payload: SeoPayload) {
 
   upsertMetaByName('description', payload.description)
   upsertMetaByName('keywords', payload.keywords ?? 'Prakhar Tripathi, Backend Engineer, Full Stack Engineer, Portfolio')
+  if (payload.priority) {
+    upsertMetaByName('priority', payload.priority)
+  } else {
+    removeMetaByName('priority')
+  }
   upsertMetaByName('robots', robotsValue)
   upsertMetaByName('googlebot', robotsValue)
   upsertMetaByName('twitter:title', payload.title)

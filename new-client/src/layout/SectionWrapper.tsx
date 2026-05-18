@@ -1,4 +1,4 @@
-import type { PropsWithChildren } from 'react'
+import type { PropsWithChildren, ReactNode } from 'react'
 
 import { cn } from '../shared/lib/cn'
 
@@ -10,6 +10,7 @@ type SectionWrapperProps = PropsWithChildren<{
   titleAs?: 'h1' | 'h2'
   className?: string
   bodyClassName?: string
+  headerAction?: ReactNode
 }>
 
 export function SectionWrapper({
@@ -20,6 +21,7 @@ export function SectionWrapper({
   titleAs = 'h2',
   className,
   bodyClassName,
+  headerAction,
   children,
 }: SectionWrapperProps) {
   const TitleTag = titleAs
@@ -27,9 +29,12 @@ export function SectionWrapper({
   return (
     <section id={id} className={cn('section-wrapper', className)}>
       <header className="section-wrapper__header">
-        <p className="section-wrapper__eyebrow">{eyebrow}</p>
-        <TitleTag className="section-wrapper__title">{title}</TitleTag>
-        {description ? <p className="section-wrapper__description">{description}</p> : null}
+        <div className="section-wrapper__header-copy">
+          <p className="section-wrapper__eyebrow">{eyebrow}</p>
+          <TitleTag className="section-wrapper__title">{title}</TitleTag>
+          {description ? <p className="section-wrapper__description">{description}</p> : null}
+        </div>
+        {headerAction ? <div className="section-wrapper__header-action">{headerAction}</div> : null}
       </header>
 
       <div className={cn('section-wrapper__body', bodyClassName)}>{children}</div>

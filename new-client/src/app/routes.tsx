@@ -2,7 +2,13 @@ import { Suspense, lazy, useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 
 import { certifications, getCertificationBySlug, getCertificationPdfPath } from '../features/certifications'
-import { contributionItems, getContributionBySlug, npmProfileUrl } from '../features/contributions'
+import {
+  contributionItems,
+  getContributionBySlug,
+  npmProfileUrl,
+  sculptorNpmOrgUrl,
+  sculptorRepoUrl,
+} from '../features/contributions'
 import { ContactEndpointSection } from '../features/contact-endpoint'
 import { SystemOverviewSection } from '../features/system-overview'
 import { systemsDesignedCases } from '../features/systems-designed/data'
@@ -101,6 +107,12 @@ const contributionsDescription =
 
 const sculptorDescription =
   'Sculptor TS is a beta Express framework with a compact package split, config-driven runtime behavior, and a practical CLI workflow.'
+
+const sculptorGuideDescription =
+  'Sculptor TS documentation covering package architecture, routing styles, configuration, runtime flow, and command workflow.'
+
+const pharmetrixDescription =
+  'Pharmetrix is a pharmaceutical inventory and POS platform for batch-aware stock control, FEFO dispensing, cold-chain monitoring, and edge-cloud synchronization.'
 
 type NotFoundPageProps = {
   pathname: string
@@ -208,6 +220,7 @@ export function PortfolioRoutes() {
         title: 'Prakhar Tripathi | Backend-Focused Full-Stack Engineer',
         description: homeDescription,
         path: '/',
+        priority: 'high',
         keywords:
           'Prakhar Tripathi, Backend Engineer, Full Stack Engineer, Node.js, Express, ASP.NET Core, MongoDB, MySQL, Docker, RBAC, JWT, Portfolio',
       })
@@ -323,6 +336,58 @@ export function PortfolioRoutes() {
     if (route.page === 'contribution-detail' && activeContribution) {
       const contributionPath = buildContributionPath(activeContribution.slug)
 
+      if (activeContribution.slug === 'sculptor-ts') {
+        applySeo({
+          title: 'Sculptor TS | Express Framework by Prakhar Tripathi',
+          description: sculptorDescription,
+          path: contributionPath,
+          priority: 'high',
+          type: 'website',
+          keywords:
+            'Sculptor TS, Express framework, TypeScript backend framework, @sculptor/core, @sculptor/router, @sculptor/config, @sculptor/cli, npm, backend tooling',
+          structuredData: [
+            {
+              '@type': 'SoftwareApplication',
+              name: 'Sculptor TS',
+              description: sculptorDescription,
+              applicationCategory: 'DeveloperApplication',
+              operatingSystem: 'Cross-platform',
+              url: `${seoConstants.siteUrl}${contributionPath}`,
+              author: {
+                '@type': 'Person',
+                name: 'Prakhar Tripathi',
+                url: seoConstants.siteUrl,
+              },
+              sameAs: [sculptorRepoUrl, sculptorNpmOrgUrl],
+            },
+            {
+              '@type': 'BreadcrumbList',
+              itemListElement: [
+                {
+                  '@type': 'ListItem',
+                  position: 1,
+                  name: 'Home',
+                  item: seoConstants.siteUrl,
+                },
+                {
+                  '@type': 'ListItem',
+                  position: 2,
+                  name: 'My Contributions',
+                  item: `${seoConstants.siteUrl}/contributions`,
+                },
+                {
+                  '@type': 'ListItem',
+                  position: 3,
+                  name: 'Sculptor TS',
+                  item: `${seoConstants.siteUrl}${contributionPath}`,
+                },
+              ],
+            },
+          ],
+        })
+        return
+      }
+
       applySeo({
         title: `${activeContribution.title} | My Contributions`,
         description: activeContribution.shortSummary,
@@ -377,16 +442,18 @@ export function PortfolioRoutes() {
       const guidePath = buildContributionGuidePath(activeContribution.slug)
 
       applySeo({
-        title: `${activeContribution.title} Guide | My Contributions`,
-        description: sculptorDescription,
+        title: 'Sculptor TS Guide | Documentation & Architecture',
+        description: sculptorGuideDescription,
         path: guidePath,
+        priority: 'high',
         type: 'article',
-        keywords: `${activeContribution.title} guide, Sculptor TS, @sculptor/core, @sculptor/router, @sculptor/config, @sculptor/cli, Express framework, TypeScript`,
+        keywords:
+          'Sculptor TS guide, framework documentation, Express framework, TypeScript backend framework, @sculptor/core, @sculptor/router, @sculptor/config, @sculptor/cli, architecture',
         structuredData: [
           {
             '@type': 'TechArticle',
-            name: `${activeContribution.title} Guide`,
-            description: sculptorDescription,
+            name: 'Sculptor TS Guide',
+            description: sculptorGuideDescription,
             url: `${seoConstants.siteUrl}${guidePath}`,
             author: {
               '@type': 'Person',
@@ -529,6 +596,61 @@ export function PortfolioRoutes() {
 
     if (route.page === 'project-detail' && activeProject) {
       const projectPath = buildProjectPath(activeProject.id)
+
+      if (activeProject.id === 'pharmetrix') {
+        applySeo({
+          title: 'Pharmetrix | Pharmaceutical Inventory & POS Platform',
+          description: pharmetrixDescription,
+          path: projectPath,
+          priority: 'high',
+          image: `${seoConstants.siteUrl}${activeProject.icon}`,
+          type: 'article',
+          keywords:
+            'Pharmetrix, pharmaceutical inventory system, POS platform, FEFO, cold-chain monitoring, edge-cloud synchronization, batch stock tracking, React, Node.js, Express',
+          structuredData: [
+            {
+              '@type': 'SoftwareApplication',
+              name: 'Pharmetrix',
+              description: pharmetrixDescription,
+              applicationCategory: 'BusinessApplication',
+              operatingSystem: 'Web',
+              url: `${seoConstants.siteUrl}${projectPath}`,
+              image: `${seoConstants.siteUrl}${activeProject.icon}`,
+              author: {
+                '@type': 'Person',
+                name: 'Prakhar Tripathi',
+                url: seoConstants.siteUrl,
+              },
+              sameAs: activeProject.liveUrl ? [activeProject.liveUrl] : undefined,
+            },
+            {
+              '@type': 'BreadcrumbList',
+              itemListElement: [
+                {
+                  '@type': 'ListItem',
+                  position: 1,
+                  name: 'Home',
+                  item: seoConstants.siteUrl,
+                },
+                {
+                  '@type': 'ListItem',
+                  position: 2,
+                  name: 'Projects',
+                  item: `${seoConstants.siteUrl}/projects`,
+                },
+                {
+                  '@type': 'ListItem',
+                  position: 3,
+                  name: 'Pharmetrix',
+                  item: `${seoConstants.siteUrl}${projectPath}`,
+                },
+              ],
+            },
+          ],
+        })
+        return
+      }
+
       applySeo({
         title: `${activeProject.name} Project | Prakhar Tripathi`,
         description: `${activeProject.shortSummary} Domain: ${activeProject.domain}`,
@@ -596,7 +718,7 @@ export function PortfolioRoutes() {
       path: route.page === 'not-found' ? route.pathname : '/',
       noindex: true,
     })
-  }, [route, activeProject, activeCertification, activeContribution])
+  }, [route, activeProject, activeCertification, activeContribution, isSculptorContribution])
 
   function openProject(projectId: string) {
     navigateTo(buildProjectPath(projectId))
