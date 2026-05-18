@@ -1,13 +1,10 @@
-export type ContactEndpoint = {
+import type { IconType } from 'react-icons'
+
+export type ContactMethod = {
   id: string
   label: string
   value: string
   href: string
-}
-
-export type ContactFormPayload = {
-  name: string
-  email: string
-  subject: string
-  message: string
+  description: string
+  icon: IconType
 }

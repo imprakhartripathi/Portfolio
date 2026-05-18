@@ -1,5 +1,4 @@
 export { ContactEndpointSection } from './components/ContactEndpointSection'
-export { ContactForm } from './components/ContactForm'
-export { EndpointRow } from './components/EndpointRow'
-export { contactEndpoints } from './data'
-export type { ContactEndpoint, ContactFormPayload } from './types'
+export { ContactMethodCard } from './components/ContactMethodCard'
+export { contactMethods } from './data'
+export type { ContactMethod } from './types'
