@@ -1,12 +1,15 @@
 # @sculptor/template-registry
 
+<!-- <img src="https://raw.githubusercontent.com/imprakhartripathi/Sculptor/main/assets/sculptor-full-bg.png" alt="SculptorTS"/> -->
+
 The SculptorTS template-registry package hosts scaffold and generator templates outside the CLI.
 
 ## Version Notes
 
-- Deprecated range: `0.1.0` through `0.1.5`
-- Current stable: `0.1.6`
-- Reason: the earlier releases predate the registry split, the typed template files under `src/registry/`, the scaffolded `.gitignore`, and the current route/handler scaffold layout.
+- Release line: `v1.0.2`
+- Current package version: `1.0.2`
+- This release line keeps the template registry focused on scaffold and generator content while the CLI owns orchestration, package registry updates, `AGENTS.md` generation, and exact file command flows.
+- Future template changes should stay additive and backwards-conscious.
 
 ## What This Package Does
 
@@ -15,6 +18,10 @@ The SculptorTS template-registry package hosts scaffold and generator templates 
 - Exposes the generator helpers used by the CLI
 - Gives future plugins a stable place to register templates
 - Organizes templates under `src/registry/templates/` with a thin export-only `src/index.ts`
+- Includes package scaffold templates for package-aware generation
+- Supports marker-block based regeneration for package indexes and other generated files
+- Emits class, functional, and hybrid scaffolds depending on the selected mode
+- Generates helper-linked metadata blocks without guessing user-authored helper names
 
 ## Public API
 
@@ -30,7 +37,7 @@ The CLI consumes this package through the same generator helpers it used before:
 When the CLI loads these helpers at runtime, it now does so lazily so global installs can recover if this package is missing.
 
 Route generation now emits paired `*.route.ts` and `*.route.handler.ts` files by default.
-Controller generation stays controller-first by default and can opt into paired functional files when requested.
+Controller generation stays class-first by default and can opt into paired functional files when requested.
 Scaffolded apps now also receive a standard `.gitignore` with common Node and TypeScript ignores.
 
 ## Why It Exists

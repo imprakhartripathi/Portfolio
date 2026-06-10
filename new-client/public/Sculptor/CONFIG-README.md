@@ -1,12 +1,16 @@
 # @sculptor/config
 
+<!-- <img src="https://raw.githubusercontent.com/imprakhartripathi/Sculptor/main/assets/sculptor-full-bg.png" alt="SculptorTS"/> -->
+
 The SculptorTS config package loads framework and runtime config from the app root.
 
 ## Version Notes
 
-This package is part of the current stable release line. The docs below describe the merged config behavior used by the current runtime and CLI.
+This package is part of the `v1.0.2` release line. The docs below describe the merged config behavior used by the current runtime and CLI.
 
-Current stable: `0.2.1`
+Current package version: `1.0.2`
+
+Future changes should stay additive and backwards-conscious.
 
 ## What This Package Does
 

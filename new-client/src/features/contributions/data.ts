@@ -407,6 +407,11 @@ export const sculptorGuideDocs: SculptorDocMapEntry[] = [
     summary: "Decorator API, prefix handling, and Express router assembly.",
   },
   {
+    title: "@sculptor/di",
+    path: "/Sculptor/DI-README.md",
+    summary: "Dependency injection container for managing and resolving dependencies.",
+  },
+  {
     title: "@sculptor/paws",
     path: "/Sculptor/PAWS-README.md",
     summary:

@@ -1,12 +1,15 @@
 # @sculptor/router
 
+<!-- <img src="https://raw.githubusercontent.com/imprakhartripathi/Sculptor/main/assets/sculptor-full-bg.png" alt="SculptorTS"/> -->
+
 The SculptorTS router package provides decorators and router assembly for controller-based and hybrid app styles.
 
 ## Version Policy
 
-- Deprecated range: `0.2.0` through `0.2.4`
-- Current stable: `0.2.5`
-- Reason: the earlier releases were published before the current collision detection, `@Patch()` support, and typed functional-router scope model were stabilized.
+- Release line: `v1.0.2`
+- Current package version: `1.0.2`
+- The router package keeps the controller, hybrid, and functional routing contract stable in the package-aware runtime line.
+- Future changes should stay additive and backwards-conscious.
 
 ## What This Package Does
 
@@ -15,6 +18,7 @@ The SculptorTS router package provides decorators and router assembly for contro
 - Scans decorated controllers
 - Builds an Express router from controller classes and router instances
 - Exposes a Sculptor-style functional router builder
+- Wraps controller routes and functional handlers so sync and async throws stay inside the framework pipeline
 
 ## Public API
 
@@ -76,6 +80,8 @@ const users = FunctionalRouter("/users");
 - `users.use(errorHandler)` can mount an Express error handler for the scope
 - the returned scope type is `FunctionalRouterScope`
 
+Hybrid package scaffolds intentionally generate a functional route under `"/r/<package>"` so the generated route does not collide with the package controller route. That convention is deliberate and preserved by the package generator, and the prefix can be changed by the user if needed.
+
 ## Router Assembly
 
 `createRouter()` accepts:
@@ -126,6 +132,7 @@ If you do not pass a prefix, the router is returned unwrapped.
 | Pass no controllers and no routes | An empty router is returned |
 | Pass both controllers and routes | Both styles are mounted into one router |
 | Register the same method and path twice | Bootstrap fails with a typed route-collision error |
+| Generate a hybrid package scaffold | The functional route is generated under `/r/<package>` to avoid collisions with the controller |
 
 ## Example
 

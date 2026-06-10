@@ -1,21 +1,26 @@
 # @sculptor/core
 
+<!-- <img src="https://raw.githubusercontent.com/imprakhartripathi/Sculptor/main/assets/sculptor-full-bg.png" alt="SculptorTS"/> -->
+
 The SculptorTS core package boots the HTTP server and exposes the primary framework runtime API.
 
 ## Version Policy
 
-- Deprecated range: `0.2.0` through `0.2.2`
-- Current stable: `0.2.3`
-- Reason: the earlier releases predate the stabilized request context, framework error hook, and non-listening bootstrap flow, so they are more likely to surface bootstrap and typing issues in generated apps.
+- Release line: `v1.0.2`
+- Current package version: `1.0.2`
+- This release line keeps request context, package flattening, functional package metadata, and explicit DI re-exports aligned with the package-aware runtime contract.
+- Future changes should stay additive and backwards-conscious.
 
 ## What This Package Does
 
 - Starts an Express server from a registry
 - Loads runtime config and framework config
-- Creates the app router from controllers and routes
+- Creates the app router from packages, controllers, services, repositories, middlewares, and routes
+- Flattens package composition internally while keeping the package index as the package contract
 - Exposes the shared registry shape used by scaffolded apps
 - Exposes `bootstrapApp({ listen: false })` for validation and CI flows
-- Exposes request context and framework error hook support
+- Exposes request context and a unified framework error pipeline
+- Re-exports the package metadata, explicit DI decorators, and functional package types from `@sculptor/di`
 
 ## Public API
 
@@ -48,10 +53,26 @@ Options:
 
 The default empty registry shape exported by the package.
 
+The current registry shape supports both the legacy flat arrays and the package-aware form:
+
+- `packages`
+- `controllers`
+- `services`
+- `repositories`
+- `middlewares`
+- `routes`
+
+Package metadata can describe class-based or functional package outputs, and helper-linked file metadata stays outside the runtime DI container.
+
 ### Re-exports
 
 `@sculptor/core` also re-exports the router decorators and config helpers:
 
+- `Package`
+- `AutoInject`
+- `Service`
+- `Repository`
+- `Middleware`
 - `Controller`
 - `Get`
 - `Patch`
@@ -105,12 +126,13 @@ If the resolved port is `0`, the runtime reads the actual bound port from the se
 
 | If the registry contains | Then the runtime does this |
 | --- | --- |
+| Packages | Flattens the package composition and registers the package-owned runtime pieces |
 | Controllers | Scans the controller metadata and registers decorator-based routes |
 | Routes | Mounts the Express routers directly |
 | Both controllers and routes | Combines both into one app router |
 | No routes | Starts a server, but nothing is mounted beyond Express body parsing |
 | `listen: false` | Bootstraps the app, validates the registry, and returns without binding a socket |
-| `onError` provided | Framework errors are routed through the lightweight hook before Express handling continues |
+| `onError` provided | Framework errors are routed through the lightweight hook before the JSON error response is sent |
 
 ## Request Context
 
@@ -135,7 +157,19 @@ The hook receives:
 - optional controller info
 - the request `context`
 
-This preserves Express compatibility while giving apps one central place to shape framework errors.
+The framework still sends a consistent JSON response after the hook runs:
+
+```json
+{
+  "error": {
+    "code": "RUNTIME_ERROR",
+    "message": "Something went wrong",
+    "status": 500
+  }
+}
+```
+
+This preserves Express compatibility while preventing HTML error pages from leaking out of framework-owned routes.
 
 ## Config Behavior
 

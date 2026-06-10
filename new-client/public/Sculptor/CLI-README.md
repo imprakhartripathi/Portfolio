@@ -1,43 +1,61 @@
 # @sculptor/cli
 
+<!-- <img src="https://raw.githubusercontent.com/imprakhartripathi/Sculptor/main/assets/sculptor-full-bg.png" alt="SculptorTS" /> -->
+
 The SculptorTS CLI is the user-facing command line for the framework.
 
 It handles:
 
-- New app scaffolding
-- Resource generation
-- Test generation and registry syncing
-- Dev and production startup paths
-- Help and version output
-- App dependency recovery with `sc install deps`
-- Global package refresh with `sc update`
-- Scaffolded `.gitignore` generation
+- new app scaffolding
+- package-aware and unpackaged resource generation
+- test generation and registry syncing
+- dev and production startup paths
+- package registry maintenance
+- diagnostics and compatibility checks
+- `AGENTS.md` generation
+- app dependency recovery with `sc install deps`
+- global CLI refresh with `sc update`
+- scaffolded `.gitignore` generation
+- exact file register/unregister/remove flows with clean prompts
+- package registry commands for both package indexes and individual files
 
 ## Version Policy
 
-- Deprecated range: `0.2.0` through `0.2.3`
-- Current stable: `0.2.4`
-- Reason: the earlier release predates the current template-registry layout, the `sc config` command set, the `sc install deps` and `sc update` commands, and the route/handler generation contract used by the current CLI.
+- Release line: `v1.0.2`
+- Current package version: `1.0.2`
+- This release line keeps package-aware generation, functional package scaffolds, `sc doctor`, `sc agents`, `sculptor.packages.json`, and exact package/file alias commands.
+- Future changes should stay additive and backwards-conscious.
 
 ## Quick Command Sheet
 
 | Command | What it does |
 | --- | --- |
 | `sc new <app>` | Creates a new app |
+| `sc agents` | Generates `AGENTS.md` |
+| `sc agents refresh` | Regenerates `AGENTS.md` |
 | `sc dev` | Starts the app from source |
 | `sc start` | Starts the app in production-style mode |
 | `sc build` | Builds the app |
 | `sc lint` | Lints the app |
 | `sc test` | Runs the test suite |
+| `sc sync` | Syncs and validates `sculptor.packages.json` |
+| `sc ls` / `sc list` | Prints the tree and package diagnostics |
+| `sc pkg` / `sc package` | Prints package diagnostics |
 | `sc config get <path>` | Reads a config value |
 | `sc config set <path=value>` | Writes a config value |
 | `sc config list` | Lists the merged config |
+| `sc reg` / `sc register` / `sc r` | Registers a file in the package registry |
+| `sc ureg` / `sc unreg` / `sc unregister` / `sc ur` | Unregisters a file from the package registry |
+| `sc rm` / `sc remove` | Deletes a file and syncs the registry |
 | `sc install deps` | Replays app dependency installs inside a Sculptor app |
 | `sc i deps` | Alias for `sc install deps` |
-| `sc update` | Updates globally installed Sculptor packages outside an app |
+| `sc update` | Updates the globally installed Sculptor CLI only |
+| `sc doctor` | Runs project, registry, and compatibility diagnostics |
 | `sc generate` / `sc g` | Generates framework resources |
 | `sc g c user` | Generates a controller resource |
 | `sc g r user` | Generates a functional route and handler pair |
+| `sc g pkg user` | Generates a package index and package-local resources |
+| `sc g c user --functional` | Generates paired functional route and handler output |
 | `sc g c user in src/app/users` | Generates into a custom path |
 | `sc g c in src/app/users` | Infers the name from the path and generates there |
 | `sc g t user -e` | Generates an enum type file |
@@ -53,18 +71,20 @@ It handles:
 - Temporary Execution (via Package Runner): `npx sc` or `npx sculptor`
 - Programmatic API: `runCli()`
 
-Note: If the Binary: `sc` resolves to Windows Service Control or conflicts with any other Binary, use `sculptor` instead. Otherwise use `npx` as prefix to invoke the CLI via Package Runner. 
+If `sc` conflicts with another command on your system, use `sculptor` instead.
 
 ## Command Reference
 
 ### `sc new <app>`
 
 What it does:
-- Creates a new Sculptor app in a sibling folder
-- Writes the initial framework files
-- Installs the package dependencies
+
+- creates a new Sculptor app in a sibling folder
+- writes the initial framework files
+- installs the package dependencies
 
 How it is used:
+
 ```bash
 sc new my-app
 ```
@@ -87,136 +107,137 @@ Flags:
 | `--tsx` | Shortcut for `tsx` dev server |
 | `--nodemon` | Shortcut for `nodemon` dev server |
 
-Examples:
-```bash
-sc new api
-sc new api --style=hybrid
-sc new api --dev-server=nodemon
-sc new api --framework-lock=false
-```
+### `sc agents` and `sc agents refresh`
 
-What it solves:
-- You get a ready-to-run app with the framework defaults already wired
+What they do:
 
-You will find it here:
-- [packages/cli/src/cli.ts](src/cli.ts)
-- [packages/cli/src/scaffold.ts](src/scaffold.ts)
-- [packages/cli/src/runtime-dependencies.ts](src/runtime-dependencies.ts)
+- generate a concise `AGENTS.md`
+- capture package-aware, registry-aware, DI-aware, and CLI-aware guidance for AI coding agents
+
+Behavior:
+
+- `sc agents` writes the file if it is missing
+- `sc agents refresh` rewrites the file with the latest framework guidance
+- both commands are safe to run repeatedly
 
 ### `sc dev`
 
 What it does:
-- Starts the app from source
-- Prints the CLI banner
 
-How it is used:
-```bash
-sc dev
-sc dev --port=4000
-```
-
-Flags:
-
-| Flag | Meaning |
-| --- | --- |
-| `--port=<number>` | Sets `PORT` for the dev process |
-
-What it solves:
-- You can restart the app quickly while editing source files
+- starts the app from source
+- prints the CLI banner
 
 Behavior:
-- Uses `nodemon` when `project.devServer` is `nodemon`
-- Uses `tsx` when `project.devServer` is `tsx`
-- Refuses to run outside a Sculptor app root
-- Suppresses the runtime banner by setting `SCULPTOR_SUPPRESS_BANNER=1`
+
+- uses `nodemon` when `project.devServer` is `nodemon`
+- uses `tsx` when `project.devServer` is `tsx`
+- refuses to run outside a Sculptor app root
+- prints a clean one-line framework error instead of a raw stack trace when the command is not allowed in the current directory
+- suppresses the runtime banner by setting `SCULPTOR_SUPPRESS_BANNER=1`
 
 ### `sc start`
 
 What it does:
-- Starts the app in production-style mode
 
-How it is used:
-```bash
-sc start
-sc start --port=4000
-sc start --watch
-```
-
-Flags:
-
-| Flag | Meaning |
-| --- | --- |
-| `--port=<number>` | Sets `PORT` for the process |
-| `--watch` | Forces the dev path instead of the built path |
+- starts the app in production-style mode
 
 Behavior:
-- If `dist/main.js` exists and `--watch` is not set, it runs the built app
-- If `--watch` is set, it behaves like `sc dev`
-- If no build output exists, it falls back to `tsx src/main.ts`
 
-What it solves:
-- The same command can be used for production-style startup and local fallback startup
+- if `dist/main.js` exists and `--watch` is not set, it runs the built app
+- if `--watch` is set, it behaves like `sc dev`
+- if no build output exists, it falls back to `tsx src/main.ts`
 
 ### `sc build`
 
 What it does:
-- Runs TypeScript build for the current app
 
-How it is used:
-```bash
-sc build
-```
-
-What it solves:
-- Creates production JavaScript output from app source
-
-Behavior:
-- Only works inside a Sculptor app root
-- Uses the app-local `tsconfig.json`
+- runs TypeScript build for the current app
+- runs package validation before TypeScript compile in the current release line
 
 ### `sc lint`
 
 What it does:
-- Runs ESLint from the app root
 
-How it is used:
-```bash
-sc lint
-```
-
-What it solves:
-- Gives a single framework-aligned lint command
+- runs ESLint from the app root
 
 ### `sc test`
 
 What it does:
-- Runs the app test suite
 
-How it is used:
-```bash
-sc test
-```
+- runs the app test suite
 
 Behavior:
-- If `src/tests/runner.spec.ts` exists, runs `vitest run src/tests/runner.spec.ts`
-- If the runner does not exist, falls back to `vitest run`
 
-What it solves:
-- You can keep a generated test registry while still having a standard test command
+- if `src/tests/runner.spec.ts` exists, it runs that entrypoint
+- otherwise it falls back to `vitest run`
+
+### `sc sync`
+
+What it does:
+
+- validates and refreshes `sculptor.packages.json`
+- checks package ownership, stale files, missing files, and registry consistency
+
+Behavior:
+
+- supports `-p`, `--p`, `-pkg`, `--pkg`, `-package`, and `--package`
+- package targeting is exact and does not singularize or pluralize names
+- package records track `registered` state and `tags` such as `helper`
+- warnings do not block the build path unless metadata is malformed or irrecoverable
+
+### `sc ls` / `sc list`
+
+What they do:
+
+- print package and tree diagnostics
+- show registered files, missing files, and unregistered files
+
+Behavior:
+
+- `-t`, `--tree`, `-tree`, and `--t` enable tree output
+- package targeting uses the same exact-name flags as `sc sync`
+
+### `sc pkg` / `sc package`
+
+What they do:
+
+- print package diagnostics
+- show package path, index path, and tracked files
+
+### `sc reg` / `sc register` / `sc r`
+
+What they do:
+
+- register a file in `sculptor.packages.json`
+- resolve exact file paths before prompting
+- support package registration with `sc reg pkg <name>`
+
+### `sc ureg` / `sc unreg` / `sc unregister` / `sc ur`
+
+What they do:
+
+- unregister a file from `sculptor.packages.json`
+- resolve exact file paths before prompting
+- support exact file-path matching only
+
+### `sc rm` / `sc remove`
+
+What they do:
+
+- delete a file
+- sync the registry after removal
+- support `sc rm pkg <name>` for package removal
+- refuse to delete package index files directly
+- prompt before deleting the resolved file
 
 ### `sc config`
 
 What it does:
-- Reads, writes, and lists app config
 
-How it is used:
-```bash
-sc config get logging
-sc config set logging.dogMode=false
-sc config list
-```
+- reads, writes, and lists app config
 
 Behavior:
+
 - `get` reads a dot-path from the merged config
 - `set` writes a dot-path assignment while preserving JSON formatting when possible
 - `list` prints the flattened merged config
@@ -225,368 +246,84 @@ Behavior:
 ### `sc install deps` and `sc i deps`
 
 What it does:
-- Replays the standard Sculptor app dependency installation sequence
-- Runs inside an existing Sculptor app root
-- Helps recover after an interrupted `npm i` during setup
 
-How it is used:
-```bash
-sc install deps
-sc i deps
-```
+- replays the standard Sculptor app dependency installation sequence
+- runs inside an existing Sculptor app root
+- helps recover after an interrupted `npm i` during setup
 
 Behavior:
-- Uses `npm i` for the app package.json dependencies first
-- Installs the Sculptor runtime dependencies next
-- Reinstalls the Sculptor CLI/config/router dev dependencies last
-- Refuses to run outside a Sculptor app root
+
+- uses `npm i` for the app package.json dependencies first
+- installs the Sculptor runtime dependencies next
+- reinstalls the Sculptor CLI/config/router dev dependencies last
+- refuses to run outside a Sculptor app root
 
 ### `sc update`
 
 What it does:
-- Updates globally installed Sculptor packages to their latest versions
+
+- updates the globally installed Sculptor CLI package only
 
 How it is used:
+
 ```bash
 sc update
 ```
 
 Behavior:
-- Works only outside a Sculptor app root
-- Uses the active package manager when possible
-- Updates the global Sculptor package set in one pass
 
-### `sc generate` and `sc g`
+- only installs `@sculptor/cli`
+- does not mutate runtime package dependencies globally
+- remains separate from scaffold-time template-registry recovery
 
-What it does:
-- Generates framework resources in the current app
+## Alias Notes
 
-How it is used:
-```bash
-sc generate controller user
-sc g c user
-```
+- `sc g` -> `sc generate`
+- `pkg` -> `package`
+- `ls` -> `list`
+- `reg` -> `register`
+- `ureg` -> `unreg` -> `unregister` -> `ur`
+- `rm` -> `remove`
 
-Supported kinds:
+## Package Target Flags
 
-| Kind | Aliases |
-| --- | --- |
-| controller | `c`, `controller` |
-| service | `s`, `service` |
-| module | `m`, `mo`, `module` |
-| middleware | `mw`, `middleware` |
-| type | `t`, `type` |
-| route | `r`, `route`, `resource` |
+Package-targeting flags accept either `=value` or separate `value` forms:
 
-Behavior:
-- Refuses to run outside a Sculptor app root
-- Controller generation is controller-first by default and can opt into paired functional route files with `--functional`
-- Route generation always writes the paired functional route and handler files
-- Rewrites the test registry when test generation is enabled
-
-What it solves:
-- Your app stays consistent as it grows
-
-### `sc help`
-
-What it does:
-- Prints help text
-
-How it is used:
-```bash
-sc help
-sc help generate
-sc help controller
-sc help module
-sc help middleware
-sc help type
-sc help route
-```
-
-### `sc version`
-
-What it does:
-- Prints the CLI version and the banner
-
-How it is used:
-```bash
-sc version
-sc v
-sc -v
-sc --v
-sc --version
-```
-
-## Full Flag Reference
-
-### Global flags and aliases
-
-| Input | Meaning |
-| --- | --- |
-| `-v` | Print version |
-| `--v` | Print version |
-| `--version` | Print version |
-| `version` | Print version |
-| `v` | Print version |
-| `-h` | Print help |
-| `--help` | Print help |
-
-### `sc new` flags
-
-| Flag | Meaning |
-| --- | --- |
-| `--name` | App name |
-| `--version` | Scaffold version |
-| `--style` | Routing style |
-| `--decorator` | Decorator routing shortcut |
-| `--functional` | Functional routing shortcut |
-| `--hybrid` | Hybrid routing shortcut |
-| `--frameworkLock` | Framework lock |
-| `--frameworklock` | Framework lock |
-| `--framework-lock` | Framework lock |
-| `--dev-server` | Dev server selection |
-| `--devserver` | Dev server selection |
-| `--tsx` | Dev server shortcut |
-| `--nodemon` | Dev server shortcut |
-
-### `sc dev` / `sc start` flags
-
-| Flag | Meaning |
-| --- | --- |
-| `--port` | Sets the process port |
-| `--watch` | Only used by `sc start` |
-
-### `sc generate` flags
-
-| Flag | Meaning |
-| --- | --- |
-| `--functional` | Use functional routing mode |
-| `--with-routes` | Alias for paired functional route generation |
-| `--decorator` | Use decorator routing mode |
-| `--hybrid` | Use hybrid routing mode |
-| `--style` | Explicitly set routing mode |
-| `in <path>` | Write files into a custom directory |
-| `-i` | Type generator creates `*.interface.ts` |
-| `-interface` | Type generator creates `*.interface.ts` |
-| `-c` | Type generator creates `*.class.ts` |
-| `-class` | Type generator creates `*.class.ts` |
-| `-e` | Type generator creates `*.enum.ts` |
-| `-enum` | Type generator creates `*.enum.ts` |
-
-## Generator Behavior
-
-### Controller generation
-
-What it does:
-- Writes `*.controller.ts` by default
-- Pass `--functional` or `--with-routes` to also write paired `*.route.ts` and `*.route.handler.ts` files
-- In functional-first app flows, the paired functional route files are the standard route shape
+- `-p`
+- `--p`
+- `-pkg`
+- `--pkg`
+- `-package`
+- `--package`
 
 Examples:
+
 ```bash
-sc generate controller user
-sc g c user
-sc g c user in src/app/users
-sc g c in src/app/users
-sc g c user --functional
+sc g pkg user -p=user
+sc g pkg user --pkg user
+sc g pkg user -package=user
+sc ls -t --package user
 ```
 
-If you use `in <path>`:
-- the file location changes to that path
-- the file name still follows the generator suffix
-- if you do not provide a name, the CLI infers it from the last path segment
-- the generated test file, when enabled, is written under `src/tests`
+## App Root Rule
 
-### Service generation
-
-What it does:
-- Writes `*.service.ts`
-
-Examples:
-```bash
-sc generate service user
-sc g s user
-sc g s user in src/app/services
-```
-
-### Module generation
-
-What it does:
-- Writes `*.module.ts`
-
-Examples:
-```bash
-sc generate module user
-sc g m user
-sc g mo user
-```
-
-### Middleware generation
-
-What it does:
-- Writes `*.middleware.ts`
-
-Examples:
-```bash
-sc generate middleware auth
-sc g mw auth
-sc g mw auth in src/app/middlewares
-```
-
-### Type generation
-
-What it does:
-- Writes one of:
-  - `*.type.ts`
-  - `*.interface.ts`
-  - `*.class.ts`
-  - `*.enum.ts`
-
-Examples:
-```bash
-sc g t
-sc generate type user
-sc g t user
-sc generate type user -interface
-sc g t user -i
-sc generate type user -class
-sc g t user -c
-sc generate type user -enum
-sc g t user -e
-```
-
-If you omit the name, the CLI falls back to `index` unless a custom output path lets it infer a name from the directory.
-
-### Route generation
-
-What it does:
-- Writes `*.route.ts` and `*.route.handler.ts`
-- Uses the Sculptor functional router builder
-- Generates a paired handler with try/catch and error middleware boilerplate
-
-Examples:
-```bash
-sc generate route user
-sc g r user
-sc g r user in src/app/routes
-```
-
-## Test Generation
-
-Test generation is controlled by `testing.generate` in `sculptor.json`.
-
-| Setting | Result |
-| --- | --- |
-| `true` | Matching `*.spec.ts` files are generated |
-| `false` | No new spec files are generated |
-
-Generated spec names:
-
-- `user.controller.spec.ts`
-- `user.service.spec.ts`
-- `user.route.spec.ts`
-- `auth.middleware.spec.ts`
-
-Default scaffold test files:
-
-- `src/tests/main.spec.ts`
-- `src/tests/health.controller.spec.ts`
-- `src/tests/health.route.spec.ts`
-- `src/tests/registry.ts`
-- `src/tests/runner.ts`
-- `src/tests/runner.spec.ts`
-
-## Test Harness Behavior
-
-What it does:
-- Discovers every `*.spec.ts` file under `src/tests`
-- Writes `src/tests/registry.ts`
-- Writes `src/tests/runner.ts`
-- Writes `src/tests/runner.spec.ts`
-
-How it is used:
-- `sc test` runs the registry runner when it exists
-
-What it solves:
-- You do not have to manually keep your test suite entrypoint updated
-
-## App Root Rules
-
-Only these commands work from outside a Sculptor app root:
+The CLI only allows certain commands outside a Sculptor app root:
 
 - `sc new`
+- `sc agents`
+- `sc agents refresh`
 - `sc help`
 - `sc version`
+- `sc doctor`
 - `sc update`
 
-`sc install deps` and `sc i deps` require a Sculptor app root.
+The runtime commands require `sculptor.json` in the current app root.
 
-Everything else requires `sculptor.json` in the current directory.
+When a command is rejected by the app-root guard, Sculptor prints a user-facing message only. It does not expose the internal stack trace in normal CLI output.
 
-If you try to run a restricted command outside an app root, the CLI stops with a clear error.
+Next:
 
-## CLI Banner Behavior
-
-The version line in the banner is automatic.
-
-If the package version changes, the banner version changes too.
-
-## Programmatic Use
-
-```ts
-import { runCli } from "@sculptor/cli";
-
-await runCli(["node", "sc", "help"]);
-```
-
-## Exports
-
-`@sculptor/cli` re-exports:
-
-- `runCli`
-- `resolveProjectMetadata`
-- `scaffoldProject`
-- `generateResourceFiles`
-- `writeGeneratedFiles`
-- `syncTestHarness`
-- the scaffold help strings
-
-These generator helpers now resolve `@sculptor/template-registry` at runtime and can prompt to install it if the package is missing.
-Call them with `await` when using the package programmatically.
-
-## Package Scripts
-
-- `npm run cli` runs the CLI source with `tsx`
-- `npm run build` compiles the package
-- `npm run prepack` builds before packaging
-
-## Runtime Boundaries
-
-- `@sculptor/template-registry` is a runtime dependency, not a dev-only helper
-- the CLI loads it lazily so global installs can recover cleanly when the package is missing
-- future plugin/template loaders should follow the same pattern: detect, explain, recover, then retry
-- publish `@sculptor/template-registry` before `@sculptor/cli` so global installs never see a missing runtime dependency during rollout
-
-## If You Only Remember One Thing
-
-If you are inside a Sculptor app root, use:
-
-```bash
-sc dev
-sc generate controller user
-sc generate route user
-sc config list
-sc test
-```
-
-If you are outside an app root, only use:
-
-```bash
-sc new
-sc help
-sc version
-```
-
-## License
-
-MIT
+- [packages/core/README.md](../core/README.md)
+- [packages/di/README.md](../di/README.md)
+- [packages/router/README.md](../router/README.md)
+- [packages/template-registry/README.md](../template-registry/README.md)
