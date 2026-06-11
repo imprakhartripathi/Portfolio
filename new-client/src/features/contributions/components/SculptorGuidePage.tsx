@@ -7,7 +7,7 @@ import { FaArrowLeftLong, FaArrowRightLong, FaBug, FaGithub, FaNpm } from "react
 import { SectionWrapper } from "../../../layout/SectionWrapper";
 import { useInViewReveal } from "../../../shared/hooks/useInViewReveal";
 import { revealContainer, revealItem } from "../../../shared/motion/variants";
-import { sculptorGuideDocs, sculptorNpmOrgUrl, sculptorRepoUrl } from "../data";
+import { sculptorGuideDocs, sculptorNpmOrgUrl, sculptorProductSpec, sculptorRepoUrl } from "../data";
 import type { ContributionItem } from "../types";
 
 type SculptorGuidePageProps = {
@@ -574,7 +574,7 @@ export function SculptorGuidePage({
           className="sculptor-guide-page__hero"
         >
           <div className="sculptor-guide-page__copy">
-            <p className="sculptor-guide-page__status">Beta</p>
+            <p className="sculptor-guide-page__status">{ sculptorProductSpec.version }</p>
             <h2 className="sculptor-guide-page__title">
               The full framework docs, rendered in-page.
             </h2>
@@ -619,7 +619,7 @@ export function SculptorGuidePage({
                 <div className="sculptor-guide-page__map-links">
                   {sculptorGuideDocs.map((doc) => (
                     <a
-                      key={doc.path}
+                      key={doc.url}
                       href={`#${createDocAnchorId(doc.title)}`}
                       className={`sculptor-guide-page__map-link ${activeDocId === createDocAnchorId(doc.title) ? "is-active" : ""}`}
                       aria-current={
@@ -697,11 +697,11 @@ export function SculptorGuidePage({
 
           <div className="sculptor-guide-page__docs">
             {sculptorGuideDocs.map((doc) => (
-              <motion.div key={doc.path} variants={revealItem}>
+              <motion.div key={doc.url} variants={revealItem}>
                 <MarkdownDocCard
                   title={doc.title}
                   summary={doc.summary}
-                  path={doc.path}
+                  path={doc.url}
                   isActive={activeDocId === createDocAnchorId(doc.title)}
                   onStatsChange={(stats) =>
                     setDocStats((current) => {

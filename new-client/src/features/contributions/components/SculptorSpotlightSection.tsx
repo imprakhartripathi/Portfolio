@@ -36,21 +36,28 @@ export function SculptorSpotlightSection({ onOpenSculptorPage, onOpenSculptorGui
         className="sculptor-spotlight__stack"
       >
         <motion.article variants={revealItem} className="sculptor-spotlight__card">
-          <div className="sculptor-spotlight__copy">
-            <p className="sculptor-spotlight__status sculptor-spotlight__status--beta">Beta</p>
-            <h3 className="sculptor-spotlight__title">{sculptor.shortSummary}</h3>
-            <p className="sculptor-spotlight__text">
-              Read the complete product definition including package docs, runtime flow, routing modes, config model, and the guide built from the framework docs.
-            </p>
+          <div className="sculptor-spotlight-wrapper">
+            <img src="sculptor-nobg.png" alt="Sculptor TS Logo" className="sculptor-spotlight__logo" />
+            <img src="sculptor-full-bg.png" alt="Sculptor TS Logo" className="sculptor-spotlight__logo--full" />
+
+              
+            <div className="sculptor-spotlight__copy">
+              <p className="sculptor-spotlight__status sculptor-spotlight__status--beta">{ sculptor.version }</p>
+              <h3 className="sculptor-spotlight__title">{sculptor.shortSummary}</h3>
+              <p className="sculptor-spotlight__text">
+                Read the complete product definition including package docs, runtime flow, routing modes, config model, and the guide built from the framework docs.
+              </p>
+            </div>
           </div>
-          <div className="sculptor-spotlight__actions">
-            <button type="button" className="link-btn" onClick={onOpenSculptorPage}>
-              Open Product Page <FaArrowRightLong />
-            </button>
-            <button type="button" className="link-btn link-btn--ghost" onClick={onOpenSculptorGuide}>
-              Read Guide <FaArrowRightLong />
-            </button>
-          </div>
+            
+            <div className="sculptor-spotlight__actions">
+              <button type="button" className="link-btn" onClick={onOpenSculptorPage}>
+                Open Product Page <FaArrowRightLong />
+              </button>
+              <button type="button" className="link-btn link-btn--ghost" onClick={onOpenSculptorGuide}>
+                Read Guide <FaArrowRightLong />
+              </button>
+            </div>
         </motion.article>
       </motion.div>
     </SectionWrapper>

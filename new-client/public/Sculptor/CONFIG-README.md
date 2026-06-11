@@ -1,7 +1,5 @@
 # @sculptor/config
 
-<!-- <img src="https://raw.githubusercontent.com/imprakhartripathi/Sculptor/main/assets/sculptor-full-bg.png" alt="SculptorTS"/> -->
-
 The SculptorTS config package loads framework and runtime config from the app root.
 
 ## Version Notes

@@ -3,7 +3,8 @@ export type ContributionItem = {
   slug: string
   title: string
   packageName: string
-  status: 'Published' | 'Coming Soon' | 'Beta'
+  version?: string
+  status: 'Published' | 'Coming Soon' | 'Beta' | 'Stable' | 'Depricated'
   shortSummary: string
   description: string
   features: string[]
@@ -21,7 +22,7 @@ export type SculptorPackageModule = {
 
 export type SculptorDocMapEntry = {
   title: string
-  path: string
+  url: string
   summary: string
 }
 
@@ -31,7 +32,7 @@ export type SculptorProductSpec = {
   brand: string
   namespace: string
   cli: string
-  betaNote: string
+  version: string
   positioning: string
   overview: string
   packageDocs: SculptorDocMapEntry[]
@@ -39,6 +40,7 @@ export type SculptorProductSpec = {
   routingModes: Array<{
     name: string
     summary: string
+    filename: string
     example: string[]
   }>
   configuration: Array<{
@@ -54,5 +56,5 @@ export type SculptorProductSpec = {
   }>
   platformCapabilities: string[]
   successCriteria: string[]
-  betaCautions: string[]
+  releaseNotes: string[]
 }

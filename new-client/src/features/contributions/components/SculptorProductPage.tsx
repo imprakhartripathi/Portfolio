@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion'
-import { FaArrowLeftLong, FaArrowRightLong, FaBug, FaNpm } from 'react-icons/fa6'
+import { FaArrowLeftLong, FaArrowRightLong, FaBug, FaNpm, FaTag } from 'react-icons/fa6'
 
 import { SectionWrapper } from '../../../layout/SectionWrapper'
 import { useInViewReveal } from '../../../shared/hooks/useInViewReveal'
 import { revealContainer, revealItem } from '../../../shared/motion/variants'
-import { sculptorNpmOrgUrl, sculptorProductSpec, sculptorRepoUrl } from '../data'
+import { sculptorNpmOrgUrl, sculptorProductSpec, sculptorReleasesUrl, sculptorRepoUrl } from '../data'
 
 type SculptorProductPageProps = {
   onBack: () => void
@@ -64,9 +64,12 @@ export function SculptorProductPage({ onBack, onOpenContributions, onOpenGuide }
         animate={inView ? 'visible' : 'hidden'}
         className="sculptor-product__stack"
       >
+        <motion.article variants={revealItem} className="sculptor-product__overview">
+            <img src="../../../../public/sculptor-full-bg.png" alt="Sculptor TS Logo" className="sculptor-product__logo--full" />
+        </motion.article>
         <motion.article variants={revealItem} className="sculptor-product__hero">
           <div className="sculptor-product__hero-copy">
-            <p className="sculptor-product__status sculptor-product__status--beta">{spec.betaNote}</p>
+            <p className="sculptor-product__status sculptor-product__status--beta">{spec.version}</p>
             <h2 className="sculptor-product__hero-title">{spec.positioning}</h2>
             <p className="sculptor-product__hero-text">
               {spec.overview}
@@ -75,13 +78,16 @@ export function SculptorProductPage({ onBack, onOpenContributions, onOpenGuide }
           </div>
           <div className="sculptor-product__hero-actions">
             <button type="button" className="link-btn" onClick={onOpenGuide}>
-              Open Guide <FaArrowRightLong />
+              <FaArrowRightLong /> Open Guide
             </button>
             <button type="button" className="link-btn" onClick={onOpenContributions}>
-              View All Contributions <FaArrowRightLong />
+              <FaArrowRightLong /> All Contributions
             </button>
             <a href={sculptorNpmOrgUrl} target="_blank" rel="noreferrer" className="link-btn link-btn--ghost">
-              npm Org <FaNpm />
+              <FaNpm /> Sculptor NPM
+            </a>
+            <a href={sculptorReleasesUrl} target="_blank" rel="noreferrer" className="link-btn link-btn--ghost">
+              <FaTag /> Releases
             </a>
             <button type="button" className="link-btn link-btn--ghost" onClick={onBack}>
               <FaArrowLeftLong /> Back
@@ -118,7 +124,9 @@ export function SculptorProductPage({ onBack, onOpenContributions, onOpenGuide }
               <article key={doc.title} className="sculptor-product__module-card">
                 <h4>{doc.title}</h4>
                 <p className="sculptor-product__module-summary">{doc.summary}</p>
-                <code className="sculptor-product__doc-path">{doc.path}</code>
+                <a href={doc.url} target="_blank" rel="noreferrer" className="sculptor-product__doc-path">
+                  Learn More
+                </a>
               </article>
             ))}
           </div>
@@ -141,7 +149,7 @@ export function SculptorProductPage({ onBack, onOpenContributions, onOpenGuide }
                 <h4>{mode.name}</h4>
                 <p>{mode.summary}</p>
                 <CodeEditorBlock
-                  filename={mode.name === 'Class-based Controller Mode' ? 'user.controller.ts' : 'users.routes.ts'}
+                  filename={ mode.filename }
                   lines={mode.example}
                   language="ts"
                 />
@@ -201,10 +209,10 @@ export function SculptorProductPage({ onBack, onOpenContributions, onOpenGuide }
         </motion.section>
 
         <motion.section variants={revealItem} className="sculptor-product__section">
-          <h3>Beta Notes</h3>
+          <h3>Release Notes</h3>
           <ul className="sculptor-product__success-list">
-            {spec.betaCautions.map((warning) => (
-              <li key={warning}>{warning}</li>
+            {spec.releaseNotes.map((note) => (
+              <li key={note}>{note}</li>
             ))}
           </ul>
         </motion.section>

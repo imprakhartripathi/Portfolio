@@ -1,7 +1,5 @@
 # @sculptor/core
 
-<!-- <img src="https://raw.githubusercontent.com/imprakhartripathi/Sculptor/main/assets/sculptor-full-bg.png" alt="SculptorTS"/> -->
-
 The SculptorTS core package boots the HTTP server and exposes the primary framework runtime API.
 
 ## Version Policy

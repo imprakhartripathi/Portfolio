@@ -1,7 +1,5 @@
 # @sculptor/template-registry
 
-<!-- <img src="https://raw.githubusercontent.com/imprakhartripathi/Sculptor/main/assets/sculptor-full-bg.png" alt="SculptorTS"/> -->
-
 The SculptorTS template-registry package hosts scaffold and generator templates outside the CLI.
 
 ## Version Notes

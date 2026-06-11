@@ -1,7 +1,5 @@
 # @sculptor/router
 
-<!-- <img src="https://raw.githubusercontent.com/imprakhartripathi/Sculptor/main/assets/sculptor-full-bg.png" alt="SculptorTS"/> -->
-
 The SculptorTS router package provides decorators and router assembly for controller-based and hybrid app styles.
 
 ## Version Policy

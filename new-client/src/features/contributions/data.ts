@@ -3,228 +3,298 @@ import type { ContributionItem, SculptorDocMapEntry, SculptorProductSpec } from 
 export const npmProfileUrl = 'https://www.npmjs.com/~imprakhartripathi'
 export const sculptorNpmOrgUrl = 'https://www.npmjs.com/org/sculptor'
 export const sculptorRepoUrl = "https://github.com/imprakhartripathi/Sculptor";
+export const sculptorReleasesUrl = `${sculptorRepoUrl}/releases`
 
 export const contributionItems: ContributionItem[] = [
   {
-    id: 'scafollder',
-    slug: 'scafollder',
-    title: '@imprakhartripathi/scafollder',
-    packageName: '@imprakhartripathi/scafollder',
-    status: 'Published',
+    id: "scafollder",
+    slug: "scafollder",
+    title: "@imprakhartripathi/scafollder",
+    packageName: "@imprakhartripathi/scafollder",
+    status: "Published",
     shortSummary:
-      'CLI tool to scaffold a Node.js + Express + TypeScript + MongoDB backend with a Modified MVC structure.',
+      "CLI tool to scaffold a Node.js + Express + TypeScript + MongoDB backend with a Modified MVC structure.",
     description:
-      'Scafollder is a production-focused bootstrap CLI that removes repetitive setup work for backend services. It copies a ready backend template, merges scripts and dependencies into package.json, and leaves you with a runnable service baseline.',
+      "Scafollder is a production-focused bootstrap CLI that removes repetitive setup work for backend services. It copies a ready backend template, merges scripts and dependencies into package.json, and leaves you with a runnable service baseline.",
     features: [
-      'Pre-configured Express + MongoDB backend',
-      'TypeScript-ready development flow',
-      'Nodemon + ts-node setup for local iteration',
-      'Template merge for scripts and dependencies',
-      'Auth-ready and environment-aware structure',
+      "Pre-configured Express + MongoDB backend",
+      "TypeScript-ready development flow",
+      "Nodemon + ts-node setup for local iteration",
+      "Template merge for scripts and dependencies",
+      "Auth-ready and environment-aware structure",
     ],
-    techStack: ['Node.js', 'Express.js', 'TypeScript', 'MongoDB', 'JWT', 'Nodemailer', 'Razorpay'],
+    techStack: [
+      "Node.js",
+      "Express.js",
+      "TypeScript",
+      "MongoDB",
+      "JWT",
+      "Nodemailer",
+      "Razorpay",
+    ],
     quickStart: [
-      'npx @imprakhartripathi/scafollder init',
-      'npm install',
-      'npm start',
+      "npx @imprakhartripathi/scafollder init",
+      "npm install",
+      "npm start",
     ],
-    npmUrl: 'https://www.npmjs.com/package/@imprakhartripathi/scafollder',
-    keywords: ['scaffold', 'backend', 'express', 'typescript', 'cli'],
+    npmUrl: "https://www.npmjs.com/package/@imprakhartripathi/scafollder",
+    keywords: ["scaffold", "backend", "express", "typescript", "cli"],
   },
   {
-    id: 'reactron',
-    slug: 'reactron',
-    title: '@imprakhartripathi/reactron',
-    packageName: '@imprakhartripathi/reactron',
-    status: 'Published',
+    id: "reactron",
+    slug: "reactron",
+    title: "@imprakhartripathi/reactron",
+    packageName: "@imprakhartripathi/reactron",
+    status: "Published",
     shortSummary:
-      'CLI tool to bootstrap a custom-structured React + TypeScript + Vite app with component-page-service architecture.',
+      "CLI tool to bootstrap a custom-structured React + TypeScript + Vite app with component-page-service architecture.",
     description:
-      'Reactron helps ship structured frontend projects faster by creating a consistent project foundation with TypeScript, routing, SCSS, linting, and theme service utilities already wired.',
+      "Reactron helps ship structured frontend projects faster by creating a consistent project foundation with TypeScript, routing, SCSS, linting, and theme service utilities already wired.",
     features: [
-      'Vite-powered React + TypeScript setup',
-      'Custom component-page-service structure',
-      'Pre-configured React Router and strict mode',
-      'SCSS/Sass support and theme service',
-      'Package script and dependency auto-merge',
+      "Vite-powered React + TypeScript setup",
+      "Custom component-page-service structure",
+      "Pre-configured React Router and strict mode",
+      "SCSS/Sass support and theme service",
+      "Package script and dependency auto-merge",
     ],
-    techStack: ['React', 'TypeScript', 'Vite', 'React Router', 'SCSS', 'ESLint'],
+    techStack: [
+      "React",
+      "TypeScript",
+      "Vite",
+      "React Router",
+      "SCSS",
+      "ESLint",
+    ],
     quickStart: [
-      'npx @imprakhartripathi/reactron init',
-      'npm install',
-      'npm run dev',
+      "npx @imprakhartripathi/reactron init",
+      "npm install",
+      "npm run dev",
     ],
-    npmUrl: 'https://www.npmjs.com/package/@imprakhartripathi/reactron',
-    keywords: ['react', 'vite', 'typescript', 'cli', 'scaffold'],
+    npmUrl: "https://www.npmjs.com/package/@imprakhartripathi/reactron",
+    keywords: ["react", "vite", "typescript", "cli", "scaffold"],
   },
   {
-    id: 'routesculpt',
-    slug: 'routesculpt',
-    title: 'RouteSculpt',
-    packageName: 'routesculpt',
-    status: 'Published',
+    id: "routesculpt",
+    slug: "routesculpt",
+    title: "RouteSculpt",
+    packageName: "routesculpt",
+    status: "Published",
     shortSummary:
-      'Decorator-first routing layer for Express with automatic controller registration and framework-style ergonomics.',
+      "Decorator-first routing layer for Express with automatic controller registration and framework-style ergonomics.",
     description:
-      'RouteSculpt is a lightweight TypeScript library that introduces clean controller-based routing on top of Express. It supports controller decorators, HTTP method decorators, middleware decorators, and parameter extraction with minimal runtime overhead.',
+      "RouteSculpt is a lightweight TypeScript library that introduces clean controller-based routing on top of Express. It supports controller decorators, HTTP method decorators, middleware decorators, and parameter extraction with minimal runtime overhead.",
     features: [
-      'Controller decorators with base path support',
-      'HTTP decorators: Get, Post, Put, Delete, Patch',
-      'Class-level and method-level middleware decorators',
-      'Body, Param, and Query parameter decorators',
-      'Automatic controller registration with error forwarding',
-      'ESM and CommonJS builds with TypeScript typings',
+      "Controller decorators with base path support",
+      "HTTP decorators: Get, Post, Put, Delete, Patch",
+      "Class-level and method-level middleware decorators",
+      "Body, Param, and Query parameter decorators",
+      "Automatic controller registration with error forwarding",
+      "ESM and CommonJS builds with TypeScript typings",
     ],
-    techStack: ['Express', 'TypeScript', 'Decorators', 'Middleware', 'reflect-metadata'],
+    techStack: [
+      "Express",
+      "TypeScript",
+      "Decorators",
+      "Middleware",
+      "reflect-metadata",
+    ],
     quickStart: [
-      'npm install routesculpt express reflect-metadata',
-      'Enable experimentalDecorators and emitDecoratorMetadata in tsconfig',
-      'registerControllers(app, [YourController])',
+      "npm install routesculpt express reflect-metadata",
+      "Enable experimentalDecorators and emitDecoratorMetadata in tsconfig",
+      "registerControllers(app, [YourController])",
     ],
-    npmUrl: 'https://www.npmjs.com/package/routesculpt',
-    keywords: ['express', 'routing', 'decorators', 'typescript', 'controller'],
+    npmUrl: "https://www.npmjs.com/package/routesculpt",
+    keywords: ["express", "routing", "decorators", "typescript", "controller"],
   },
   {
-    id: 'sculptor-ts',
-    slug: 'sculptor-ts',
-    title: 'Sculptor TS',
-    packageName: '@sculptor/*',
-    status: 'Beta',
+    id: "sculptor-ts",
+    slug: "sculptor-ts",
+    title: "Sculptor TS",
+    packageName: "@sculptor/*",
+    status: "Stable",
     shortSummary:
-      'A TypeScript-first Express framework split into core, router, config, and CLI packages with a disciplined app runtime.',
+      "A package-aware TypeScript-first Express framework supporting decorator, functional, and hybrid architectures with explicit dependency injection.",
     description:
-      'Sculptor TS is a framework for teams that want the ergonomics of a modern backend stack without abandoning Express. The current surface area centers on four packages, a shared config model, router decorators or functional routes, and a CLI that handles app creation, local dev, builds, linting, testing, and code generation.',
+      "Sculptor TS is a modular Express framework built around package contracts, explicit dependency injection, registry-driven tooling, and code generation. It supports decorator, functional, and hybrid application styles while providing diagnostics, package-aware scaffolding, request context support, and unified runtime behavior.",
     features: [
-      'Four-package surface: core, router, config, and CLI',
-      'Decorator, functional, and hybrid routing styles',
-      'Framework config in sculptor.json',
-      'Runtime config in props.json',
-      'Generated test harness support',
-      'Single-command app lifecycle with sc',
+      "Package-aware architecture with @Package()",
+      "Decorator, functional, and hybrid application styles",
+      "Explicit dependency injection with @AutoInject()",
+      "sculptor.packages.json ownership tracking",
+      "Package-aware generation and registry synchronization",
+      "Request context support via req.ctx",
+      "Framework diagnostics with sc doctor",
+      "AGENTS.md generation with sc agents",
+      "Unified framework error pipeline",
+      "Single-command application lifecycle",
     ],
-    techStack: ['Express', 'TypeScript', 'CLI Tooling', 'Decorators', 'Configuration'],
-    quickStart: [
-      'sc new demo-app',
-      'cd demo-app',
-      'sc dev',
+    techStack: [
+      "Express",
+      "TypeScript",
+      "Dependency Injection",
+      "CLI Tooling",
+      "Decorators",
+      "Configuration",
     ],
+    quickStart: ["sc new demo-app", "cd demo-app", "sc dev"],
     npmUrl: sculptorNpmOrgUrl,
-    keywords: ['express framework', 'typescript', 'backend product', 'cli', 'architecture'],
+    keywords: [
+      "express",
+      "typescript",
+      "backend",
+      "framework",
+      "dependency injection",
+      "cli",
+      "architecture",
+    ],
+    version: "v1.0-26.06",
   },
-]
+];
 
 export const spotlightContributionSlug = 'sculptor-ts'
 
 export const sculptorProductSpec: SculptorProductSpec = {
   brand: "Sculptor TS",
   namespace: "@sculptor/*",
-  cli: "sc",
-  betaNote: "Beta",
+  cli: "'sc' and 'sculptor' (on Windows)",
+  version: "v1.0-26.06",
+
   positioning:
-    "A TypeScript-first Express framework with disciplined runtime startup, config-driven behavior, and a CLI that keeps the app lifecycle predictable.",
+    "A package-aware TypeScript-first Express framework with explicit dependency injection, registry-driven tooling, and support for decorator, functional, and hybrid architectures.",
+
   overview:
-    "Sculptor TS is designed to make Express feel structured instead of ad hoc. The framework keeps the moving parts small, names the responsibilities clearly, and lets you choose between class-based decorators, functional routers, or a hybrid of both.",
+    "Sculptor TS is a modular Express framework built around package contracts, explicit dependency injection, request context support, package-aware code generation, and unified runtime behavior. Applications can be structured using controllers, functional routers, or a hybrid approach while maintaining clear ownership boundaries, predictable startup behavior, and registry-aware tooling.",
+
   packageDocs: [
     {
       title: "@sculptor/core",
-      path: "packages/core/README.md",
+      url: "https://npmjs.com/package/@sculptor/core",
       summary:
-        "Boot the app, resolve config, and mount the registry into a running HTTP server.",
+        "Runtime bootstrap, package composition, request context, and server startup.",
     },
     {
       title: "@sculptor/router",
-      path: "packages/router/README.md",
+      url: "https://npmjs.com/package/@sculptor/router",
       summary:
-        "Decorators and router assembly for controller-based, functional, or hybrid route styles.",
+        "Decorators, functional routers, middleware metadata, and route assembly.",
+    },
+    {
+      title: "@sculptor/di",
+      url: "https://npmjs.com/package/@sculptor/di",
+      summary:
+        "Explicit dependency injection, package metadata, and package contracts.",
     },
     {
       title: "@sculptor/config",
-      path: "packages/config/README.md",
+      url: "https://npmjs.com/package/@sculptor/config",
       summary:
-        "Load sculptor.json and props.json, merge them, and expose path-based lookups.",
+        "Configuration loading, interpolation, redaction, and path-based lookups.",
     },
     {
       title: "@sculptor/cli",
-      path: "packages/cli/README.md",
+      url: "https://npmjs.com/package/@sculptor/cli",
       summary:
-        "Create apps, run them, generate resources, and keep generated tests in sync.",
+        "Scaffolding, generation, diagnostics, package management, and application lifecycle tooling.",
     },
     {
       title: "@sculptor/paws",
-      path: "packages/paws/README.md",
-      summary:
-        "Structured logging and expressive dog mode for clear runtime feedback.",
+      url: "https://npmjs.com/package/@sculptor/paws",
+      summary: "Structured logging with standard and dog-mode output.",
     },
     {
       title: "@sculptor/template-registry",
-      path: "packages/template-registry/README.md",
+      url: "https://npmjs.com/package/@sculptor/template-registry",
       summary:
-        "Template registry for managing and resolving templates in the app.",
+        "Scaffold and generator templates used by the CLI and package-aware generation.",
     },
   ],
+
   packageModules: [
     {
       name: "@sculptor/core",
-      summary: "Runtime bootstrap and server startup.",
+      summary: "Runtime bootstrap, package composition, and server startup.",
       responsibilities: [
-        "Loads framework and runtime config",
-        "Starts the Express server from the registry",
-        "Prints the listening port and localhost URL",
+        "Loads framework and runtime configuration",
+        "Flattens package composition into runtime registries",
+        "Provides request context through req.ctx",
+        "Supports validation-only bootstrap mode",
+        "Routes errors through a unified framework pipeline",
       ],
     },
     {
       name: "@sculptor/router",
-      summary: "Decorators and router assembly.",
+      summary: "Decorators, functional routers, and route assembly.",
       responsibilities: [
-        "Controller decorators and HTTP method decorators",
-        "Middleware attachment at class or method level",
-        "Controller and route registration into one router",
+        "Controller and HTTP method decorators",
+        "Functional router scopes",
+        "Middleware metadata and registration",
+        "Hybrid routing support",
+        "Route collision detection",
+      ],
+    },
+    {
+      name: "@sculptor/di",
+      summary: "Explicit dependency injection and package contracts.",
+      responsibilities: [
+        "Provides @Service(), @Repository(), and @Middleware()",
+        "Provides @Package() package metadata",
+        "Provides @AutoInject() explicit injection",
+        "Detects circular dependencies",
+        "Supports package-aware runtime composition",
       ],
     },
     {
       name: "@sculptor/config",
-      summary: "Framework and runtime config loading.",
+      summary: "Framework and runtime configuration loading.",
       responsibilities: [
-        "Reads sculptor.json and props.json",
-        "Deep-merges runtime values into framework config",
-        "Provides getConfig() lookups by dot path",
+        "Reads sculptor.json, props.json, and .env",
+        "Resolves recursive variable interpolation",
+        "Provides getConfig() lookups",
+        "Redacts sensitive values when required",
+        "Caches configuration per root directory",
       ],
     },
     {
       name: "@sculptor/cli",
-      summary: "App creation and command orchestration.",
+      summary: "App creation, generation, diagnostics, and package tooling.",
       responsibilities: [
-        "Creates new apps with the framework defaults",
-        "Runs dev, build, lint, test, and generate commands",
-        "Generates source files and test harness updates",
+        "Creates new applications",
+        "Generates package-aware resources",
+        "Maintains sculptor.packages.json",
+        "Provides sc doctor diagnostics",
+        "Generates AGENTS.md",
       ],
     },
     {
       name: "@sculptor/paws",
-      summary:
-        "Structured logging and expressive dog mode for clear runtime feedback.",
+      summary: "Structured logging and expressive runtime feedback.",
       responsibilities: [
-        "Provides structured logging capabilities",
-        "Enables expressive dog mode for clear runtime feedback",
-        "Integrates with the framework's config system",
+        "Provides framework logging",
+        "Supports dog-mode personalities",
+        "Reads logging settings from configuration",
+        "Supports structured object logging",
+        "Integrates with framework startup and diagnostics",
       ],
     },
     {
       name: "@sculptor/template-registry",
-      summary:
-        "Template registry for managing and resolving templates in the app.",
+      summary: "Generator and scaffold template assets.",
       responsibilities: [
-        "Creates new apps with the framework defaults",
-        "Resolves and manages templates in the app",
-        "Generates source files and test harness updates",
+        "Hosts scaffold templates",
+        "Hosts generator templates",
+        "Supports package-aware generation",
+        "Provides marker-block regeneration support",
+        "Supplies template assets to the CLI",
       ],
     },
   ],
+
   routingModes: [
     {
       name: "Class-based Controller Mode",
       summary:
-        "Decorator-driven controllers when you want module-oriented structure and explicit route groupings.",
+        "Decorator-driven controllers for applications that prefer structured modules and grouped routes.",
+      filename: "user.controller.ts",
       example: [
         "@Controller('/users')",
         "class UserController {",
@@ -236,7 +306,8 @@ export const sculptorProductSpec: SculptorProductSpec = {
     {
       name: "Functional Route Mode",
       summary:
-        "Direct router registration when you want the route map to stay explicit and lightweight.",
+        "Lightweight router composition with explicit route registration and handler separation.",
+      filename: "health.route.ts",
       example: [
         "export const health = FunctionalRouter('/health');",
         "health.get(healthHandler);",
@@ -247,7 +318,8 @@ export const sculptorProductSpec: SculptorProductSpec = {
     {
       name: "Hybrid Mode",
       summary:
-        "Mix controllers and direct routers when one feature set benefits from each style.",
+        "Combine controller-based and functional routing styles within the same application.",
+      filename: "main.ts",
       example: [
         "createRouter({",
         "  controllers: [UserController],",
@@ -257,21 +329,25 @@ export const sculptorProductSpec: SculptorProductSpec = {
       ],
     },
     {
-      name: "Typed Request/Response and Error Handling for Functional Routes",
+      name: "Package-Aware Architecture",
       summary:
-        "Typed request/response handling with built-in error normalization and framework-level error middleware support",
+        "Organize applications into first-class packages using package metadata and ownership tracking.",
+      filename: "users/index.ts",
       example: [
-        'import { normalizeError } from "@sculptor/core"',
-        'import type { Req, Res, Nxt } from "@sculptor/core"',
-        'import type { FrameworkErrorHandler } from "@sculptor/core"',
-        'import type { SculptorError } from "@sculptor/core"',
+        "@Package({",
+        "  name: 'users',",
+        "  controllers: [UserController],",
+        "  services: [UserService]",
+        "})",
       ],
     },
   ],
+
   configuration: [
     {
       file: "sculptor.json",
-      purpose: "Framework behavior, source layout, and generation defaults.",
+      purpose:
+        "Framework behavior, source layout, generation defaults, and runtime preferences.",
       highlights: [
         "Project metadata and source root",
         "Routing style: decorator, functional, or hybrid",
@@ -288,138 +364,159 @@ export const sculptorProductSpec: SculptorProductSpec = {
     {
       file: "props.json",
       purpose:
-        "Runtime settings such as port, prefix, and deploy-time overrides.",
+        "Runtime settings such as ports, prefixes, and deploy-time configuration.",
       highlights: [
         "App port and router prefix",
-        "Runtime defaults that can be overridden at startup",
-        "Values the runtime reads without touching source code",
+        "Runtime defaults",
+        "Environment-specific values",
       ],
       snippet: [
         "{",
-        '  "app": { ',
-        '     "port": 3000, "prefix": "/api"',
-        "   }",
+        '  "app": {',
+        '    "port": 3000,',
+        '    "prefix": "/api"',
+        "  }",
         "}",
       ],
     },
   ],
+
   runtimeFlow: [
-    "Load sculptor.json and props.json from the app root.",
-    "Resolve the port from startApp(), PORT, props.json, or the 3000 default.",
-    "Attach Express middleware and build the router from the registry.",
-    "Mount controllers and routes under the configured prefix.",
-    "Start listening and print the port plus localhost URL.",
+    "Load sculptor.json, props.json, and .env from the app root.",
+    "Resolve configuration values and interpolation.",
+    "Flatten package composition into runtime registries.",
+    "Attach middleware and request context.",
+    "Build routers from controllers and functional routes.",
+    "Start listening and route errors through the framework pipeline.",
   ],
+
   commandSheet: [
     {
       command: "sc new demo-app",
-      summary: "Create a new app with the current framework defaults.",
+      summary: "Create a new application with the current framework defaults.",
     },
     {
       command: "sc dev",
-      summary:
-        "Run the app from source with the CLI banner suppressed in the runtime.",
+      summary: "Run the application directly from source.",
     },
     {
       command: "sc start",
-      summary:
-        "Start production-style mode from dist/ when the build output exists.",
+      summary: "Start the application using production-style startup behavior.",
     },
     {
       command: "sc build",
-      summary: "Compile the app with the app-local TypeScript config.",
+      summary: "Validate packages and compile the application.",
     },
     {
       command: "sc lint",
-      summary: "Run ESLint from the app root.",
+      summary: "Run ESLint from the application root.",
     },
     {
       command: "sc test",
-      summary: "Run the generated or standard test suite.",
+      summary: "Run the generated or configured test suite.",
     },
     {
-      command: "sc generate controller user",
-      summary:
-        "Create a controller resource and refresh the generated test registry.",
+      command: "sc sync",
+      summary: "Validate and synchronize sculptor.packages.json.",
+    },
+    {
+      command: "sc doctor",
+      summary: "Run project, registry, and compatibility diagnostics.",
+    },
+    {
+      command: "sc agents",
+      summary: "Generate AGENTS.md for AI coding assistants.",
+    },
+    {
+      command: "sc g pkg users",
+      summary: "Generate a package index and package-local resources.",
     },
     {
       command: "sc config get app.port",
-      summary:
-        "Get a runtime config value by its dot path without importing code or reading files.",
+      summary: "Read a configuration value by dot path.",
     },
   ],
+
   platformCapabilities: [
-    "Startup banner suppression in dev",
-    "App-root guardrails for lifecycle commands",
-    "Generated spec registry when testing is enabled",
-    "Config caching by root directory",
-    "Controller and router coexistence",
-    "Prefix normalization for mounted routers",
+    "Package-aware architecture",
+    "Explicit dependency injection",
+    "Request context support",
+    "Package ownership tracking",
+    "Registry synchronization",
+    "AGENTS.md generation",
+    "Framework diagnostics",
+    "Exact file registration flows",
+    "Hybrid routing support",
+    "Unified framework error pipeline",
   ],
+
   successCriteria: [
-    "A new app can be created, run, and built with one command family.",
-    "Routing style stays explicit even as the app grows.",
-    "Runtime behavior is declared in config instead of scattered through code.",
-    "Generated tests stay aligned with generated resources.",
-    "The framework stays understandable from the README and package docs alone.",
+    "Applications can scale through package-based organization.",
+    "Routing style remains explicit as applications grow.",
+    "Dependency wiring stays predictable and intentional.",
+    "Runtime behavior is declared through configuration.",
+    "Package ownership and generation remain synchronized.",
+    "Framework documentation is sufficient to understand the runtime model.",
   ],
-  betaCautions: [
-    "Expect small API shifts before v1.",
-    "Treat the README and package docs as the current source of truth.",
-    "Prefer the guide page when you need the practical workflow, not just the package names.",
+
+  releaseNotes: [
+    "Current stable runtime line: v1.0.2",
+    "Combined framework release: v1.0-26.06",
+    "Versions before v1.0.0 are deprecated",
+    "Future changes are expected to remain additive and backwards-conscious",
   ],
 };
 
 export const sculptorGuideDocs: SculptorDocMapEntry[] = [
   {
     title: "Framework Overview",
-    path: "/Sculptor/readme.md",
+    url: "/Sculptor/readme.md",
     summary:
       "Start here for the package map, runtime behavior, startup output, and app root rules.",
   },
   {
     title: "Changelog",
-    path: "/Sculptor/changelog.md",
+    url: "/Sculptor/changelog.md",
     summary:
       "Changelog with versioned entries for new features, improvements, and fixes across all packages.",
   },
   {
     title: "@sculptor/cli",
-    path: "/Sculptor/CLI-README.md",
+    url: "/Sculptor/CLI-README.md",
     summary:
       "Command reference for scaffolding, dev, start, build, lint, test, and generators.",
   },
   {
     title: "@sculptor/core",
-    path: "/Sculptor/CORE-README.md",
+    url: "/Sculptor/CORE-README.md",
     summary:
       "Runtime startup, config resolution, port handling, and registry behavior.",
   },
   {
     title: "@sculptor/config",
-    path: "/Sculptor/CONFIG-README.md",
+    url: "/Sculptor/CONFIG-README.md",
     summary:
       "Config file format, merge rules, cache behavior, and runtime lookup helpers.",
   },
   {
     title: "@sculptor/router",
-    path: "/Sculptor/ROUTER-README.md",
+    url: "/Sculptor/ROUTER-README.md",
     summary: "Decorator API, prefix handling, and Express router assembly.",
   },
   {
     title: "@sculptor/di",
-    path: "/Sculptor/DI-README.md",
+    url: "/Sculptor/DI-README.md",
     summary: "Dependency injection container for managing and resolving dependencies.",
   },
   {
     title: "@sculptor/paws",
-    path: "/Sculptor/PAWS-README.md",
+    url: "/Sculptor/PAWS-README.md",
     summary:
       "Lightweight logger with a standard mode and a more expressive dog mode.",
   },
   {
     title: "@sculptor/template-registry",
-    path: "/Sculptor/TEMPLATE-REGISTRY-README.md",
+    url: "/Sculptor/TEMPLATE-REGISTRY-README.md",
     summary:
       "Template registry for managing and resolving templates in the app.",
   },
