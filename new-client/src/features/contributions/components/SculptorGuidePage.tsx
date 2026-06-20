@@ -2,13 +2,24 @@ import { useEffect, useMemo, useState } from "react";
 import type { ElementType, ReactNode } from "react";
 
 import { motion } from "framer-motion";
-import { FaArrowLeftLong, FaArrowRightLong, FaBug, FaGithub, FaNpm } from "react-icons/fa6";
+import {
+  FaArrowLeftLong,
+  FaArrowRightLong,
+  FaBug,
+  FaGithub,
+  FaNpm,
+  FaXmark,
+} from "react-icons/fa6";
 
 import { SectionWrapper } from "../../../layout/SectionWrapper";
 import { useInViewReveal } from "../../../shared/hooks/useInViewReveal";
 import { revealContainer, revealItem } from "../../../shared/motion/variants";
 import { sculptorGuideDocs, sculptorNpmOrgUrl, sculptorProductSpec, sculptorRepoUrl } from "../data";
 import type { ContributionItem } from "../types";
+
+const GUIDE_MAP_OPEN_EVENT = "portfolio:guide-map:open";
+const GUIDE_MAP_CLOSE_EVENT = "portfolio:guide-map:close";
+const GUIDE_MAP_STATE_EVENT = "portfolio:guide-map:state";
 
 type SculptorGuidePageProps = {
   contribution: ContributionItem;
@@ -22,7 +33,10 @@ type MarkdownBlock =
   | { type: "list"; ordered: boolean; items: string[] }
   | { type: "blockquote"; lines: string[] }
   | { type: "code"; language: string; code: string }
-  | { type: "table"; header: string[]; rows: string[][] };
+  | { type: "table"; header: string[]; rows: string[][] }
+  | { type: "image"; alt: string; src: string; title?: string }
+  | { type: "html"; html: string }
+  | { type: "hr" };
 
 function joinBase(path: string) {
   const base = import.meta.env.BASE_URL || "/";
@@ -74,20 +88,42 @@ function isListItem(line: string) {
   return /^\s*(?:[-*]|\d+\.)\s+/.test(line);
 }
 
+function isImageLine(line: string) {
+  return /^!\[[^\]]*\]\([^)]+\)\s*$/.test(line.trim());
+}
+
+function isHorizontalRule(line: string) {
+  return /^(-{3,}|_{3,}|\*{3,})\s*$/.test(line.trim());
+}
+
+function isHtmlCommentStart(line: string) {
+  return line.includes("<!--");
+}
+
+function isHtmlBlockLine(line: string) {
+  return /^<\/?\w+[\s>]/.test(line.trim());
+}
+
 function isBlockStart(line: string) {
   return (
     /^#{1,6}\s+/.test(line) ||
     line.startsWith("```") ||
     line.startsWith("> ") ||
     isListItem(line) ||
-    line.includes("|")
+    line.includes("|") ||
+    isImageLine(line) ||
+    isHorizontalRule(line) ||
+    isHtmlBlockLine(line)
   );
 }
 
 function countWords(markdown: string) {
   const stripped = markdown
+    .replace(/<!--[\s\S]*?-->/g, " ")
     .replace(/```[\s\S]*?```/g, " ")
+    .replace(/!\[[^\]]*\]\([^)]+\)/g, " ")
     .replace(/\[[^\]]+\]\([^)]+\)/g, " ")
+    .replace(/<[^>]+>/g, " ")
     .replace(/[#>*`|_-]/g, " ");
 
   const words = stripped.match(/\b[\p{L}\p{N}']+\b/gu);
@@ -98,13 +134,61 @@ function parseMarkdown(markdown: string): MarkdownBlock[] {
   const lines = markdown.replace(/\r\n/g, "\n").split("\n");
   const blocks: MarkdownBlock[] = [];
   let index = 0;
+  let inComment = false;
 
   while (index < lines.length) {
     const line = lines[index].trimEnd();
 
+    if (inComment) {
+      if (line.includes("-->")) {
+        inComment = false;
+      }
+      index += 1;
+      continue;
+    }
+
     if (!line.trim()) {
       index += 1;
       continue;
+    }
+
+    if (isHtmlCommentStart(line)) {
+      if (!line.includes("-->")) {
+        inComment = true;
+      }
+      index += 1;
+      continue;
+    }
+
+    if (isHorizontalRule(line)) {
+      blocks.push({ type: "hr" });
+      index += 1;
+      continue;
+    }
+
+    if (isHtmlBlockLine(line)) {
+      const htmlLines: string[] = [];
+
+      while (index < lines.length && lines[index].trim().startsWith("<")) {
+        htmlLines.push(lines[index].trimEnd());
+        index += 1;
+      }
+
+      blocks.push({ type: "html", html: htmlLines.join(" ") });
+      continue;
+    }
+
+    if (isImageLine(line)) {
+      const imageMatch = line.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+      if (imageMatch) {
+        blocks.push({
+          type: "image",
+          alt: imageMatch[1],
+          src: imageMatch[2],
+        });
+        index += 1;
+        continue;
+      }
     }
 
     const headingMatch = line.match(/^(#{1,6})\s+(.*)$/);
@@ -210,7 +294,7 @@ function parseMarkdown(markdown: string): MarkdownBlock[] {
 
 function renderInline(text: string) {
   const parts: ReactNode[] = [];
-  const pattern = /(`[^`]+`|\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*|\*[^*]+\*)/g;
+  const pattern = /(`[^`]+`|!\[[^\]]*\]\([^)]+\)|\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*|\*[^*]+\*)/g;
   let lastIndex = 0;
 
   for (const match of text.matchAll(pattern)) {
@@ -227,6 +311,22 @@ function renderInline(text: string) {
           {full.slice(1, -1)}
         </code>,
       );
+    } else if (full.startsWith("![")) {
+      const imageMatch = full.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+      if (imageMatch) {
+        parts.push(
+          <span key={`${start}-image`} className="sculptor-markdown__image-shell">
+            <img
+              alt={imageMatch[1]}
+              src={imageMatch[2]}
+              className="sculptor-markdown__image"
+              loading="lazy"
+            />
+          </span>,
+        );
+      } else {
+        parts.push(full);
+      }
     } else if (full.startsWith("[")) {
       const linkMatch = full.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
       if (linkMatch) {
@@ -237,6 +337,7 @@ function renderInline(text: string) {
             href={resolvedHref}
             target={resolvedHref.startsWith("http") ? "_blank" : undefined}
             rel={resolvedHref.startsWith("http") ? "noreferrer" : undefined}
+            className="sculptor-markdown__link"
           >
             {linkMatch[1]}
           </a>,
@@ -266,6 +367,33 @@ function renderInline(text: string) {
   }
 
   return parts.length ? parts : text;
+}
+
+function extractHtmlImages(html: string) {
+  const images: Array<{ alt: string; src: string; title?: string }> = [];
+  const imgPattern = /<img\b[^>]*>/gi;
+
+  for (const match of html.matchAll(imgPattern)) {
+    const tag = match[0];
+    const src = tag.match(/\bsrc="([^"]+)"/i)?.[1] ?? tag.match(/\bsrc='([^']+)'/i)?.[1];
+    if (!src) {
+      continue;
+    }
+
+    images.push({
+      src,
+      alt:
+        tag.match(/\balt="([^"]*)"/i)?.[1] ??
+        tag.match(/\balt='([^']*)'/i)?.[1] ??
+        "",
+      title:
+        tag.match(/\btitle="([^"]*)"/i)?.[1] ??
+        tag.match(/\btitle='([^']*)'/i)?.[1] ??
+        undefined,
+    });
+  }
+
+  return images;
 }
 
 function MarkdownBlocks({ markdown }: { markdown: string }) {
@@ -365,6 +493,49 @@ function MarkdownBlocks({ markdown }: { markdown: string }) {
               </table>
             </div>
           );
+        }
+
+        if (block.type === "image") {
+          return (
+            <figure key={key} className="sculptor-markdown__figure">
+              <img
+                src={block.src}
+                alt={block.alt}
+                className="sculptor-markdown__image"
+                loading="lazy"
+              />
+            </figure>
+          );
+        }
+
+        if (block.type === "html") {
+          const htmlImages = extractHtmlImages(block.html);
+
+          if (htmlImages.length > 0) {
+            return (
+              <div key={key} className="sculptor-markdown__html-block sculptor-markdown__html-block--center">
+                <div className="sculptor-markdown__html-row">
+                  {htmlImages.map((image, imageIndex) => (
+                    <span key={`${key}-html-img-${imageIndex}`} className="sculptor-markdown__html-badge">
+                      <img src={image.src} alt={image.alt} title={image.title} loading="lazy" />
+                    </span>
+                  ))}
+                </div>
+              </div>
+            );
+          }
+
+          return (
+            <div
+              key={key}
+              className="sculptor-markdown__html-block"
+              dangerouslySetInnerHTML={{ __html: block.html }}
+            />
+          );
+        }
+
+        if (block.type === "hr") {
+          return <hr key={key} className="sculptor-markdown__divider" />;
         }
 
         return null;
@@ -481,6 +652,7 @@ export function SculptorGuidePage({
   const [docStats, setDocStats] = useState<
     Array<{ title: string; words: number; readTime: number }>
   >([]);
+  const [isMobileMapOpen, setIsMobileMapOpen] = useState(false);
   const [activeDocTitle, setActiveDocTitle] = useState(
     sculptorGuideDocs[0]?.title ?? "",
   );
@@ -494,7 +666,26 @@ export function SculptorGuidePage({
   );
   const activeDocId = createDocAnchorId(activeDocTitle);
 
+  function jumpToDoc(title: string) {
+    const targetId = createDocAnchorId(title);
+    const target = document.getElementById(targetId);
+
+    setIsMobileMapOpen(false);
+
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
   useEffect(() => {
+    const onOpenGuideMap = () => {
+      setIsMobileMapOpen(true);
+    };
+
+    const onCloseGuideMap = () => {
+      setIsMobileMapOpen(false);
+    };
+
     const updateActiveDoc = () => {
       const cards = Array.from(
         document.querySelectorAll<HTMLElement>(".sculptor-guide-doc"),
@@ -540,10 +731,14 @@ export function SculptorGuidePage({
     };
 
     updateActiveDoc();
+    window.addEventListener(GUIDE_MAP_OPEN_EVENT, onOpenGuideMap);
+    window.addEventListener(GUIDE_MAP_CLOSE_EVENT, onCloseGuideMap);
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
 
     return () => {
+      window.removeEventListener(GUIDE_MAP_OPEN_EVENT, onOpenGuideMap);
+      window.removeEventListener(GUIDE_MAP_CLOSE_EVENT, onCloseGuideMap);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
       if (frame) {
@@ -552,16 +747,24 @@ export function SculptorGuidePage({
     };
   }, [activeDocTitle]);
 
+  useEffect(() => {
+    window.dispatchEvent(
+      new CustomEvent(GUIDE_MAP_STATE_EVENT, {
+        detail: { open: isMobileMapOpen },
+      }),
+    );
+  }, [isMobileMapOpen]);
+
   return (
     <SectionWrapper
-      id="sculptor-guide"
-      eyebrow="Framework Guide"
-      title="Sculptor TS"
-      description={`${contribution.packageName} • rendered from the markdown docs in public/Sculptor`}
-      className="sculptor-guide-page"
-      bodyClassName="sculptor-guide-page__body"
-      titleAs="h1"
-    >
+        id="sculptor-guide"
+        eyebrow="Framework Guide"
+        title="Sculptor TS"
+        description={`${contribution.packageName} • rendered from the markdown docs in public/Sculptor`}
+        className="sculptor-guide-page"
+        bodyClassName="sculptor-guide-page__body"
+        titleAs="h1"
+      >
       <motion.div
         ref={ref}
         variants={revealContainer}
@@ -618,18 +821,15 @@ export function SculptorGuidePage({
                 <h3>File Map</h3>
                 <div className="sculptor-guide-page__map-links">
                   {sculptorGuideDocs.map((doc) => (
-                    <a
+                    <button
                       key={doc.url}
-                      href={`#${createDocAnchorId(doc.title)}`}
+                      type="button"
                       className={`sculptor-guide-page__map-link ${activeDocId === createDocAnchorId(doc.title) ? "is-active" : ""}`}
-                      aria-current={
-                        activeDocId === createDocAnchorId(doc.title)
-                          ? "true"
-                          : undefined
-                      }
+                      aria-current={activeDocId === createDocAnchorId(doc.title) ? "true" : undefined}
+                      onClick={() => jumpToDoc(doc.title)}
                     >
                       {doc.title}
-                    </a>
+                    </button>
                   ))}
                 </div>
               </div>
@@ -672,22 +872,25 @@ export function SculptorGuidePage({
                   target="_blank"
                   rel="noreferrer"
                   className="link-btn link-btn--ghost"
+                  aria-label="Open Sculptor repository"
                 >
-                 <FaGithub/>
+                  <FaGithub />
                 </a>
                 <a
                   href={sculptorNpmOrgUrl}
                   target="_blank"
                   rel="noreferrer"
                   className="link-btn link-btn--ghost"
+                  aria-label="Open Sculptor npm org"
                 >
-                  <FaNpm/>
+                  <FaNpm />
                 </a>
                 <a
                   href={`${sculptorRepoUrl}/issues`}
                   target="_blank"
                   rel="noreferrer"
                   className="link-btn link-btn--warning"
+                  aria-label="Report a Sculptor bug"
                 >
                   <FaBug />
                 </a>
@@ -714,6 +917,48 @@ export function SculptorGuidePage({
                 />
               </motion.div>
             ))}
+          </div>
+        </div>
+
+        <div
+          className={`sculptor-guide-page__mobile-map ${isMobileMapOpen ? "is-open" : ""}`}
+          aria-hidden={!isMobileMapOpen}
+        >
+          <button
+            type="button"
+            className="sculptor-guide-page__mobile-map-backdrop"
+            aria-label="Close file map"
+            onClick={() => setIsMobileMapOpen(false)}
+          />
+
+          <div className="sculptor-guide-page__mobile-map-panel" role="dialog" aria-modal="true" aria-label="Guide file map">
+            <div className="sculptor-guide-page__mobile-map-head">
+              <div>
+                <p className="sculptor-guide-page__mobile-map-kicker">File Map</p>
+                <h3>Jump between docs</h3>
+              </div>
+              <button
+                type="button"
+                className="sculptor-guide-page__mobile-map-close"
+                aria-label="Close file map"
+                onClick={() => setIsMobileMapOpen(false)}
+              >
+                <FaXmark aria-hidden="true" />
+              </button>
+            </div>
+
+            <div className="sculptor-guide-page__mobile-map-links">
+              {sculptorGuideDocs.map((doc) => (
+                <button
+                  key={`mobile-${doc.url}`}
+                  type="button"
+                  className={`sculptor-guide-page__map-link ${activeDocId === createDocAnchorId(doc.title) ? "is-active" : ""}`}
+                  onClick={() => jumpToDoc(doc.title)}
+                >
+                  {doc.title}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </motion.div>

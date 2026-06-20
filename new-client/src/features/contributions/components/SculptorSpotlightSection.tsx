@@ -4,7 +4,7 @@ import { FaArrowRightLong } from 'react-icons/fa6'
 import { SectionWrapper } from '../../../layout/SectionWrapper'
 import { useInViewReveal } from '../../../shared/hooks/useInViewReveal'
 import { revealContainer, revealItem } from '../../../shared/motion/variants'
-import { contributionItems } from '../data'
+import { contributionItems, sculptorNpmOrgUrl } from '../data'
 
 type SculptorSpotlightSectionProps = {
   onOpenSculptorPage: () => void
@@ -35,29 +35,57 @@ export function SculptorSpotlightSection({ onOpenSculptorPage, onOpenSculptorGui
         animate={inView ? 'visible' : 'hidden'}
         className="sculptor-spotlight__stack"
       >
-        <motion.article variants={revealItem} className="sculptor-spotlight__card">
-          <div className="sculptor-spotlight-wrapper">
-            <img src="sculptor-nobg.png" alt="Sculptor TS Logo" className="sculptor-spotlight__logo" />
-            <img src="sculptor-full-bg.png" alt="Sculptor TS Logo" className="sculptor-spotlight__logo--full" />
-
-              
-            <div className="sculptor-spotlight__copy">
-              <p className="sculptor-spotlight__status sculptor-spotlight__status--beta">{ sculptor.version }</p>
-              <h3 className="sculptor-spotlight__title">{sculptor.shortSummary}</h3>
-              <p className="sculptor-spotlight__text">
-                Read the complete product definition including package docs, runtime flow, routing modes, config model, and the guide built from the framework docs.
-              </p>
+        <motion.article variants={revealItem} className="projects-cta-card sculptor-spotlight-card">
+          <div className="projects-cta-card__visual sculptor-spotlight-card__visual">
+            <div className="projects-cta-card__visual-frame sculptor-spotlight-card__visual-frame">
+              <img
+                src="sculptor-nobg.png"
+                alt="Sculptor TS Logo"
+                className="projects-cta-card__visual-image sculptor-spotlight-card__visual-image"
+              />
             </div>
           </div>
-            
-            <div className="sculptor-spotlight__actions">
-              <button type="button" className="link-btn" onClick={onOpenSculptorPage}>
-                Open Product Page <FaArrowRightLong />
-              </button>
-              <button type="button" className="link-btn link-btn--ghost" onClick={onOpenSculptorGuide}>
-                Read Guide <FaArrowRightLong />
-              </button>
+
+          <div className="sculptor-spotlight-card__copy">
+            <div className="projects-cta-card__eyebrow-row">
+              {/* <span className="projects-cta-card__eyebrow">Framework Spotlight</span> */}
+              <span className="projects-cta-card__status">{sculptor.version}</span>
             </div>
+
+            <h3 className="projects-cta-card__title">Package-aware Express framework</h3>
+            <p className="projects-cta-card__text">
+              Sculptor TS keeps framework structure explicit: package ownership, request context, config loading, and CLI-driven generation all stay visible in one place.
+            </p>
+
+            <div className="sculptor-spotlight-card__action-grid">
+              <button type="button" className="sculptor-spotlight-card__action-card" onClick={onOpenSculptorGuide}>
+                <span className="sculptor-spotlight-card__action-kicker">Guide</span>
+                <span className="sculptor-spotlight-card__action-title">Read the docs map</span>
+                <span className="sculptor-spotlight-card__action-copy">
+                  Runtime flow, package docs, config model, and the live markdown reader.
+                </span>
+                <span className="sculptor-spotlight-card__action-footer">Open guide <FaArrowRightLong aria-hidden="true" /></span>
+              </button>
+
+              <a
+                href={sculptorNpmOrgUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="sculptor-spotlight-card__action-card sculptor-spotlight-card__action-card--link"
+              >
+                <span className="sculptor-spotlight-card__action-kicker">npm org</span>
+                <span className="sculptor-spotlight-card__action-title">See published packages</span>
+                <span className="sculptor-spotlight-card__action-copy">
+                  Quick access to the Sculptor package family and package releases.
+                </span>
+                <span className="sculptor-spotlight-card__action-footer">Open npm <FaArrowRightLong aria-hidden="true" /></span>
+              </a>
+            </div>
+
+            <button type="button" className="hero-action sculptor-spotlight-card__product-link" onClick={onOpenSculptorPage}>
+              Open product page
+            </button>
+          </div>
         </motion.article>
       </motion.div>
     </SectionWrapper>

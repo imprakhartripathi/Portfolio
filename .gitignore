@@ -1,2 +1,4 @@
 .zencoder
 .codex
+# Local Netlify folder
+.netlify

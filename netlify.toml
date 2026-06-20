@@ -23,3 +23,11 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+
+[functions]
+directory = "netlify/functions"
+
+[build]
+base = "new-client"
+publish = "dist"

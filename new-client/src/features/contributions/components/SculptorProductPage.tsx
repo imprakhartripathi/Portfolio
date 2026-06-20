@@ -10,12 +10,14 @@ import {
 import { SectionWrapper } from "../../../layout/SectionWrapper";
 // import { useInViewReveal } from "../../../shared/hooks/useInViewReveal";
 import { revealItem } from "../../../shared/motion/variants";
+import { buildContributionGuidePath } from "../../../app/navigation";
 import {
   sculptorNpmOrgUrl,
   sculptorProductSpec,
   sculptorReleasesUrl,
   sculptorRepoUrl,
 } from "../data";
+import { SculptorPackageDownloadsPill } from "./SculptorPackageDownloadsPill";
 
 type SculptorProductPageProps = {
   onBack: () => void;
@@ -75,33 +77,35 @@ export function SculptorProductPage({
 
   return (
     <SectionWrapper
-      id="sculptor-product"
-      eyebrow="Framework Product"
-      title={spec.brand}
-      description={`${spec.namespace} • CLI: ${spec.cli}`}
-      className="sculptor-product"
-      bodyClassName="sculptor-product__body"
-      titleAs="h1"
-    >
-      <motion.div
-        className="sculptor-product__stack"
-        initial={{ opacity: 0, y: 18 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{
-          duration: 0.55,
-          ease: "easeOut",
-        }}
+        id="sculptor-product"
+        eyebrow="Framework Product"
+        title={spec.brand}
+        description={`${spec.namespace} • CLI: ${spec.cli}`}
+        className="sculptor-product"
+        bodyClassName="sculptor-product__body"
+        titleAs="h1"
       >
+        <motion.div
+          className="sculptor-product__stack"
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{
+            duration: 0.55,
+            ease: "easeOut",
+          }}
+        >
         <motion.article
           variants={revealItem}
           className="sculptor-product__overview"
         >
-          <img
-            src="/sculptor-full-bg.png"
-            alt="Sculptor TS Logo"
-            className="sculptor-product__logo--full"
-          />
+          <div className="sculptor-product__overview-frame">
+            <img
+              src="/sculptor-full-bg.png"
+              alt="Sculptor TS Logo"
+              className="sculptor-product__logo--full"
+            />
+          </div>
         </motion.article>
 
         <motion.article
@@ -180,58 +184,48 @@ export function SculptorProductPage({
           <h3>Package Architecture</h3>
 
           <div className="sculptor-product__modules">
-            {spec.packageModules.map((module) => (
+            {spec.packageSections.map((section) => (
               <article
-                key={module.name}
+                key={section.name}
                 className="sculptor-product__module-card"
               >
-                <h4>{module.name}</h4>
+                <div className="sculptor-product__module-card-top">
+                  <div className="sculptor-product__module-card-copy">
+                    <h4>{section.name}</h4>
 
-                <p className="sculptor-product__module-summary">
-                  {module.summary}
-                </p>
+                    <p className="sculptor-product__module-summary">
+                      {section.summary}
+                    </p>
+                  </div>
+
+                  <SculptorPackageDownloadsPill packageName={section.npmPackage} />
+                </div>
 
                 <div className="sculptor-product__pill-list">
-                  {module.responsibilities.map((responsibility) => (
-                    <span
-                      key={responsibility}
-                      className="certification-skill-pill"
-                    >
+                  {section.responsibilities.map((responsibility) => (
+                    <span key={responsibility} className="certification-skill-pill">
                       {responsibility}
                     </span>
                   ))}
                 </div>
-              </article>
-            ))}
-          </div>
-        </motion.section>
 
-        <motion.section
-          variants={revealItem}
-          className="sculptor-product__section"
-        >
-          <h3>Docs Map</h3>
-
-          <div className="sculptor-product__modules">
-            {spec.packageDocs.map((doc) => (
-              <article
-                key={doc.title}
-                className="sculptor-product__module-card"
-              >
-                <h4>{doc.title}</h4>
-
-                <p className="sculptor-product__module-summary">
-                  {doc.summary}
-                </p>
-
-                <a
-                  href={doc.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="sculptor-product__doc-path"
-                >
-                  Learn More
-                </a>
+                <div className="sculptor-product__module-card-actions">
+                  <a
+                    href={`${buildContributionGuidePath("sculptor-ts")}#${section.guideAnchor}`}
+                    className="link-btn link-btn--ghost"
+                    title={section.readmePath}
+                  >
+                    Read Guide
+                  </a>
+            <a
+              href={section.npmUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-btn link-btn--ghost"
+            >
+                    Go to npm
+                  </a>
+                </div>
               </article>
             ))}
           </div>
@@ -366,7 +360,7 @@ export function SculptorProductPage({
             ))}
           </ul>
         </motion.section>
-      </motion.div>
+        </motion.div>
     </SectionWrapper>
   );
 }

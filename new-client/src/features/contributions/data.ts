@@ -1,9 +1,15 @@
-import type { ContributionItem, SculptorDocMapEntry, SculptorProductSpec } from './types'
+import type {
+  ContributionItem,
+  SculptorDocMapEntry,
+  SculptorProductSpec,
+} from './types'
 
 export const npmProfileUrl = 'https://www.npmjs.com/~imprakhartripathi'
 export const sculptorNpmOrgUrl = 'https://www.npmjs.com/org/sculptor'
 export const sculptorRepoUrl = "https://github.com/imprakhartripathi/Sculptor";
+export const apiUrl = ".netlify/functions/npm-stats?package=";
 export const sculptorReleasesUrl = `${sculptorRepoUrl}/releases`
+
 
 export const contributionItems: ContributionItem[] = [
   {
@@ -165,127 +171,108 @@ export const sculptorProductSpec: SculptorProductSpec = {
   overview:
     "Sculptor TS is a modular Express framework built around package contracts, explicit dependency injection, request context support, package-aware code generation, and unified runtime behavior. Applications can be structured using controllers, functional routers, or a hybrid approach while maintaining clear ownership boundaries, predictable startup behavior, and registry-aware tooling.",
 
-  packageDocs: [
+  packageSections: [
     {
-      title: "@sculptor/core",
-      url: "https://npmjs.com/package/@sculptor/core",
-      summary:
-        "Runtime bootstrap, package composition, request context, and server startup.",
-    },
-    {
-      title: "@sculptor/router",
-      url: "https://npmjs.com/package/@sculptor/router",
-      summary:
-        "Decorators, functional routers, middleware metadata, and route assembly.",
-    },
-    {
-      title: "@sculptor/di",
-      url: "https://npmjs.com/package/@sculptor/di",
-      summary:
-        "Explicit dependency injection, package metadata, and package contracts.",
-    },
-    {
-      title: "@sculptor/config",
-      url: "https://npmjs.com/package/@sculptor/config",
-      summary:
-        "Configuration loading, interpolation, redaction, and path-based lookups.",
-    },
-    {
-      title: "@sculptor/cli",
-      url: "https://npmjs.com/package/@sculptor/cli",
+      name: "@sculptor/cli",
       summary:
         "Scaffolding, generation, diagnostics, package management, and application lifecycle tooling.",
+      responsibilities: [
+        "Scaffolding, generation, diagnostics, and package lifecycle tooling",
+        "Maintains sculptor.packages.json and generated package indexes",
+        "Provides AGENTS.md generation and framework-aware sync commands",
+      ],
+      guideAnchor: "sculptor-cli",
+      readmePath: "/Sculptor/CLI-README.md",
+      npmPackage: "@sculptor/cli",
+      npmUrl: "https://npmjs.com/package/@sculptor/cli",
     },
-    {
-      title: "@sculptor/paws",
-      url: "https://npmjs.com/package/@sculptor/paws",
-      summary: "Structured logging with standard and dog-mode output.",
-    },
-    {
-      title: "@sculptor/template-registry",
-      url: "https://npmjs.com/package/@sculptor/template-registry",
-      summary:
-        "Scaffold and generator templates used by the CLI and package-aware generation.",
-    },
-  ],
-
-  packageModules: [
     {
       name: "@sculptor/core",
-      summary: "Runtime bootstrap, package composition, and server startup.",
+      summary:
+        "Runtime bootstrap, package composition, request context, and server startup.",
       responsibilities: [
         "Loads framework and runtime configuration",
         "Flattens package composition into runtime registries",
         "Provides request context through req.ctx",
-        "Supports validation-only bootstrap mode",
-        "Routes errors through a unified framework pipeline",
       ],
+      guideAnchor: "sculptor-core",
+      readmePath: "/Sculptor/CORE-README.md",
+      npmPackage: "@sculptor/core",
+      npmUrl: "https://npmjs.com/package/@sculptor/core",
     },
     {
       name: "@sculptor/router",
-      summary: "Decorators, functional routers, and route assembly.",
+      summary:
+        "Decorators, functional routers, middleware metadata, and route assembly.",
       responsibilities: [
         "Controller and HTTP method decorators",
         "Functional router scopes",
         "Middleware metadata and registration",
         "Hybrid routing support",
-        "Route collision detection",
       ],
+      guideAnchor: "sculptor-router",
+      readmePath: "/Sculptor/ROUTER-README.md",
+      npmPackage: "@sculptor/router",
+      npmUrl: "https://npmjs.com/package/@sculptor/router",
     },
     {
       name: "@sculptor/di",
-      summary: "Explicit dependency injection and package contracts.",
+      summary:
+        "Explicit dependency injection, package metadata, and package contracts.",
       responsibilities: [
         "Provides @Service(), @Repository(), and @Middleware()",
         "Provides @Package() package metadata",
         "Provides @AutoInject() explicit injection",
         "Detects circular dependencies",
-        "Supports package-aware runtime composition",
       ],
+      guideAnchor: "sculptor-di",
+      readmePath: "/Sculptor/DI-README.md",
+      npmPackage: "@sculptor/di",
+      npmUrl: "https://npmjs.com/package/@sculptor/di",
     },
     {
       name: "@sculptor/config",
-      summary: "Framework and runtime configuration loading.",
+      summary:
+        "Configuration loading, interpolation, redaction, and path-based lookups.",
       responsibilities: [
         "Reads sculptor.json, props.json, and .env",
         "Resolves recursive variable interpolation",
         "Provides getConfig() lookups",
-        "Redacts sensitive values when required",
         "Caches configuration per root directory",
       ],
+      guideAnchor: "sculptor-config",
+      readmePath: "/Sculptor/CONFIG-README.md",
+      npmPackage: "@sculptor/config",
+      npmUrl: "https://npmjs.com/package/@sculptor/config",
     },
-    {
-      name: "@sculptor/cli",
-      summary: "App creation, generation, diagnostics, and package tooling.",
-      responsibilities: [
-        "Creates new applications",
-        "Generates package-aware resources",
-        "Maintains sculptor.packages.json",
-        "Provides sc doctor diagnostics",
-        "Generates AGENTS.md",
-      ],
-    },
+
     {
       name: "@sculptor/paws",
-      summary: "Structured logging and expressive runtime feedback.",
+      summary: "Structured logging with standard and dog-mode output.",
       responsibilities: [
         "Provides framework logging",
         "Supports dog-mode personalities",
         "Reads logging settings from configuration",
-        "Supports structured object logging",
-        "Integrates with framework startup and diagnostics",
       ],
+      guideAnchor: "sculptor-paws",
+      readmePath: "/Sculptor/PAWS-README.md",
+      npmPackage: "@sculptor/paws",
+      npmUrl: "https://npmjs.com/package/@sculptor/paws",
     },
     {
       name: "@sculptor/template-registry",
-      summary: "Generator and scaffold template assets.",
+      summary:
+        "Scaffold and generator templates used by the CLI and package-aware generation.",
       responsibilities: [
         "Hosts scaffold templates",
         "Hosts generator templates",
         "Supports package-aware generation",
-        "Provides marker-block regeneration support",
         "Supplies template assets to the CLI",
       ],
+      guideAnchor: "sculptor-template-registry",
+      readmePath: "/Sculptor/TEMPLATE-REGISTRY-README.md",
+      npmPackage: "@sculptor/template-registry",
+      npmUrl: "https://npmjs.com/package/@sculptor/template-registry",
     },
   ],
 

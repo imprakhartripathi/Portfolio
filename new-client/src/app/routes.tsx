@@ -820,11 +820,11 @@ export function PortfolioRoutes() {
     return (
       <Suspense fallback={null}>
         {isSculptorContribution ? (
-          <LazySculptorProductPage
-            onBack={closeContribution}
-            onOpenContributions={goContributions}
-            onOpenGuide={() => openContributionGuide(activeContribution.slug)}
-          />
+        <LazySculptorProductPage
+          onBack={closeContribution}
+          onOpenContributions={goContributions}
+          onOpenGuide={() => openContributionGuide(activeContribution.slug)}
+        />
         ) : (
           <LazyContributionDetailsPage item={activeContribution} onBack={closeContribution} />
         )}

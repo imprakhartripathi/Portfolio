@@ -8,7 +8,7 @@ export {
   spotlightContributionSlug,
   sculptorProductSpec,
 } from './data'
-export type { ContributionItem, SculptorProductSpec, SculptorPackageModule } from './types'
+export type { ContributionItem, SculptorProductSpec, SculptorPackageModule, SculptorPackageSection } from './types'
 export type { SculptorDocMapEntry, SculptorGuideDoc } from './types'
 export { ContributionsPage } from './components/ContributionsPage'
 export { ContributionDetailsPage } from './components/ContributionDetailsPage'

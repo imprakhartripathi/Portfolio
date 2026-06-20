@@ -26,6 +26,23 @@ export type SculptorDocMapEntry = {
   summary: string
 }
 
+export type SculptorPackageSection = {
+  name: string
+  summary: string
+  responsibilities: string[]
+  guideAnchor: string
+  readmePath: string
+  npmPackage: string
+  npmUrl: string
+}
+
+export type NpmDownloadStat = {
+  downloads: number;
+  start: string;
+  end: string;
+  package: string;
+};
+
 export type SculptorGuideDoc = SculptorDocMapEntry
 
 export type SculptorProductSpec = {
@@ -35,8 +52,7 @@ export type SculptorProductSpec = {
   version: string
   positioning: string
   overview: string
-  packageDocs: SculptorDocMapEntry[]
-  packageModules: SculptorPackageModule[]
+  packageSections: SculptorPackageSection[]
   routingModes: Array<{
     name: string
     summary: string

@@ -2,6 +2,16 @@
 
 ![SculptorTS](https://raw.githubusercontent.com/imprakhartripathi/Sculptor/main/assets/sculptor-full-bg.png)
 
+<p align="center">
+  <img src="https://img.shields.io/npm/d18m/%40sculptor%2Fcli?style=for-the-badge&label=CLI&labelColor=1e1e2e&color=4F46E5" />
+  <img src="https://img.shields.io/npm/d18m/%40sculptor%2Fcore?style=for-the-badge&label=CORE&labelColor=1e1e2e&color=4F46E5" />
+  <img src="https://img.shields.io/npm/d18m/%40sculptor%2Frouter?style=for-the-badge&label=ROUTER&labelColor=1e1e2e&color=4F46E5" />
+  <img src="https://img.shields.io/npm/d18m/%40sculptor%2Fdi?style=for-the-badge&label=DI&labelColor=1e1e2e&color=4F46E5" />
+  <img src="https://img.shields.io/npm/d18m/%40sculptor%2Fconfig?style=for-the-badge&label=CONFIG&labelColor=1e1e2e&color=4F46E5" />
+  <img src="https://img.shields.io/npm/d18m/%40sculptor%2Fpaws?style=for-the-badge&label=PAWS&labelColor=1e1e2e&color=4F46E5" />
+  <img src="https://img.shields.io/npm/d18m/%40sculptor%2Ftemplate-registry?style=for-the-badge&label=TEMPLATES&labelColor=1e1e2e&color=4F46E5" />
+</p>
+
 SculptorTS is a TypeScript-first, Express-based framework for building APIs with decorator controllers, functional routers, or both together.
 
 The `v1.0.2` release line introduces a package-aware architecture that is:
@@ -22,6 +32,7 @@ The framework is split into focused packages:
 - `@sculptor/template-registry` for scaffold templates and generator assets
 - `@sculptor/paws` for logging with dog mode personalities
 - `@sculptor/cli` for scaffolding, generation, diagnostics, sync, and app commands
+
 
 If you are new to the framework, read this file first, then move into the package docs linked below.
 
