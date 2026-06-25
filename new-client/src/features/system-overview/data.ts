@@ -7,7 +7,7 @@ export const systemOverviewContent: SystemOverviewContent = {
   title: "Backend-Focused Full-Stack Engineer",
   summary:
     "I design production-grade backend systems and build Sculptor TS, a TypeScript-first Express framework shaped around clear package ownership, CLI ergonomics, and dependable runtime behavior.",
-  avatarUrl: "https://avatars.githubusercontent.com/u/120323432?v=4",
+  avatarUrl: "/prakhar.jpeg",
   actions: [
     {
       id: "resume",
