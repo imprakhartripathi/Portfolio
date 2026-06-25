@@ -94,7 +94,7 @@ const LazySculptorSpotlightSection = lazy(() =>
 )
 
 const homeDescription =
-  'Backend-focused full-stack engineer designing production-grade backend systems with transactional safety, role-aware access boundaries, and reliable deployments.'
+  'Prakhar Tripathi is a backend-focused full-stack engineer and creator of Sculptor TS, building TypeScript backend frameworks, npm tooling, and production-grade web systems.'
 
 const projectsDescription =
   'Domain-driven backend project portfolio covering Pharmetrix, Riwayat, Spendly, and Sahyogi with architecture decisions, outcomes, and production-focused stacks.'
@@ -103,13 +103,13 @@ const certificationsDescription =
   'Professional certifications from Google, DataCamp, Six Sigma, and Great Learning with credential IDs, verification links, and in-page PDF records.'
 
 const contributionsDescription =
-  'Open-source npm contributions including backend and frontend scaffolding CLIs and the upcoming Sculptor TS framework direction.'
+  'Open-source work by Prakhar Tripathi featuring Sculptor TS, TypeScript backend framework packages, npm CLIs, scaffolding tools, and Express architecture experiments.'
 
 const sculptorDescription =
-  'Sculptor TS is a beta Express framework with a compact package split, config-driven runtime behavior, and a practical CLI workflow.'
+  'Sculptor TS is Prakhar Tripathi’s package-aware TypeScript Express framework with explicit dependency injection, CLI tooling, config-driven runtime behavior, and decorator, functional, or hybrid routing.'
 
 const sculptorGuideDescription =
-  'Sculptor TS documentation covering package architecture, routing styles, configuration, runtime flow, and command workflow.'
+  'Sculptor TS guide by Prakhar Tripathi covering package architecture, CLI workflow, dependency injection, routing styles, runtime configuration, and framework docs.'
 
 const pharmetrixDescription =
   'Pharmetrix is a pharmaceutical inventory and POS platform for batch-aware stock control, FEFO dispensing, cold-chain monitoring, and edge-cloud synchronization.'
@@ -171,7 +171,7 @@ function NotFoundPage({ pathname, onGoHome }: NotFoundPageProps) {
               View Certifications
             </a>
             <a href="/contributions" className="link-btn link-btn--ghost">
-              View Contributions
+              View Open-Source Work
             </a>
           </div>
         </article>
@@ -217,12 +217,12 @@ export function PortfolioRoutes() {
   useEffect(() => {
     if (route.page === 'home') {
       applySeo({
-        title: 'Prakhar Tripathi | Backend-Focused Full-Stack Engineer',
+        title: 'Prakhar Tripathi | Backend Engineer & Sculptor TS Creator',
         description: homeDescription,
         path: '/',
         priority: 'high',
         keywords:
-          'Prakhar Tripathi, Backend Engineer, Full Stack Engineer, Node.js, Express, ASP.NET Core, MongoDB, MySQL, Docker, RBAC, JWT, Portfolio',
+          'Prakhar Tripathi, Sculptor TS, Backend Engineer, Full Stack Engineer, TypeScript, Express framework, Node.js, npm packages, CLI tooling, MongoDB, Docker, Portfolio',
       })
       return
     }
@@ -299,16 +299,16 @@ export function PortfolioRoutes() {
 
     if (route.page === 'contributions') {
       applySeo({
-        title: 'My Contributions | Prakhar Tripathi',
+        title: 'Open-Source Work | Prakhar Tripathi',
         description: contributionsDescription,
         path: '/contributions',
         keywords:
-          'Prakhar Tripathi npm, scafollder, reactron, sculptor ts, routesculpt, express framework, open source contributions',
+          'Prakhar Tripathi open source, Sculptor TS, TypeScript Express framework, npm packages, @sculptor/cli, scafollder, reactron, routesculpt, backend tooling',
         structuredData: [
           {
             '@type': 'CollectionPage',
             '@id': `${seoConstants.siteUrl}/contributions#collection`,
-            name: 'My Contributions | Prakhar Tripathi',
+            name: 'Open-Source Work | Prakhar Tripathi',
             url: `${seoConstants.siteUrl}/contributions`,
             description: contributionsDescription,
             inLanguage: 'en-IN',
@@ -338,13 +338,13 @@ export function PortfolioRoutes() {
 
       if (activeContribution.slug === 'sculptor-ts') {
         applySeo({
-          title: 'Sculptor TS | Express Framework by Prakhar Tripathi',
+          title: 'Sculptor TS | TypeScript Express Framework by Prakhar Tripathi',
           description: sculptorDescription,
           path: contributionPath,
           priority: 'high',
           type: 'website',
           keywords:
-            'Sculptor TS, Express framework, TypeScript backend framework, @sculptor/core, @sculptor/router, @sculptor/config, @sculptor/cli, npm, backend tooling',
+            'Sculptor TS, Prakhar Tripathi, TypeScript Express framework, backend framework, dependency injection, @sculptor/core, @sculptor/router, @sculptor/config, @sculptor/cli, npm, CLI tooling',
           structuredData: [
             {
               '@type': 'SoftwareApplication',
@@ -372,7 +372,7 @@ export function PortfolioRoutes() {
                 {
                   '@type': 'ListItem',
                   position: 2,
-                  name: 'My Contributions',
+                  name: 'Open-Source Work',
                   item: `${seoConstants.siteUrl}/contributions`,
                 },
                 {
@@ -389,7 +389,7 @@ export function PortfolioRoutes() {
       }
 
       applySeo({
-        title: `${activeContribution.title} | My Contributions`,
+        title: `${activeContribution.title} | Open-Source Work`,
         description: activeContribution.shortSummary,
         path: contributionPath,
         type: 'article',
@@ -421,7 +421,7 @@ export function PortfolioRoutes() {
               {
                 '@type': 'ListItem',
                 position: 2,
-                name: 'My Contributions',
+                name: 'Open-Source Work',
                 item: `${seoConstants.siteUrl}/contributions`,
               },
               {
@@ -442,13 +442,13 @@ export function PortfolioRoutes() {
       const guidePath = buildContributionGuidePath(activeContribution.slug)
 
       applySeo({
-        title: 'Sculptor TS Guide | Documentation & Architecture',
+        title: 'Sculptor TS Guide | Architecture, CLI & Framework Docs',
         description: sculptorGuideDescription,
         path: guidePath,
         priority: 'high',
         type: 'article',
         keywords:
-          'Sculptor TS guide, framework documentation, Express framework, TypeScript backend framework, @sculptor/core, @sculptor/router, @sculptor/config, @sculptor/cli, architecture',
+          'Sculptor TS guide, Prakhar Tripathi, framework documentation, TypeScript Express framework, dependency injection, @sculptor/core, @sculptor/router, @sculptor/config, @sculptor/cli, architecture',
         structuredData: [
           {
             '@type': 'TechArticle',
@@ -480,7 +480,7 @@ export function PortfolioRoutes() {
               {
                 '@type': 'ListItem',
                 position: 2,
-                name: 'My Contributions',
+                name: 'Open-Source Work',
                 item: `${seoConstants.siteUrl}/contributions`,
               },
               {
@@ -514,8 +514,8 @@ export function PortfolioRoutes() {
 
     if (route.page === 'contribution-detail') {
       applySeo({
-        title: 'Contribution Not Found | Prakhar Tripathi',
-        description: 'The requested contribution page does not exist.',
+        title: 'Open-Source Work Not Found | Prakhar Tripathi',
+        description: 'The requested open-source work page does not exist.',
         path: `/contributions/${route.contributionSlug}`,
         noindex: true,
       })

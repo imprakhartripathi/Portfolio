@@ -137,7 +137,7 @@ export function SculptorProductPage({
               className="link-btn"
               onClick={onOpenContributions}
             >
-              <FaArrowRightLong aria-hidden="true" /> All Contributions
+              <FaArrowRightLong aria-hidden="true" /> Open-Source Work
             </button>
 
             <a

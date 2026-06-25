@@ -14,7 +14,7 @@
 
 SculptorTS is a TypeScript-first, Express-based framework for building APIs with decorator controllers, functional routers, or both together.
 
-The `v1.0.2` release line introduces a package-aware architecture that is:
+The `v1.1.4` release line introduces a package-aware architecture with a native Express builder that is:
 
 - explicit
 - registry-aware
@@ -22,6 +22,8 @@ The `v1.0.2` release line introduces a package-aware architecture that is:
 - AI-aware
 - DI-enabled
 - hybrid-friendly
+- Express-native
+- backwards-compatible with `v1.0.x`
 
 The framework is split into focused packages:
 
@@ -38,34 +40,19 @@ If you are new to the framework, read this file first, then move into the packag
 
 ## Release Notes
 
-Current release line: `v1.0.2`
+Current release line: `v1.1.4`
 
-- `@sculptor/core` `1.0.2`
-- `@sculptor/router` `1.0.2`
-- `@sculptor/config` `1.0.2`
-- `@sculptor/paws` `1.0.2`
-- `@sculptor/template-registry` `1.0.2`
-- `@sculptor/cli` `1.0.2`
-- `@sculptor/di` `1.0.2`
+- `@sculptor/core` `1.1.4`
+- `@sculptor/router` `1.1.4`
+- `@sculptor/config` `1.1.4`
+- `@sculptor/paws` `1.1.4`
+- `@sculptor/template-registry` `1.1.4`
+- `@sculptor/cli` `1.1.4`
+- `@sculptor/di` `1.1.4`
 
-This line adds:
+View Full Release Notes in [ReleaseNotes.md](ReleaseNotes.md)
 
-- `@Package(...)` package indexes and functional package factories
-- `sculptor.packages.json` as a tracked framework artifact with ownership, registration, and helper tagging
-- explicit DI with `@Service()`, `@Repository()`, `@Middleware()`, and `@AutoInject()`
-- class, functional, and hybrid generation modes
-- package-aware generators and registry commands
-- exact package naming with no hidden singular/plural normalization
-- exact file resolution for `sc reg`, `sc ureg`, and `sc rm`
-- `sc reg pkg <name>` and `sc rm pkg <name>` for package registry management
-- safer generated marker blocks for package index updates
-- `sc doctor` for calm diagnostics
-- `sc agents` and `sc agents refresh` for `AGENTS.md`
-- `sc update` restricted to the globally installed `@sculptor/cli`
-- clean CLI errors without raw stack traces
-- `req.ctx` as the default request context on Sculptor-bootstrapped apps
-
-This is the stable `v1.0.2` line. Future changes should stay additive and backwards-conscious.
+This is the stable `v1.1.4` line. Future changes should stay additive and backwards-conscious.
 
 Versions before `v1.0.0` are no longer actively maintained and will not receive future updates.
 
@@ -144,11 +131,14 @@ This is the runtime entrypoint.
 What it does:
 
 - starts the Express server
+- exposes a strongly typed Express builder through `createApp()`
 - loads config from `sculptor.json`, `props.json`, and `.env`
+- discovers the app root automatically when `rootDir` is not supplied
 - flattens package and registry composition into runtime arrays
 - exposes `req.ctx` as the default request context
 - exposes framework error hooks
 - supports `startApp({ listen: false })` for validation-only startup
+- supports both `startApp({ rootDir })` and `startApp({ app })`
 
 How it is used:
 
@@ -268,7 +258,10 @@ Core command families:
 - `sc ureg` / `sc unreg` / `sc unregister` / `sc ur`
 - `sc rm` / `sc remove`
 - `sc doctor`
+- `sc help`
 - `sc update`
+- `sc update project`
+- `sc report`
 
 Useful generator flags:
 
@@ -422,7 +415,8 @@ What it does:
 
 How it is used:
 
-- calls `startApp({ registry, rootDir })`
+- new v1.1.0 scaffolds call `startApp({ registry, app })`
+- legacy v1.0.x scaffolds continue to call `startApp({ registry, rootDir })`
 
 You will find it here:
 
@@ -433,10 +427,12 @@ You will find it here:
 
 | If you do this | SculptorTS does this |
 | --- | --- |
-| Run `sc new <app>` | Creates a new scaffolded app and installs dependencies |
+| Run `sc new <app>` | Creates a new scaffolded app with the v1.1.0 builder startup template and installs dependencies |
 | Run `sc agents` | Generates `AGENTS.md` |
 | Run `sc agents refresh` | Regenerates `AGENTS.md` |
 | Run `sc update` outside an app | Updates the globally installed `@sculptor/cli` only |
+| Run `sc update project` inside an app | Checks the latest Sculptor version, warns, and upgrades project dependencies |
+| Run `sc report` | Prints support links and issue reporting details |
 | Run `sc doctor` inside or outside an app | Prints diagnostics and compatibility guidance |
 | Run `sc sync` | Validates and refreshes package registry metadata |
 | Run `sc ls` or `sc list` | Prints package and tree diagnostics |
@@ -513,6 +509,8 @@ The CLI has two groups of commands:
 - `sc version`
 - `sc doctor`
 - `sc update`
+- `sc update project`
+- `sc report`
 
 ### Allowed only inside a Sculptor app
 
@@ -527,6 +525,7 @@ The CLI has two groups of commands:
 - `sc ls`
 - `sc pkg`
 - `sc package`
+- `sc update project`
 - `sc reg`
 - `sc ureg`
 - `sc rm`

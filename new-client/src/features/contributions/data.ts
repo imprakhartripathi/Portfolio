@@ -9,6 +9,8 @@ export const sculptorNpmOrgUrl = 'https://www.npmjs.com/org/sculptor'
 export const sculptorRepoUrl = "https://github.com/imprakhartripathi/Sculptor";
 export const apiUrl = ".netlify/functions/npm-stats?package=";
 export const sculptorReleasesUrl = `${sculptorRepoUrl}/releases`
+export const sculptorReleaseVersion = "v1.1-26.06";
+export const sculptorStableVersion = "v1.1.4";
 
 
 export const contributionItems: ContributionItem[] = [
@@ -153,7 +155,7 @@ export const contributionItems: ContributionItem[] = [
       "cli",
       "architecture",
     ],
-    version: "v1.0-26.06",
+    version: sculptorReleaseVersion,
   },
 ];
 
@@ -163,7 +165,7 @@ export const sculptorProductSpec: SculptorProductSpec = {
   brand: "Sculptor TS",
   namespace: "@sculptor/*",
   cli: "'sc' and 'sculptor' (on Windows)",
-  version: "v1.0-26.06",
+  version: sculptorReleaseVersion,
 
   positioning:
     "A package-aware TypeScript-first Express framework with explicit dependency injection, registry-driven tooling, and support for decorator, functional, and hybrid architectures.",
@@ -411,16 +413,20 @@ export const sculptorProductSpec: SculptorProductSpec = {
       summary: "Run project, registry, and compatibility diagnostics.",
     },
     {
-      command: "sc agents",
-      summary: "Generate AGENTS.md for AI coding assistants.",
-    },
-    {
       command: "sc g pkg users",
       summary: "Generate a package index and package-local resources.",
     },
     {
       command: "sc config get app.port",
       summary: "Read a configuration value by dot path.",
+    },
+    {
+      command: "sc agents",
+      summary: "Generate AGENTS.md for AI coding assistants.",
+    },
+    {
+      command: "sc report",
+      summary: "Simplifies reporting Bugs and issues with a single command.",
     },
   ],
 
@@ -447,8 +453,8 @@ export const sculptorProductSpec: SculptorProductSpec = {
   ],
 
   releaseNotes: [
-    "Current stable runtime line: v1.0.2",
-    "Combined framework release: v1.0-26.06",
+    `Current stable runtime line: ${sculptorStableVersion}`,
+    `Combined framework release: ${sculptorReleaseVersion}`,
     "Versions before v1.0.0 are deprecated",
     "Future changes are expected to remain additive and backwards-conscious",
   ],

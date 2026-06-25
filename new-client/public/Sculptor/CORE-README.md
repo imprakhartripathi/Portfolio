@@ -4,19 +4,21 @@ The SculptorTS core package boots the HTTP server and exposes the primary framew
 
 ## Version Policy
 
-- Release line: `v1.0.2`
-- Current package version: `1.0.2`
-- This release line keeps request context, package flattening, functional package metadata, and explicit DI re-exports aligned with the package-aware runtime contract.
+- Release line: `v1.1.0`
+- This release line adds a native Express builder, automatic app root discovery, and builder-aware startup while keeping the `v1.0.x` path intact.
 - Future changes should stay additive and backwards-conscious.
 
 ## What This Package Does
 
 - Starts an Express server from a registry
+- Exposes a strongly typed Express builder through `createApp()`
 - Loads runtime config and framework config
+- Discovers the app root automatically when `rootDir` is omitted
 - Creates the app router from packages, controllers, services, repositories, middlewares, and routes
 - Flattens package composition internally while keeping the package index as the package contract
 - Exposes the shared registry shape used by scaffolded apps
 - Exposes `bootstrapApp({ listen: false })` for validation and CI flows
+- Supports `startApp({ app })` for builder-based startup
 - Exposes request context and a unified framework error pipeline
 - Re-exports the package metadata, explicit DI decorators, and functional package types from `@sculptor/di`
 
@@ -24,12 +26,15 @@ The SculptorTS core package boots the HTTP server and exposes the primary framew
 
 ```ts
 import {
+  createApp,
   createRouter,
   FunctionalRouter,
+  findAppRoot,
   Req,
   Res,
   Nxt,
   Err,
+  resolveRootDir,
   startApp,
   registry
 } from "@sculptor/core";
@@ -42,10 +47,31 @@ Starts the app and returns the Node HTTP server.
 Options:
 
 - `registry`: the app registry
-- `rootDir`: app root, defaults to `process.cwd()`
+- `rootDir`: app root. When omitted, the runtime uses `SCULPTOR_ROOT_DIR` or automatically discovers the nearest Sculptor root from `process.cwd()`
+- `app`: optional Express builder created by `createApp()`
 - `port`: optional explicit port override
 - `listen`: set to `false` to bootstrap without binding a socket
 - `onError`: optional framework-level error hook
+
+### `createApp()`
+
+Creates a chainable Express builder around the underlying Express instance.
+
+Supported builder methods:
+
+- `use()`
+- `set()`
+- `enable()`
+- `disable()`
+- `locals()`
+- `engine()`
+
+The builder also exposes:
+
+- `instance`
+- `getInstance()`
+
+It intentionally does not expose Express startup methods such as `listen()`, `route()`, `render()`, or `param()`.
 
 ### `registry`
 
@@ -95,12 +121,13 @@ It also re-exports the request typing helpers:
 
 When `startApp()` runs:
 
-1. `sculptor.json` and `props.json` are loaded from the app root
-2. The runtime chooses a port
-3. Express middleware is attached
-4. The registry is turned into an Express router
-5. The server begins listening, unless `listen: false` is requested
-6. The runtime logs the port and localhost URL
+1. `rootDir` is resolved from the supplied option, `SCULPTOR_ROOT_DIR`, or automatic discovery
+2. `sculptor.json` and `props.json` are loaded from the app root
+3. The runtime chooses a port
+4. Express middleware is attached
+5. The registry is turned into an Express router
+6. The server begins listening, unless `listen: false` is requested
+7. The runtime logs the port and localhost URL
 
 Startup output:
 
@@ -129,6 +156,7 @@ If the resolved port is `0`, the runtime reads the actual bound port from the se
 | Routes | Mounts the Express routers directly |
 | Both controllers and routes | Combines both into one app router |
 | No routes | Starts a server, but nothing is mounted beyond Express body parsing |
+| `app` provided | Uses the supplied builder instance and preserves its configuration |
 | `listen: false` | Bootstraps the app, validates the registry, and returns without binding a socket |
 | `onError` provided | Framework errors are routed through the lightweight hook before the JSON error response is sent |
 
@@ -180,14 +208,15 @@ This preserves Express compatibility while preventing HTML error pages from leak
 ## Example
 
 ```ts
-import { registry, startApp } from "@sculptor/core";
-import { fileURLToPath } from "node:url";
+import { createApp, registry, startApp } from "@sculptor/core";
 
-const rootDir = fileURLToPath(new URL("..", import.meta.url));
+const app = createApp();
+
+app.disable("x-powered-by");
 
 await startApp({
   registry,
-  rootDir,
+  app,
   port: 3000
 });
 ```
@@ -196,11 +225,12 @@ await startApp({
 
 | If you do this | Then this happens |
 | --- | --- |
-| Call `startApp()` with no port | The runtime uses environment and config defaults |
+| Call `startApp()` with no port | The runtime uses environment, config defaults, and automatic root discovery |
 | Pass `port: 0` | The OS chooses a free port and the runtime reports the actual port |
 | Pass a registry with controllers | Decorator metadata is scanned and registered |
 | Pass a registry with routes | Route routers are mounted directly |
 | Pass a registry with functional routers | Functional builders are converted to Express routers |
+| Pass an Express builder through `app` | The runtime uses that builder instance instead of creating a new one |
 | Use `loadConfig()` | Framework and runtime config are loaded and cached per root directory |
 | Use `getConfig("app.port")` | The merged runtime value is returned if present |
 

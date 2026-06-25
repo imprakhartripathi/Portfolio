@@ -13,15 +13,16 @@ It handles:
 - `AGENTS.md` generation
 - app dependency recovery with `sc install deps`
 - global CLI refresh with `sc update`
+- project upgrade guidance with `sc update project`
+- support and issue reporting with `sc report`
 - scaffolded `.gitignore` generation
 - exact file register/unregister/remove flows with clean prompts
 - package registry commands for both package indexes and individual files
 
 ## Version Policy
 
-- Release line: `v1.0.2`
-- Current package version: `1.0.2`
-- This release line keeps package-aware generation, functional package scaffolds, `sc doctor`, `sc agents`, `sculptor.packages.json`, and exact package/file alias commands.
+- Release line: `v1.1.0`
+- This release line keeps package-aware generation, functional package scaffolds, `sc doctor`, `sc agents`, `sculptor.packages.json`, and exact package/file alias commands while updating new app scaffolds to the Express builder startup template.
 - Future changes should stay additive and backwards-conscious.
 
 ## Quick Command Sheet
@@ -48,6 +49,7 @@ It handles:
 | `sc install deps` | Replays app dependency installs inside a Sculptor app |
 | `sc i deps` | Alias for `sc install deps` |
 | `sc update` | Updates the globally installed Sculptor CLI only |
+| `sc update project` | Upgrades the current Sculptor project dependencies with version guards |
 | `sc doctor` | Runs project, registry, and compatibility diagnostics |
 | `sc generate` / `sc g` | Generates framework resources |
 | `sc g c user` | Generates a controller resource |
@@ -61,6 +63,7 @@ It handles:
 | `sc g t user -c` | Generates a class type file |
 | `sc v` / `sc --v` / `sc -v` | Prints version |
 | `sc help` | Prints help |
+| `sc report` | Prints support links and issue reporting details |
 
 ## Entry Points
 
@@ -80,6 +83,8 @@ What it does:
 - creates a new Sculptor app in a sibling folder
 - writes the initial framework files
 - installs the package dependencies
+- generates the new builder-based `src/main.ts` for `v1.1.0` scaffolds
+- preserves the legacy startup template for older version inputs
 
 How it is used:
 
@@ -92,7 +97,7 @@ Flags:
 | Flag | Meaning |
 | --- | --- |
 | `--name <value>` | Sets the app name |
-| `--version <value>` | Sets the scaffolded app version |
+| `--version <value>` | Sets the scaffolded app version (defaults to `0.1.0`) |
 | `--style <decorator/functional/hybrid>` | Sets the routing mode |
 | `--decorator` | Shortcut for decorator mode |
 | `--functional` | Shortcut for functional mode |
@@ -256,23 +261,68 @@ Behavior:
 - reinstalls the Sculptor CLI/config/router dev dependencies last
 - refuses to run outside a Sculptor app root
 
+### `sc help`
+
+What it does:
+
+- prints help in a terminal-friendly format
+- highlights headings, inline code, and links for readability
+- includes links to the GitHub wiki, npm org page, and public guide
+
 ### `sc update`
 
 What it does:
 
 - updates the globally installed Sculptor CLI package only
 
-How it is used:
-
-```bash
-sc update
-```
-
 Behavior:
 
 - only installs `@sculptor/cli`
 - does not mutate runtime package dependencies globally
 - remains separate from scaffold-time template-registry recovery
+
+### `sc report`
+
+What it does:
+
+- prints support and reporting links
+- shows the GitHub issues page, email contact, and learn-more page
+
+How it is used:
+
+```bash
+sc report
+```
+
+It also links to the GitHub wiki, npm org page, and public guide.
+
+### `sc update project`
+
+What it does:
+
+- upgrades the current Sculptor project dependencies to the latest published Sculptor version
+- checks the latest available version before making changes
+- warns before every update
+- requires `--force` for major version jumps
+- asks for `y/n` confirmation for minor and patch updates
+- updates each Sculptor package to its own latest published version
+
+How it is used:
+
+```bash
+sc update
+sc update project
+sc update project --force
+```
+
+Behavior:
+
+- queries the latest published Sculptor version before applying changes
+- queries each Sculptor package version individually before applying changes
+- updates Sculptor package versions in the project `package.json`
+- runs the project package manager install after the update
+- requires `--force` for major version jumps
+- prompts for confirmation on minor and patch updates
 
 ## Alias Notes
 
@@ -314,6 +364,7 @@ The CLI only allows certain commands outside a Sculptor app root:
 - `sc version`
 - `sc doctor`
 - `sc update`
+- `sc report`
 
 The runtime commands require `sculptor.json` in the current app root.
 

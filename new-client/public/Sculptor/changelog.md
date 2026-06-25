@@ -2,13 +2,57 @@
 
 This changelog documents the current Sculptor release line and the historical ranges that remain relevant for compatibility and support conversations.
 
-All versions before `v1.0.0` are deprecated. Only the current `v1.0.2` release line is supported for active development and fixes.
+All versions before `v1.0.0` are deprecated. Only the current `v1.1.4` release line is supported for active development and fixes.
 
 Versions before `v1.0.0` are no longer actively maintained and will not receive future updates.
 
+## v1.1.4
+
+The `v1.1.4` release line tightens the native Express builder surface, cleans up CLI update messaging, and keeps the `v1.1.x` line fully synchronized.
+
+Highlights:
+
+- native Express builder support through `createApp()`
+- strongly typed builder methods for `use()`, `set()`, `enable()`, `disable()`, and `locals()`
+- automatic app root discovery through `findAppRoot()` and `resolveRootDir()`
+- `startApp({ app })` support alongside the legacy `startApp({ rootDir })` path
+- `sc update project` now upgrades each Sculptor package to its own latest version
+- `sc report` adds a dedicated support and issue-reporting command
+- `sc help` now renders as terminal-friendly help output with highlighted links
+- `sc update` and `sc update project` now print their guidance once
+- no migration required for `v1.0.x` apps
+- scaffolded `src/main.ts` now uses the builder startup style for new `v1.1.x` projects
+- legacy scaffold output is preserved for older version inputs
+- middleware compatibility remains 100 percent Express-compatible
+- documentation and scaffold templates now reflect the cleaner startup flow
+
+This remains an additive release line, so existing apps continue to boot without changes.
+
+The `v1.1.0` through `v1.1.3` release line is deprecated in favor of `v1.1.4`. `v1.1.4` is the intended stable release line to use.
+
+## v1.1.0
+
+The `v1.1.0` release line adds a native Express builder while keeping every `v1.0.x` startup path working unchanged.
+
+Highlights:
+
+- native Express builder support through `createApp()`
+- automatic app root discovery through `findAppRoot()` and `resolveRootDir()`
+- `startApp({ app })` support alongside the legacy `startApp({ rootDir })` path
+- `sc update project` now upgrades each Sculptor package to its own latest version
+- `sc report` adds a dedicated support and issue-reporting command
+- `sc help` now renders as terminal-friendly help output with highlighted links
+- no migration required for `v1.0.x` apps
+- scaffolded `src/main.ts` now uses the builder startup style for new `v1.1.0` projects
+- legacy scaffold output is preserved for older version inputs
+- middleware compatibility remains 100 percent Express-compatible
+- documentation and scaffold templates now reflect the cleaner startup flow
+
+This remains an additive release line, so existing apps continue to boot without changes.
+
 ## v1.0.2
 
-The `v1.0.2` release line is the current package-aware Sculptor architecture.
+The `v1.0.2` release line was the package-aware Sculptor architecture that preceded v1.1.0.
 
 Highlights:
 
@@ -30,7 +74,7 @@ Highlights:
 - CLI errors are surfaced cleanly without raw stack traces
 - hybrid apps continue to support decorator, functional, and mixed composition
 
-This is the stable release line, so future changes should stay additive and backwards-conscious.
+This was the stable release line, so future changes should stay additive and backwards-conscious.
 
 Current stable package family:
 

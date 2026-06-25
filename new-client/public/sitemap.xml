@@ -96,12 +96,12 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://imprakhartripathi.in/contributions/sculptor-ts</loc>
+    <loc>https://imprakhartripathi.in/Sculptor</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://imprakhartripathi.in/contributions/sculptor-ts/guide</loc>
+    <loc>https://imprakhartripathi.in/Sculptor/guide</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

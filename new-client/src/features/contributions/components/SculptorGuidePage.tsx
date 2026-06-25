@@ -798,7 +798,7 @@ export function SculptorGuidePage({
               className="link-btn"
               onClick={onOpenContributions}
             >
-              Back to Contributions <FaArrowRightLong />
+              Back to Open-Source Work <FaArrowRightLong />
             </button>
             <a
               href={`${sculptorRepoUrl}/issues`}

@@ -20,8 +20,8 @@ export function ContributionsPage({ onOpenContribution }: ContributionsPageProps
     <SectionWrapper
       id="contributions"
       eyebrow="Open Source"
-      title="My Contributions"
-      description="CLI tools and framework work I am publishing on npm."
+      title="Open-Source Contributions"
+      description="Sculptor TS and the npm tooling I am building around backend architecture, scaffolding, and framework ergonomics."
       className="contributions-page"
       titleAs="h1"
     >
@@ -45,7 +45,7 @@ export function ContributionsPage({ onOpenContribution }: ContributionsPageProps
 
             <div className="contributions-spotlight__actions">
               <button type="button" className="link-btn" onClick={() => onOpenContribution(spotlight.slug)}>
-                Open Full Description <FaArrowRightLong />
+                Open Sculptor <FaArrowRightLong />
               </button>
             </div>
           </motion.article>

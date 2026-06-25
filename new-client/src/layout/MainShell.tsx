@@ -26,15 +26,14 @@ const sectionLinks: NavigationLink[] = [
   { href: '#experience', label: 'Experience', kind: 'section' },
   { href: '#projects', label: 'Projects', kind: 'section' },
   // { href: '/certifications', label: 'Certifications', kind: 'route' },
-  // { href: '/contributions', label: 'My Contributions', kind: 'route' },
   { href: '#contact', label: 'Contact', kind: 'section' },
 ]
 
 const portalRouteLinks: PortalLink[] = [
-  { href: '/contributions/sculptor-ts', label: 'Sculptor Product', kind: 'route', },
-  { href: '/contributions/sculptor-ts/guide', label: 'Sculptor Guide', kind: 'route',},
+  { href: '/Sculptor', label: 'Sculptor Product', kind: 'route', },
+  { href: '/Sculptor/guide', label: 'Sculptor Guide', kind: 'route', },
   { href: '/certifications', label: 'Certifications', kind: 'route' },
-  { href: '/contributions', label: 'Contributions', kind: 'route' },
+  { href: '/contributions', label: 'Open-Source Work', kind: 'route' },
 ]
 
 const portalSocialLinks = [
@@ -48,7 +47,8 @@ function isProjectViewFromLocation() {
 }
 
 function isSculptorGuideViewFromLocation() {
-  return window.location.pathname.startsWith('/contributions/sculptor-ts/guide')
+  const pathname = window.location.pathname
+  return pathname.startsWith('/Sculptor/guide') || pathname.startsWith('/contributions/sculptor-ts/guide')
 }
 
 function normalizePathname(pathname: string) {
@@ -473,7 +473,7 @@ export function MainShell({ children }: PropsWithChildren) {
             </a>
             <a href="https://www.npmjs.com/~imprakhartripathi" target="_blank" rel="noreferrer">npm</a>
             <a href="/certifications">Certifications</a>
-            <a href="/contributions">My Contributions</a>
+            <a href="/contributions">Open-Source Work</a>
           </div>
         </footer>
       </div>

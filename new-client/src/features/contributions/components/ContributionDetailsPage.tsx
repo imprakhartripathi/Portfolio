@@ -18,7 +18,7 @@ export function ContributionDetailsPage({ item, onBack }: ContributionDetailsPag
   return (
     <SectionWrapper
       id="contribution-detail"
-      eyebrow="Contribution Detail"
+      eyebrow="Open-Source Detail"
       title={item.title}
       description={item.packageName}
       className="project-detail"
@@ -34,7 +34,7 @@ export function ContributionDetailsPage({ item, onBack }: ContributionDetailsPag
       >
         <motion.div variants={revealItem} className="project-detail__top">
           <button type="button" className="link-btn link-btn--ghost" onClick={onBack}>
-            <FaArrowLeftLong /> Back to Contributions
+            <FaArrowLeftLong /> Back to Open-Source Work
           </button>
           <div className="project-detail__external-links">
             {item.npmUrl ? (

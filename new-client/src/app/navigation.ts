@@ -3,6 +3,8 @@ export const PORTFOLIO_ROUTE_EVENT = 'portfolio:routechange'
 const PROJECTS_BASE_PATH = '/projects'
 const CERTIFICATIONS_BASE_PATH = '/certifications'
 const CONTRIBUTIONS_BASE_PATH = '/contributions'
+const SCULPTOR_SLUG = 'sculptor-ts'
+const SCULPTOR_CANONICAL_PATH = '/Sculptor'
 
 function normalizePathname(pathname: string) {
   if (!pathname) {
@@ -36,10 +38,18 @@ export function buildCertificationPath(certificationSlug: string) {
 }
 
 export function buildContributionPath(contributionSlug: string) {
+  if (contributionSlug === SCULPTOR_SLUG) {
+    return SCULPTOR_CANONICAL_PATH
+  }
+
   return `${CONTRIBUTIONS_BASE_PATH}/${encodeURIComponent(contributionSlug)}`
 }
 
 export function buildContributionGuidePath(contributionSlug: string) {
+  if (contributionSlug === SCULPTOR_SLUG) {
+    return `${SCULPTOR_CANONICAL_PATH}/guide`
+  }
+
   return `${CONTRIBUTIONS_BASE_PATH}/${encodeURIComponent(contributionSlug)}/guide`
 }
 
@@ -72,6 +82,14 @@ export function readRouteFromLocation(locationRef: Pick<Location, 'pathname'> = 
       return { page: 'certification-detail', certificationSlug }
     }
     return { page: 'certifications' }
+  }
+
+  if (pathname === SCULPTOR_CANONICAL_PATH) {
+    return { page: 'contribution-detail', contributionSlug: SCULPTOR_SLUG }
+  }
+
+  if (pathname === `${SCULPTOR_CANONICAL_PATH}/guide`) {
+    return { page: 'contribution-guide', contributionSlug: SCULPTOR_SLUG }
   }
 
   if (pathname === CONTRIBUTIONS_BASE_PATH) {
