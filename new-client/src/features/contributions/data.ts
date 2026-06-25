@@ -117,13 +117,13 @@ export const contributionItems: ContributionItem[] = [
   {
     id: "sculptor-ts",
     slug: "sculptor-ts",
-    title: "Sculptor TS",
+    title: "SculptorTS",
     packageName: "@sculptor/*",
     status: "Stable",
     shortSummary:
       "A package-aware TypeScript-first Express framework supporting decorator, functional, and hybrid architectures with explicit dependency injection.",
     description:
-      "Sculptor TS is a modular Express framework built around package contracts, explicit dependency injection, registry-driven tooling, and code generation. It supports decorator, functional, and hybrid application styles while providing diagnostics, package-aware scaffolding, request context support, and unified runtime behavior.",
+      "SculptorTS is a modular Express framework built around package contracts, explicit dependency injection, registry-driven tooling, and code generation. It supports decorator, functional, and hybrid application styles while providing diagnostics, package-aware scaffolding, request context support, and unified runtime behavior.",
     features: [
       "Package-aware architecture with @Package()",
       "Decorator, functional, and hybrid application styles",
@@ -162,7 +162,7 @@ export const contributionItems: ContributionItem[] = [
 export const spotlightContributionSlug = 'sculptor-ts'
 
 export const sculptorProductSpec: SculptorProductSpec = {
-  brand: "Sculptor TS",
+  brand: "SculptorTS",
   namespace: "@sculptor/*",
   cli: "'sc' and 'sculptor' (on Windows)",
   version: sculptorReleaseVersion,
@@ -171,7 +171,7 @@ export const sculptorProductSpec: SculptorProductSpec = {
     "A package-aware TypeScript-first Express framework with explicit dependency injection, registry-driven tooling, and support for decorator, functional, and hybrid architectures.",
 
   overview:
-    "Sculptor TS is a modular Express framework built around package contracts, explicit dependency injection, request context support, package-aware code generation, and unified runtime behavior. Applications can be structured using controllers, functional routers, or a hybrid approach while maintaining clear ownership boundaries, predictable startup behavior, and registry-aware tooling.",
+    "SculptorTS is a modular Express framework built around package contracts, explicit dependency injection, request context support, package-aware code generation, and unified runtime behavior. Applications can be structured using controllers, functional routers, or a hybrid approach while maintaining clear ownership boundaries, predictable startup behavior, and registry-aware tooling.",
 
   packageSections: [
     {

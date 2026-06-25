@@ -6,7 +6,7 @@ export const systemOverviewContent: SystemOverviewContent = {
   name: "PRAKHAR TRIPATHI",
   title: "Backend-Focused Full-Stack Engineer",
   summary:
-    "I design production-grade backend systems and build Sculptor TS, a TypeScript-first Express framework shaped around clear package ownership, CLI ergonomics, and dependable runtime behavior.",
+    "I design production-grade backend systems with clear access boundaries, transactional safety, and real-world deployment constraints. I build systems meant to survive beyond localhost, and open-source tools like SculptorTS that make getting to localhost a little easier for everyone else.",
   avatarUrl: "/prakhar.jpeg",
   actions: [
     {

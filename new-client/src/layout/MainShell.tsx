@@ -21,7 +21,7 @@ type PortalLink = NavigationLink & {
 
 const sectionLinks: NavigationLink[] = [
   { href: '#system-overview', label: 'Overview', kind: 'section' },
-  { href: '#sculptor-spotlight', label: 'Sculptor TS', kind: 'section' },
+  { href: '#sculptor-spotlight', label: 'SculptorTS', kind: 'section' },
   { href: '#technical-expertise', label: 'Technical Expertise', kind: 'section' },
   { href: '#experience', label: 'Experience', kind: 'section' },
   { href: '#projects', label: 'Projects', kind: 'section' },

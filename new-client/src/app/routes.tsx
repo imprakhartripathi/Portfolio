@@ -94,7 +94,7 @@ const LazySculptorSpotlightSection = lazy(() =>
 )
 
 const homeDescription =
-  'Prakhar Tripathi is a backend-focused full-stack engineer and creator of Sculptor TS, building TypeScript backend frameworks, npm tooling, and production-grade web systems.'
+  'Prakhar Tripathi is a backend-focused full-stack engineer and creator of SculptorTS, building TypeScript backend frameworks, npm tooling, and production-grade web systems.'
 
 const projectsDescription =
   'Domain-driven backend project portfolio covering Pharmetrix, Riwayat, Spendly, and Sahyogi with architecture decisions, outcomes, and production-focused stacks.'
@@ -103,13 +103,13 @@ const certificationsDescription =
   'Professional certifications from Google, DataCamp, Six Sigma, and Great Learning with credential IDs, verification links, and in-page PDF records.'
 
 const contributionsDescription =
-  'Open-source work by Prakhar Tripathi featuring Sculptor TS, TypeScript backend framework packages, npm CLIs, scaffolding tools, and Express architecture experiments.'
+  'Open-source work by Prakhar Tripathi featuring SculptorTS, TypeScript backend framework packages, npm CLIs, scaffolding tools, and Express architecture experiments.'
 
 const sculptorDescription =
-  'Sculptor TS is Prakhar Tripathi’s package-aware TypeScript Express framework with explicit dependency injection, CLI tooling, config-driven runtime behavior, and decorator, functional, or hybrid routing.'
+  'SculptorTS is Prakhar Tripathi’s package-aware TypeScript Express framework with explicit dependency injection, CLI tooling, config-driven runtime behavior, and decorator, functional, or hybrid routing.'
 
 const sculptorGuideDescription =
-  'Sculptor TS guide by Prakhar Tripathi covering package architecture, CLI workflow, dependency injection, routing styles, runtime configuration, and framework docs.'
+  'SculptorTS guide by Prakhar Tripathi covering package architecture, CLI workflow, dependency injection, routing styles, runtime configuration, and framework docs.'
 
 const pharmetrixDescription =
   'Pharmetrix is a pharmaceutical inventory and POS platform for batch-aware stock control, FEFO dispensing, cold-chain monitoring, and edge-cloud synchronization.'
@@ -217,12 +217,12 @@ export function PortfolioRoutes() {
   useEffect(() => {
     if (route.page === 'home') {
       applySeo({
-        title: 'Prakhar Tripathi | Backend Engineer & Sculptor TS Creator',
+        title: 'Prakhar Tripathi | Software Engineer & Creator - SculptorTS',
         description: homeDescription,
         path: '/',
         priority: 'high',
         keywords:
-          'Prakhar Tripathi, Sculptor TS, Backend Engineer, Full Stack Engineer, TypeScript, Express framework, Node.js, npm packages, CLI tooling, MongoDB, Docker, Portfolio',
+          'Prakhar Tripathi, SculptorTS, Backend Engineer, Full Stack Engineer, TypeScript, Express framework, Node.js, npm packages, CLI tooling, MongoDB, Docker, Portfolio',
       })
       return
     }
@@ -299,16 +299,16 @@ export function PortfolioRoutes() {
 
     if (route.page === 'contributions') {
       applySeo({
-        title: 'Open-Source Work | Prakhar Tripathi',
+        title: 'Open-Source Contrubutions | Prakhar Tripathi',
         description: contributionsDescription,
         path: '/contributions',
         keywords:
-          'Prakhar Tripathi open source, Sculptor TS, TypeScript Express framework, npm packages, @sculptor/cli, scafollder, reactron, routesculpt, backend tooling',
+          'Prakhar Tripathi open source, SculptorTS, TypeScript Express framework, npm packages, @sculptor/cli, scafollder, reactron, routesculpt, backend tooling',
         structuredData: [
           {
             '@type': 'CollectionPage',
             '@id': `${seoConstants.siteUrl}/contributions#collection`,
-            name: 'Open-Source Work | Prakhar Tripathi',
+            name: 'Open-Source Contrubutions | Prakhar Tripathi',
             url: `${seoConstants.siteUrl}/contributions`,
             description: contributionsDescription,
             inLanguage: 'en-IN',
@@ -338,17 +338,17 @@ export function PortfolioRoutes() {
 
       if (activeContribution.slug === 'sculptor-ts') {
         applySeo({
-          title: 'Sculptor TS | TypeScript Express Framework by Prakhar Tripathi',
+          title: 'SculptorTS | TypeScript-first Express Framework by Prakhar Tripathi',
           description: sculptorDescription,
           path: contributionPath,
           priority: 'high',
           type: 'website',
           keywords:
-            'Sculptor TS, Prakhar Tripathi, TypeScript Express framework, backend framework, dependency injection, @sculptor/core, @sculptor/router, @sculptor/config, @sculptor/cli, npm, CLI tooling',
+            'SculptorTS, Prakhar Tripathi, TypeScript Express framework, backend framework, dependency injection, @sculptor/core, @sculptor/router, @sculptor/config, @sculptor/cli, npm, CLI tooling',
           structuredData: [
             {
               '@type': 'SoftwareApplication',
-              name: 'Sculptor TS',
+              name: 'SculptorTS',
               description: sculptorDescription,
               applicationCategory: 'DeveloperApplication',
               operatingSystem: 'Cross-platform',
@@ -378,7 +378,7 @@ export function PortfolioRoutes() {
                 {
                   '@type': 'ListItem',
                   position: 3,
-                  name: 'Sculptor TS',
+                  name: 'SculptorTS',
                   item: `${seoConstants.siteUrl}${contributionPath}`,
                 },
               ],
@@ -442,17 +442,17 @@ export function PortfolioRoutes() {
       const guidePath = buildContributionGuidePath(activeContribution.slug)
 
       applySeo({
-        title: 'Sculptor TS Guide | Architecture, CLI & Framework Docs',
+        title: 'SculptorTS Guide | Architecture, CLI & Framework Docs',
         description: sculptorGuideDescription,
         path: guidePath,
         priority: 'high',
         type: 'article',
         keywords:
-          'Sculptor TS guide, Prakhar Tripathi, framework documentation, TypeScript Express framework, dependency injection, @sculptor/core, @sculptor/router, @sculptor/config, @sculptor/cli, architecture',
+          'SculptorTS guide, Prakhar Tripathi, framework documentation, TypeScript Express framework, dependency injection, @sculptor/core, @sculptor/router, @sculptor/config, @sculptor/cli, architecture',
         structuredData: [
           {
             '@type': 'TechArticle',
-            name: 'Sculptor TS Guide',
+            name: 'SculptorTS Guide',
             description: sculptorGuideDescription,
             url: `${seoConstants.siteUrl}${guidePath}`,
             author: {
@@ -599,7 +599,7 @@ export function PortfolioRoutes() {
 
       if (activeProject.id === 'pharmetrix') {
         applySeo({
-          title: 'Pharmetrix | Pharmaceutical Inventory & POS Platform',
+          title: 'Pharmetrix | Advanced Pharmaceutical Inventory & POS System with Cold Chain IoT',
           description: pharmetrixDescription,
           path: projectPath,
           priority: 'high',

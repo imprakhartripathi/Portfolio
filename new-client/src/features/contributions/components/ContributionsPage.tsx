@@ -21,7 +21,7 @@ export function ContributionsPage({ onOpenContribution }: ContributionsPageProps
       id="contributions"
       eyebrow="Open Source"
       title="Open-Source Contributions"
-      description="Sculptor TS and the npm tooling I am building around backend architecture, scaffolding, and framework ergonomics."
+      description="SculptorTS and the npm tooling I am building around backend architecture, scaffolding, and framework ergonomics."
       className="contributions-page"
       titleAs="h1"
     >

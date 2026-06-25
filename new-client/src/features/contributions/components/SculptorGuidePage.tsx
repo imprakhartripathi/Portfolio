@@ -759,7 +759,7 @@ export function SculptorGuidePage({
     <SectionWrapper
         id="sculptor-guide"
         eyebrow="Framework Guide"
-        title="Sculptor TS"
+        title="SculptorTS"
         description={`${contribution.packageName} • rendered from the markdown docs in public/Sculptor`}
         className="sculptor-guide-page"
         bodyClassName="sculptor-guide-page__body"

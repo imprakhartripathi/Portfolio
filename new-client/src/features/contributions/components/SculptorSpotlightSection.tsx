@@ -24,7 +24,7 @@ export function SculptorSpotlightSection({ onOpenSculptorPage, onOpenSculptorGui
     <SectionWrapper
       id={sectionId}
       eyebrow="Framework Spotlight"
-      title="Sculptor TS"
+      title="SculptorTS"
       description="A DevX-focused framework layer that brings package composition, dependency injection, and CLI ergonomics to Express applications."
       className="sculptor-spotlight"
     >
@@ -43,7 +43,7 @@ export function SculptorSpotlightSection({ onOpenSculptorPage, onOpenSculptorGui
             <div className="projects-cta-card__visual-frame sculptor-spotlight-card__visual-frame">
               <img
                 src="sculptor-nobg.png"
-                alt="Sculptor TS Logo"
+                alt="SculptorTS Logo"
                 className="projects-cta-card__visual-image sculptor-spotlight-card__visual-image"
               />
             </div>
@@ -61,7 +61,7 @@ export function SculptorSpotlightSection({ onOpenSculptorPage, onOpenSculptorGui
               Package-aware Express framework
             </h3>
             <p className="projects-cta-card__text">
-              Sculptor TS keeps framework structure explicit: package ownership,
+              SculptorTS keeps framework structure explicit: package ownership,
               request context, config loading, and CLI-driven generation all
               stay visible in one place.
             </p>

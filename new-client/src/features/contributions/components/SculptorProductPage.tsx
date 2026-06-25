@@ -102,7 +102,7 @@ export function SculptorProductPage({
           <div className="sculptor-product__overview-frame">
             <img
               src="/sculptor-full-bg.png"
-              alt="Sculptor TS Logo"
+              alt="SculptorTS Logo"
               className="sculptor-product__logo--full"
             />
           </div>
