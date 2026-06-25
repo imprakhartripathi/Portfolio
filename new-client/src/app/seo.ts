@@ -1,5 +1,5 @@
 const SITE_URL = 'https://imprakhartripathi.in'
-const DEFAULT_IMAGE = 'https://imprakhartripathi.in/myicon.png'
+const DEFAULT_IMAGE = 'https://imprakhartripathi.in/prakhar.jpeg'
 const ROUTE_SCHEMA_SCRIPT_ID = 'route-schema'
 
 type SeoPayload = {
@@ -114,4 +114,9 @@ export function applySeo(payload: SeoPayload) {
 
 export const seoConstants = {
   siteUrl: SITE_URL,
+  images: {
+    profile: `${SITE_URL}/prakhar.jpeg`,
+    sculptor: `${SITE_URL}/sculptor-bg.png`,
+    pharmetrix: `${SITE_URL}/projects/pharmetrix.png`,
+  },
 }

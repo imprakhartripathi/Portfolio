@@ -220,6 +220,7 @@ export function PortfolioRoutes() {
         title: 'Prakhar Tripathi | Software Engineer & Creator - SculptorTS',
         description: homeDescription,
         path: '/',
+        image: seoConstants.images.profile,
         priority: 'high',
         keywords:
           'Prakhar Tripathi, SculptorTS, Backend Engineer, Full Stack Engineer, TypeScript, Express framework, Node.js, npm packages, CLI tooling, MongoDB, Docker, Portfolio',
@@ -299,7 +300,7 @@ export function PortfolioRoutes() {
 
     if (route.page === 'contributions') {
       applySeo({
-        title: 'Open-Source Contrubutions | Prakhar Tripathi',
+        title: 'Open-Source Contributions | Prakhar Tripathi',
         description: contributionsDescription,
         path: '/contributions',
         keywords:
@@ -308,7 +309,7 @@ export function PortfolioRoutes() {
           {
             '@type': 'CollectionPage',
             '@id': `${seoConstants.siteUrl}/contributions#collection`,
-            name: 'Open-Source Contrubutions | Prakhar Tripathi',
+            name: 'Open-Source Contributions | Prakhar Tripathi',
             url: `${seoConstants.siteUrl}/contributions`,
             description: contributionsDescription,
             inLanguage: 'en-IN',
@@ -341,6 +342,7 @@ export function PortfolioRoutes() {
           title: 'SculptorTS | TypeScript-first Express Framework by Prakhar Tripathi',
           description: sculptorDescription,
           path: contributionPath,
+          image: seoConstants.images.sculptor,
           priority: 'high',
           type: 'website',
           keywords:
@@ -353,6 +355,7 @@ export function PortfolioRoutes() {
               applicationCategory: 'DeveloperApplication',
               operatingSystem: 'Cross-platform',
               url: `${seoConstants.siteUrl}${contributionPath}`,
+              image: seoConstants.images.sculptor,
               author: {
                 '@type': 'Person',
                 name: 'Prakhar Tripathi',
@@ -445,6 +448,7 @@ export function PortfolioRoutes() {
         title: 'SculptorTS Guide | Architecture, CLI & Framework Docs',
         description: sculptorGuideDescription,
         path: guidePath,
+        image: seoConstants.images.sculptor,
         priority: 'high',
         type: 'article',
         keywords:
@@ -455,6 +459,7 @@ export function PortfolioRoutes() {
             name: 'SculptorTS Guide',
             description: sculptorGuideDescription,
             url: `${seoConstants.siteUrl}${guidePath}`,
+            image: seoConstants.images.sculptor,
             author: {
               '@type': 'Person',
               name: 'Prakhar Tripathi',
@@ -466,6 +471,7 @@ export function PortfolioRoutes() {
               applicationCategory: 'DeveloperApplication',
               operatingSystem: 'Cross-platform',
               url: `${seoConstants.siteUrl}${contributionPath}`,
+              image: seoConstants.images.sculptor,
             },
           },
           {
@@ -603,7 +609,7 @@ export function PortfolioRoutes() {
           description: pharmetrixDescription,
           path: projectPath,
           priority: 'high',
-          image: `${seoConstants.siteUrl}${activeProject.icon}`,
+          image: seoConstants.images.pharmetrix,
           type: 'article',
           keywords:
             'Pharmetrix, pharmaceutical inventory system, POS platform, FEFO, cold-chain monitoring, edge-cloud synchronization, batch stock tracking, React, Node.js, Express',
@@ -615,7 +621,7 @@ export function PortfolioRoutes() {
               applicationCategory: 'BusinessApplication',
               operatingSystem: 'Web',
               url: `${seoConstants.siteUrl}${projectPath}`,
-              image: `${seoConstants.siteUrl}${activeProject.icon}`,
+              image: seoConstants.images.pharmetrix,
               author: {
                 '@type': 'Person',
                 name: 'Prakhar Tripathi',
