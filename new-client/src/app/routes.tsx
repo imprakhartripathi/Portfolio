@@ -10,7 +10,9 @@ import {
   sculptorRepoUrl,
 } from '../features/contributions'
 import { ContactEndpointSection } from '../features/contact-endpoint'
+import { BrandedRedirectPage, getBrandedRedirectConfig } from '../features/redirects'
 import { SystemOverviewSection } from '../features/system-overview'
+import { resumeUrl } from '../features/system-overview/data'
 import { systemsDesignedCases } from '../features/systems-designed/data'
 import { SectionWrapper } from '../layout/SectionWrapper'
 import { useInViewport } from '../shared/hooks/useInViewport'
@@ -212,9 +214,18 @@ export function PortfolioRoutes() {
         : null,
     [route],
   )
+  const activeBrandedRedirect = useMemo(
+    () => (route.page === 'branded-redirect' ? getBrandedRedirectConfig(route.redirectKey) : null),
+    [route],
+  )
   const isSculptorContribution = activeContribution?.slug === 'sculptor-ts'
 
   useEffect(() => {
+    if (route.page === 'resume') {
+      window.location.replace(resumeUrl)
+      return
+    }
+
     if (route.page === 'home') {
       applySeo({
         title: 'Prakhar Tripathi | Software Engineer & Creator - SculptorTS',
@@ -224,6 +235,48 @@ export function PortfolioRoutes() {
         priority: 'high',
         keywords:
           'Prakhar Tripathi, SculptorTS, Backend Engineer, Full Stack Engineer, TypeScript, Express framework, Node.js, npm packages, CLI tooling, MongoDB, Docker, Portfolio',
+      })
+      return
+    }
+
+    if (route.page === 'branded-redirect' && activeBrandedRedirect) {
+      applySeo({
+        title: activeBrandedRedirect.seo.title,
+        description: activeBrandedRedirect.seo.description,
+        path: activeBrandedRedirect.path,
+        keywords: activeBrandedRedirect.seo.keywords,
+        structuredData: [
+          {
+            '@type': 'ProfilePage',
+            '@id': `${seoConstants.siteUrl}${activeBrandedRedirect.path}#profile`,
+            name: activeBrandedRedirect.seo.title,
+            url: `${seoConstants.siteUrl}${activeBrandedRedirect.path}`,
+            description: activeBrandedRedirect.seo.description,
+            mainEntity: {
+              '@type': 'Person',
+              name: 'Prakhar Tripathi',
+              url: seoConstants.siteUrl,
+              sameAs: [activeBrandedRedirect.destinationUrl],
+            },
+          },
+          {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: seoConstants.siteUrl,
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: activeBrandedRedirect.platformName,
+                item: `${seoConstants.siteUrl}${activeBrandedRedirect.path}`,
+              },
+            ],
+          },
+        ],
       })
       return
     }
@@ -724,7 +777,7 @@ export function PortfolioRoutes() {
       path: route.page === 'not-found' ? route.pathname : '/',
       noindex: true,
     })
-  }, [route, activeProject, activeCertification, activeContribution, isSculptorContribution])
+  }, [route, activeProject, activeCertification, activeContribution, activeBrandedRedirect, isSculptorContribution])
 
   function openProject(projectId: string) {
     navigateTo(buildProjectPath(projectId))
@@ -804,6 +857,14 @@ export function PortfolioRoutes() {
         <LazyProjectDetailsPage study={activeProject} onBack={closeProject} />
       </Suspense>
     )
+  }
+
+  if (route.page === 'resume') {
+    return null
+  }
+
+  if (route.page === 'branded-redirect' && activeBrandedRedirect) {
+    return <BrandedRedirectPage config={activeBrandedRedirect} />
   }
 
   if (route.page === 'project-detail' && !activeProject) {

@@ -3,6 +3,7 @@ export const PORTFOLIO_ROUTE_EVENT = 'portfolio:routechange'
 const PROJECTS_BASE_PATH = '/projects'
 const CERTIFICATIONS_BASE_PATH = '/certifications'
 const CONTRIBUTIONS_BASE_PATH = '/contributions'
+const BRANDED_REDIRECT_PATHS = ['/github', '/npm', '/linkedin'] as const
 const SCULPTOR_SLUG = 'sculptor-ts'
 const SCULPTOR_CANONICAL_PATH = '/Sculptor'
 
@@ -27,6 +28,8 @@ export type PortfolioRoute =
   | { page: 'contributions' }
   | { page: 'contribution-detail'; contributionSlug: string }
   | { page: 'contribution-guide'; contributionSlug: string }
+  | { page: 'branded-redirect'; redirectKey: 'github' | 'npm' | 'linkedin' }
+  | { page: 'resume' }
   | { page: 'not-found'; pathname: string }
 
 export function buildProjectPath(projectId: string) {
@@ -58,6 +61,14 @@ export function readRouteFromLocation(locationRef: Pick<Location, 'pathname'> = 
 
   if (pathname === '/') {
     return { page: 'home' }
+  }
+
+  if (pathname === '/resume') {
+    return { page: 'resume' }
+  }
+
+  if (BRANDED_REDIRECT_PATHS.includes(pathname as (typeof BRANDED_REDIRECT_PATHS)[number])) {
+    return { page: 'branded-redirect', redirectKey: pathname.slice(1) as 'github' | 'npm' | 'linkedin' }
   }
 
   if (pathname === PROJECTS_BASE_PATH) {
