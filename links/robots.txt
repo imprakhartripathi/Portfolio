@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Allow: /assets/
+
+Host: links.imprakhartripathi.in
+Sitemap: https://links.imprakhartripathi.in/sitemap.xml
