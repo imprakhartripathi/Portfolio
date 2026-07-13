@@ -1942,12 +1942,15 @@
 .experience-roadmap__node {
   width: 96px;
   height: 96px;
+  box-sizing: border-box;
   justify-self: center;
   position: relative;
   z-index: 2;
   border: 1px solid rgba(103, 215, 245, 0.42);
   border-radius: 22px;
   padding: 12px;
+  display: grid;
+  place-items: center;
   cursor: pointer;
   background:
     linear-gradient(145deg, rgba(103, 215, 245, 0.16), rgba(10, 22, 42, 0.82)),
@@ -1963,8 +1966,12 @@
 }
 
 .experience-roadmap__node img {
-  width: 100%;
-  height: 100%;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  margin: auto;
   object-fit: contain;
   border-radius: 12px;
   background: #ffffff;
@@ -2019,10 +2026,12 @@
 }
 
 .experience-detail__hero {
+  width: 100%;
+  box-sizing: border-box;
   display: grid;
   grid-template-columns: minmax(160px, 280px) minmax(0, 1fr);
   gap: clamp(18px, 4vw, 42px);
-  align-items: center;
+  align-items: start;
   padding: clamp(18px, 3vw, 30px);
   border: 1px solid rgba(103, 215, 245, 0.24);
   border-radius: 18px;
@@ -2033,9 +2042,11 @@
 
 .experience-detail__logo-frame {
   width: 100%;
-  aspect-ratio: 10 / 4;
+  aspect-ratio: 1 / 1;
   border-radius: 16px;
   padding: 10px;
+  max-width: 280px;
+  margin-inline: auto;
 }
 
 .experience-detail__logo-frame img {
@@ -2048,10 +2059,12 @@
 .experience-detail__hero-copy {
   display: grid;
   gap: 12px;
+  min-width: 0;
+  align-items: start;
 }
 
 .experience-detail__hero-copy p {
-  max-width: 78ch;
+  max-width: 100%;
   margin: 0;
   color: var(--text-muted);
   line-height: 1.66;
@@ -2087,7 +2100,14 @@
   padding-left: 18px;
   color: var(--text-muted);
   display: grid;
-  gap: 7px;
+  gap: 4px;
+  line-height: 1.45;
+}
+
+.experience-detail__panel ul li,
+.experience-detail__project ul li {
+  margin: 0;
+  padding: 0;
 }
 
 .experience-detail__projects {
@@ -3601,6 +3621,11 @@
     width: min(100%, 190px);
   }
 
+  .experience-detail__meta-row span {
+    inline-size: min(100%, 140px);
+    white-space: normal;
+  }
+
   .certifications-page__grid {
     grid-template-columns: 1fr;
   }
@@ -4168,6 +4193,36 @@
     grid-template-columns: 1fr;
   }
 
+  .experience-detail__hero {
+    align-items: start;
+    gap: 18px;
+  }
+
+  .experience-detail__logo-frame {
+    width: min(100%, 190px);
+    max-width: 190px;
+    padding: 10px;
+    margin-inline: auto;
+  }
+
+  .experience-detail__meta-row {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .experience-detail__meta-row span {
+    inline-size: min(100%, 132px);
+    white-space: normal;
+  }
+
+  .experience-detail__hero-copy {
+    align-items: start;
+  }
+
+  .experience-detail__hero-copy p {
+    max-width: 100%;
+  }
+
   .experience-spotlight__chip-columns {
     grid-template-columns: 1fr;
   }
@@ -4179,10 +4234,15 @@
 
   .experience-roadmap__track {
     display: block;
-    inset: 32px auto 32px 61px;
+    inset: 32px auto 32px auto;
+    left: 48px;
     width: 2px;
     height: auto;
     background: linear-gradient(rgba(103, 215, 245, 0.72), rgba(143, 223, 183, 0.38));
+  }
+
+  .experience-roadmap__node {
+    justify-self: center;
   }
 
   .experience-roadmap__track span {
@@ -4247,7 +4307,7 @@
   }
 
   .experience-roadmap__track {
-    left: 45px;
+    left: 36px;
   }
 
   .experience-roadmap__stop,
@@ -4259,8 +4319,11 @@
   .experience-roadmap__node {
     width: 72px;
     height: 72px;
+    box-sizing: border-box;
     border-radius: 16px;
     padding: 9px;
+    display: grid;
+    place-items: center;
   }
 
   .experience-roadmap__copy h3 {
@@ -4269,5 +4332,12 @@
 
   .experience-detail__logo-frame {
     max-width: 260px;
+  }
+
+  .experience-roadmap__node img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
   }
 }

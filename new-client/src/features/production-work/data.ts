@@ -42,7 +42,7 @@ export const productionWorkEntries: ProductionWorkEntry[] = [
       'Practiced team-based software delivery with enterprise architecture expectations and clean implementation boundaries.',
     ],
     learnings: [
-      'Java',
+      'Advanced Java',
       'Spring Boot',
       'Spring Security',
       'Enterprise application architecture',
