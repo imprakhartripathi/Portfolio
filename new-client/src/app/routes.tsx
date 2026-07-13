@@ -10,6 +10,7 @@ import {
   sculptorRepoUrl,
 } from '../features/contributions'
 import { ContactEndpointSection } from '../features/contact-endpoint'
+import { getExperienceBySlug, productionWorkEntries } from '../features/production-work'
 import { BrandedRedirectPage, getBrandedRedirectConfig } from '../features/redirects'
 import { SystemOverviewSection } from '../features/system-overview'
 import { resumeUrl } from '../features/system-overview/data'
@@ -21,6 +22,7 @@ import {
   buildContributionPath,
   buildContributionGuidePath,
   buildCertificationPath,
+  buildExperiencePath,
   buildProjectPath,
   navigateTo,
   PORTFOLIO_ROUTE_EVENT,
@@ -38,6 +40,18 @@ const LazyCapabilityMatrixSection = lazy(() =>
 const LazyProductionTimelineSection = lazy(() =>
   import('../features/production-work/components/ProductionTimelineSection').then((module) => ({
     default: module.ProductionTimelineSection,
+  })),
+)
+
+const LazyExperiencesPage = lazy(() =>
+  import('../features/production-work/components/ExperiencesPage').then((module) => ({
+    default: module.ExperiencesPage,
+  })),
+)
+
+const LazyExperienceDetailsPage = lazy(() =>
+  import('../features/production-work/components/ExperienceDetailsPage').then((module) => ({
+    default: module.ExperienceDetailsPage,
   })),
 )
 
@@ -100,6 +114,9 @@ const homeDescription =
 
 const projectsDescription =
   'Domain-driven backend project portfolio covering Pharmetrix, Riwayat, Spendly, and Sahyogi with architecture decisions, outcomes, and production-focused stacks.'
+
+const experiencesDescription =
+  'Experience roadmap for Prakhar Tripathi, covering Capgemini fellowship work, enterprise Java microservices, and production-facing Ferth internships.'
 
 const certificationsDescription =
   'Professional certifications from Google, DataCamp, Six Sigma, and Great Learning with credential IDs, verification links, and in-page PDF records.'
@@ -199,6 +216,11 @@ export function PortfolioRoutes() {
 
   const activeProject = useMemo(
     () => (route.page === 'project-detail' ? systemsDesignedCases.find((project) => project.id === route.projectId) ?? null : null),
+    [route],
+  )
+
+  const activeExperience = useMemo(
+    () => (route.page === 'experience-detail' ? getExperienceBySlug(route.experienceSlug) : null),
     [route],
   )
 
@@ -309,6 +331,41 @@ export function PortfolioRoutes() {
               position: index + 1,
               name: project.name,
               url: `${seoConstants.siteUrl}${buildProjectPath(project.id)}`,
+            })),
+          },
+        ],
+      })
+      return
+    }
+
+    if (route.page === 'experiences') {
+      applySeo({
+        title: 'Experience | Prakhar Tripathi',
+        description: experiencesDescription,
+        path: '/experience',
+        keywords:
+          'Prakhar Tripathi experience, Capgemini Fellowship, Software Engineer Trainee, Java, Spring Boot, microservices, Ferth internship',
+        structuredData: [
+          {
+            '@type': 'CollectionPage',
+            '@id': `${seoConstants.siteUrl}/experience#collection`,
+            name: 'Experience | Prakhar Tripathi',
+            url: `${seoConstants.siteUrl}/experience`,
+            description: experiencesDescription,
+            inLanguage: 'en-IN',
+            about: {
+              '@type': 'Person',
+              name: 'Prakhar Tripathi',
+              url: seoConstants.siteUrl,
+            },
+          },
+          {
+            '@type': 'ItemList',
+            itemListElement: productionWorkEntries.map((experience, index) => ({
+              '@type': 'ListItem',
+              position: index + 1,
+              name: `${experience.company} - ${experience.position}`,
+              url: `${seoConstants.siteUrl}${buildExperiencePath(experience.slug)}`,
             })),
           },
         ],
@@ -771,13 +828,79 @@ export function PortfolioRoutes() {
       return
     }
 
+    if (route.page === 'experience-detail' && activeExperience) {
+      const experiencePath = buildExperiencePath(activeExperience.slug)
+
+      applySeo({
+        title: `${activeExperience.company} ${activeExperience.position} | Experience`,
+        description: activeExperience.summary,
+        path: experiencePath,
+        image: `${seoConstants.siteUrl}${activeExperience.companyLogo}`,
+        type: 'article',
+        keywords: `${activeExperience.company}, ${activeExperience.position}, ${activeExperience.technologies.join(', ')}, ${activeExperience.skills.join(', ')}`,
+        structuredData: [
+          {
+            '@type': 'Article',
+            headline: `${activeExperience.company} - ${activeExperience.position}`,
+            description: activeExperience.summary,
+            url: `${seoConstants.siteUrl}${experiencePath}`,
+            image: `${seoConstants.siteUrl}${activeExperience.companyLogo}`,
+            author: {
+              '@type': 'Person',
+              name: 'Prakhar Tripathi',
+              url: seoConstants.siteUrl,
+            },
+            about: {
+              '@type': 'Organization',
+              name: activeExperience.company,
+            },
+            keywords: activeExperience.skills.join(', '),
+          },
+          {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: seoConstants.siteUrl,
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Experience',
+                item: `${seoConstants.siteUrl}/experience`,
+              },
+              {
+                '@type': 'ListItem',
+                position: 3,
+                name: activeExperience.company,
+                item: `${seoConstants.siteUrl}${experiencePath}`,
+              },
+            ],
+          },
+        ],
+      })
+      return
+    }
+
+    if (route.page === 'experience-detail') {
+      applySeo({
+        title: 'Experience Not Found | Prakhar Tripathi',
+        description: 'The requested experience page does not exist.',
+        path: `/experience/${route.experienceSlug}`,
+        noindex: true,
+      })
+      return
+    }
+
     applySeo({
       title: 'Page Not Found | Prakhar Tripathi',
       description: 'This page does not exist on imprakhartripathi.in.',
       path: route.page === 'not-found' ? route.pathname : '/',
       noindex: true,
     })
-  }, [route, activeProject, activeCertification, activeContribution, activeBrandedRedirect, isSculptorContribution])
+  }, [route, activeProject, activeExperience, activeCertification, activeContribution, activeBrandedRedirect, isSculptorContribution])
 
   function openProject(projectId: string) {
     navigateTo(buildProjectPath(projectId))
@@ -788,6 +911,24 @@ export function PortfolioRoutes() {
   function closeProject() {
     navigateTo('/projects', { replace: true })
     setRoute({ page: 'projects' })
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  function openExperience(experienceSlug: string) {
+    navigateTo(buildExperiencePath(experienceSlug))
+    setRoute({ page: 'experience-detail', experienceSlug })
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  function closeExperience() {
+    navigateTo('/experience', { replace: true })
+    setRoute({ page: 'experiences' })
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  function goExperiences() {
+    navigateTo('/experience')
+    setRoute({ page: 'experiences' })
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -871,6 +1012,18 @@ export function PortfolioRoutes() {
     return <NotFoundPage pathname={`/projects/${route.projectId}`} onGoHome={goHome} />
   }
 
+  if (route.page === 'experience-detail' && activeExperience) {
+    return (
+      <Suspense fallback={null}>
+        <LazyExperienceDetailsPage experience={activeExperience} onBack={closeExperience} onOpenProject={openProject} />
+      </Suspense>
+    )
+  }
+
+  if (route.page === 'experience-detail' && !activeExperience) {
+    return <NotFoundPage pathname={`/experience/${route.experienceSlug}`} onGoHome={goHome} />
+  }
+
   if (route.page === 'certification-detail' && activeCertification) {
     return (
       <Suspense fallback={null}>
@@ -935,6 +1088,14 @@ export function PortfolioRoutes() {
     )
   }
 
+  if (route.page === 'experiences') {
+    return (
+      <Suspense fallback={null}>
+        <LazyExperiencesPage onOpenExperience={openExperience} onBackHome={goHome} />
+      </Suspense>
+    )
+  }
+
   if (route.page === 'projects') {
     return (
       <Suspense fallback={null}>
@@ -972,7 +1133,11 @@ export function PortfolioRoutes() {
       </DeferredViewportMount>
       <DeferredViewportMount anchorId="experience" minHeight={320} rootMargin="0px 0px">
         <Suspense fallback={null}>
-          <LazyProductionTimelineSection sectionId="experience-content" />
+          <LazyProductionTimelineSection
+            sectionId="experience-content"
+            onOpenExperience={openExperience}
+            onOpenExperiencesPage={goExperiences}
+          />
         </Suspense>
       </DeferredViewportMount>
       <DeferredViewportMount anchorId="projects" minHeight={280} rootMargin="0px 0px">

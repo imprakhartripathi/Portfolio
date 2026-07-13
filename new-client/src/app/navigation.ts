@@ -1,6 +1,7 @@
 export const PORTFOLIO_ROUTE_EVENT = 'portfolio:routechange'
 
 const PROJECTS_BASE_PATH = '/projects'
+const EXPERIENCE_BASE_PATH = '/experience'
 const CERTIFICATIONS_BASE_PATH = '/certifications'
 const CONTRIBUTIONS_BASE_PATH = '/contributions'
 const BRANDED_REDIRECT_PATHS = ['/github', '/npm', '/linkedin'] as const
@@ -23,6 +24,8 @@ export type PortfolioRoute =
   | { page: 'home' }
   | { page: 'projects' }
   | { page: 'project-detail'; projectId: string }
+  | { page: 'experiences' }
+  | { page: 'experience-detail'; experienceSlug: string }
   | { page: 'certifications' }
   | { page: 'certification-detail'; certificationSlug: string }
   | { page: 'contributions' }
@@ -34,6 +37,10 @@ export type PortfolioRoute =
 
 export function buildProjectPath(projectId: string) {
   return `${PROJECTS_BASE_PATH}/${encodeURIComponent(projectId)}`
+}
+
+export function buildExperiencePath(experienceSlug: string) {
+  return `${EXPERIENCE_BASE_PATH}/${encodeURIComponent(experienceSlug)}`
 }
 
 export function buildCertificationPath(certificationSlug: string) {
@@ -81,6 +88,18 @@ export function readRouteFromLocation(locationRef: Pick<Location, 'pathname'> = 
       return { page: 'project-detail', projectId }
     }
     return { page: 'projects' }
+  }
+
+  if (pathname === EXPERIENCE_BASE_PATH) {
+    return { page: 'experiences' }
+  }
+
+  if (pathname.startsWith(`${EXPERIENCE_BASE_PATH}/`)) {
+    const experienceSlug = decodeURIComponent(pathname.slice(EXPERIENCE_BASE_PATH.length + 1))
+    if (experienceSlug) {
+      return { page: 'experience-detail', experienceSlug }
+    }
+    return { page: 'experiences' }
   }
 
   if (pathname === CERTIFICATIONS_BASE_PATH) {

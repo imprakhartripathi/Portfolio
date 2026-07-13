@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title desc">
+  <title id="title">Capgemini mark</title>
+  <desc id="desc">A clean cyan and green enterprise technology monogram.</desc>
+  <rect width="160" height="160" rx="28" fill="#07101f"/>
+  <path d="M35 95c0-31 21-55 51-55 17 0 31 6 40 18l-18 14c-5-7-13-11-23-11-17 0-29 14-29 33 0 20 12 33 30 33 10 0 19-4 25-12l18 13c-10 14-25 21-44 21-29 0-50-23-50-54Z" fill="#67d7f5"/>
+  <path d="M74 98c13-29 33-48 59-58-7 26-24 47-52 65l-7-7Z" fill="#8fdfb7"/>
+  <path d="M80 116c18-7 34-18 47-34-3 18-13 34-29 46l-18-12Z" fill="#d7e2f5" opacity=".82"/>
+</svg>

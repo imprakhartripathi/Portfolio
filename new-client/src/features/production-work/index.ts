@@ -1,4 +1,6 @@
+export { ExperienceDetailsPage } from './components/ExperienceDetailsPage'
+export { ExperiencesPage } from './components/ExperiencesPage'
 export { ProductionTimelineSection } from './components/ProductionTimelineSection'
 export { TimelineItem } from './components/TimelineItem'
-export { productionWorkEntries } from './data'
-export type { ProductionWorkEntry } from './types'
+export { getExperienceBySlug, latestExperience, productionWorkEntries } from './data'
+export type { ExperienceCertificate, ExperienceProject, ProductionWorkEntry } from './types'

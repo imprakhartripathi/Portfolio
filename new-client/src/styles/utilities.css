@@ -65,6 +65,12 @@
   background: var(--glow-cyan);
 }
 
+.topbar__link.is-active {
+  border-color: rgba(103, 215, 245, 0.42);
+  background: rgba(103, 215, 245, 0.12);
+  color: var(--accent-cyan);
+}
+
 .topbar__portal-btn {
   display: inline-flex;
   align-items: center;
@@ -208,6 +214,12 @@
 .portal-nav__link:hover {
   border-color: var(--line-strong);
   background: rgba(103, 215, 245, 0.14);
+}
+
+.portal-nav__link.is-active {
+  border-color: rgba(103, 215, 245, 0.48);
+  background: rgba(103, 215, 245, 0.13);
+  color: var(--accent-cyan);
 }
 
 .portal-nav__link--accent {
@@ -1584,6 +1596,539 @@
   gap: 6px;
 }
 
+.experience-spotlight__shell,
+.experience-roadmap__stack,
+.experience-detail__stack {
+  display: grid;
+  gap: 18px;
+}
+
+.experience-spotlight__panel {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  gap: 22px;
+  padding: clamp(18px, 2.4vw, 28px);
+  border: 1px solid rgba(103, 215, 245, 0.28);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 16% 16%, rgba(103, 215, 245, 0.18), transparent 34%),
+    radial-gradient(circle at 86% 18%, rgba(143, 223, 183, 0.12), transparent 30%),
+    linear-gradient(145deg, rgba(14, 31, 58, 0.9), rgba(5, 10, 20, 0.82));
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.26), inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.experience-spotlight__panel:hover {
+  border-color: rgba(103, 215, 245, 0.44);
+  box-shadow: 0 28px 88px rgba(0, 0, 0, 0.31), 0 0 36px rgba(103, 215, 245, 0.08), inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+}
+
+.experience-spotlight__panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(103, 215, 245, 0.08), transparent 34%, rgba(143, 223, 183, 0.06)),
+    repeating-linear-gradient(90deg, rgba(140, 163, 199, 0.045) 0 1px, transparent 1px 78px);
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.82), transparent);
+}
+
+.experience-spotlight__orbital {
+  position: absolute;
+  inset: 18px 18px auto auto;
+  width: 172px;
+  height: 172px;
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+.experience-spotlight__orbital span {
+  position: absolute;
+  inset: calc(var(--orbital-index, 0) * 18px);
+  border: 1px solid rgba(103, 215, 245, 0.22);
+  border-radius: 999px;
+  animation: experience-orbit 16s linear infinite;
+}
+
+.experience-spotlight__orbital span:nth-child(2) {
+  --orbital-index: 1;
+  border-color: rgba(143, 223, 183, 0.24);
+  animation-duration: 22s;
+  animation-direction: reverse;
+}
+
+.experience-spotlight__orbital span:nth-child(3) {
+  --orbital-index: 2;
+  animation-duration: 28s;
+}
+
+.experience-spotlight__orbital span::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 16px rgba(103, 215, 245, 0.78);
+}
+
+@keyframes experience-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.experience-spotlight__identity,
+.experience-spotlight__content,
+.experience-spotlight__chip-columns {
+  position: relative;
+  z-index: 1;
+}
+
+.experience-spotlight__identity {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.experience-spotlight__logo-frame,
+.experience-detail__logo-frame {
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(140, 163, 199, 0.32);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.24);
+}
+
+.experience-spotlight__logo-frame {
+  width: clamp(76px, 12vw, 112px);
+  min-width: 76px;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  padding: 7px;
+}
+
+.experience-spotlight__logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: inherit;
+}
+
+.experience-spotlight__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 8px;
+  color: var(--accent-cyan);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.experience-spotlight__identity h3,
+.experience-detail__hero-copy h2 {
+  margin: 0;
+  font-size: clamp(1.72rem, 3.5vw, 3.25rem);
+  line-height: 1.05;
+  letter-spacing: 0;
+}
+
+.experience-spotlight__identity p:last-child {
+  margin: 6px 0 0;
+  color: var(--text-muted);
+}
+
+.experience-spotlight__content {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(260px, 0.55fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.experience-spotlight__copy {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+}
+
+.experience-spotlight__meta-row,
+.experience-detail__meta-row,
+.experience-roadmap__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.experience-spotlight__meta-row span,
+.experience-detail__meta-row span,
+.experience-roadmap__meta span {
+  --experience-meta-pill-width: 148px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: min(100%, var(--experience-meta-pill-width));
+  min-block-size: 30px;
+  border: 1px solid rgba(103, 215, 245, 0.32);
+  border-radius: 999px;
+  padding: 0 10px;
+  color: var(--accent-cyan);
+  background: rgba(103, 215, 245, 0.1);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.experience-spotlight__summary {
+  max-width: 72ch;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: clamp(1rem, 1.45vw, 1.16rem);
+  line-height: 1.68;
+}
+
+.experience-spotlight__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.experience-spotlight__signal {
+  display: grid;
+  gap: 10px;
+}
+
+.experience-spotlight__signal > div {
+  border: 1px solid rgba(140, 163, 199, 0.26);
+  border-radius: 12px;
+  padding: 13px;
+  background: rgba(7, 16, 31, 0.68);
+}
+
+.experience-spotlight__signal span,
+.experience-spotlight__chip-columns p {
+  display: block;
+  margin: 0 0 5px;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.experience-spotlight__signal strong {
+  color: var(--text-primary);
+  font-size: 0.98rem;
+  line-height: 1.35;
+}
+
+.experience-spotlight__chip-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.experience-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.experience-chip-row span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  border: 1px solid rgba(103, 215, 245, 0.3);
+  border-radius: 10px;
+  padding: 7px 10px;
+  background: rgba(103, 215, 245, 0.1);
+  color: #cbeefd;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.experience-chip-row--muted span {
+  border-color: rgba(143, 223, 183, 0.26);
+  background: rgba(143, 223, 183, 0.09);
+  color: #c7ead9;
+}
+
+.experience-roadmap__body,
+.experience-detail__body {
+  padding-top: 28px;
+}
+
+.experience-roadmap__top {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.experience-roadmap__canvas {
+  position: relative;
+  min-height: 430px;
+  padding: 32px 18px 26px;
+  overflow: hidden;
+  border: 1px solid rgba(103, 215, 245, 0.22);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(103, 215, 245, 0.14), transparent 34%),
+    radial-gradient(circle at 78% 70%, rgba(143, 223, 183, 0.1), transparent 30%),
+    rgba(7, 16, 31, 0.58);
+}
+
+.experience-roadmap__track {
+  position: absolute;
+  top: 80px;
+  right: calc(18px + (100% - 36px) / 6);
+  left: calc(18px + (100% - 36px) / 6);
+  height: 2px;
+  background: linear-gradient(90deg, rgba(103, 215, 245, 0.2), rgba(103, 215, 245, 0.72), rgba(143, 223, 183, 0.44));
+  box-shadow: 0 0 22px rgba(103, 215, 245, 0.22);
+}
+
+.experience-roadmap__track span {
+  position: absolute;
+  inset: -2px 0 auto;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(215, 226, 245, 0.74), transparent);
+  box-shadow: 0 0 18px rgba(103, 215, 245, 0.48);
+  animation: roadmap-pulse 4.2s ease-in-out infinite;
+}
+
+@keyframes roadmap-pulse {
+  0%,
+  100% {
+    transform: translateX(-36%);
+    opacity: 0.22;
+  }
+
+  50% {
+    transform: translateX(36%);
+    opacity: 0.72;
+  }
+}
+
+.experience-roadmap__list {
+  position: relative;
+  z-index: 1;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  padding: 0;
+  margin: 0;
+}
+
+.experience-roadmap__stop {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
+.experience-roadmap__stop:nth-child(even) {
+  padding-top: 0;
+}
+
+.experience-roadmap__node {
+  width: 96px;
+  height: 96px;
+  justify-self: center;
+  position: relative;
+  z-index: 2;
+  border: 1px solid rgba(103, 215, 245, 0.42);
+  border-radius: 22px;
+  padding: 12px;
+  cursor: pointer;
+  background:
+    linear-gradient(145deg, rgba(103, 215, 245, 0.16), rgba(10, 22, 42, 0.82)),
+    rgba(10, 22, 42, 0.9);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.26), 0 0 34px rgba(103, 215, 245, 0.13);
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.experience-roadmap__node:hover {
+  transform: translateY(-3px);
+  border-color: var(--line-strong);
+  box-shadow: 0 22px 52px rgba(0, 0, 0, 0.3), 0 0 38px rgba(103, 215, 245, 0.18);
+}
+
+.experience-roadmap__node img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 6px;
+}
+
+.experience-roadmap__copy {
+  display: grid;
+  gap: 7px;
+  justify-items: center;
+  text-align: center;
+  min-height: 210px;
+  padding-top: 6px;
+  transition: transform 180ms ease;
+}
+
+.experience-roadmap__stop:hover .experience-roadmap__copy {
+  transform: translateY(-2px);
+}
+
+.experience-roadmap__phase {
+  color: var(--accent-green);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+}
+
+.experience-roadmap__copy h3,
+.experience-roadmap__copy p {
+  margin: 0;
+}
+
+.experience-roadmap__copy h3 {
+  font-size: 1.18rem;
+}
+
+.experience-roadmap__copy p {
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.experience-roadmap__meta {
+  justify-content: center;
+}
+
+.experience-roadmap__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 4px;
+  color: var(--accent-cyan);
+  font-size: 13px;
+}
+
+.experience-detail__hero {
+  display: grid;
+  grid-template-columns: minmax(160px, 280px) minmax(0, 1fr);
+  gap: clamp(18px, 4vw, 42px);
+  align-items: center;
+  padding: clamp(18px, 3vw, 30px);
+  border: 1px solid rgba(103, 215, 245, 0.24);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at top left, rgba(103, 215, 245, 0.16), transparent 38%),
+    linear-gradient(145deg, rgba(14, 31, 58, 0.76), rgba(5, 10, 20, 0.72));
+}
+
+.experience-detail__logo-frame {
+  width: 100%;
+  aspect-ratio: 10 / 4;
+  border-radius: 16px;
+  padding: 10px;
+}
+
+.experience-detail__logo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: inherit;
+}
+
+.experience-detail__hero-copy {
+  display: grid;
+  gap: 12px;
+}
+
+.experience-detail__hero-copy p {
+  max-width: 78ch;
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.66;
+}
+
+.experience-detail__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.experience-detail__grid--dense {
+  align-items: start;
+}
+
+.experience-detail__panel {
+  display: grid;
+  gap: 10px;
+  border: 1px solid rgba(140, 163, 199, 0.24);
+  border-radius: 14px;
+  padding: 16px;
+  background: rgba(10, 22, 42, 0.72);
+}
+
+.experience-detail__panel h3,
+.experience-detail__project h4 {
+  margin: 0;
+}
+
+.experience-detail__panel ul,
+.experience-detail__project ul {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text-muted);
+  display: grid;
+  gap: 7px;
+}
+
+.experience-detail__projects {
+  display: grid;
+  gap: 12px;
+}
+
+.experience-detail__project {
+  display: grid;
+  gap: 10px;
+  border: 1px solid rgba(103, 215, 245, 0.22);
+  border-radius: 12px;
+  padding: 14px;
+  background: rgba(7, 16, 31, 0.54);
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.experience-detail__project--clickable {
+  cursor: pointer;
+}
+
+.experience-detail__project--clickable:hover,
+.experience-detail__project--clickable:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(103, 215, 245, 0.42);
+  background: rgba(9, 22, 42, 0.74);
+  outline: none;
+}
+
+.experience-detail__project h4 {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.experience-detail__project p {
+  margin: 6px 0 0;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
 .certification-detail__body {
   padding-top: 28px;
 }
@@ -1645,6 +2190,7 @@
   font-family: 'JetBrains Mono', monospace;
   overflow-x: auto;
 }
+
 
 .sculptor-product__body {
   padding-top: 26px;
@@ -3043,6 +3589,18 @@
     justify-content: flex-start;
   }
 
+  .experience-spotlight__content,
+  .experience-spotlight__chip-columns,
+  .experience-detail__hero,
+  .experience-detail__grid,
+  .experience-detail__grid--dense {
+    grid-template-columns: 1fr;
+  }
+
+  .experience-detail__logo-frame {
+    width: min(100%, 190px);
+  }
+
   .certifications-page__grid {
     grid-template-columns: 1fr;
   }
@@ -3083,6 +3641,49 @@
 
   .topbar__portal-btn {
     display: none;
+  }
+
+  .experience-spotlight__identity {
+    align-items: flex-start;
+  }
+
+  .experience-spotlight__logo-frame {
+    width: 62px;
+    height: 62px;
+    border-radius: 14px;
+  }
+
+  .experience-spotlight__logo {
+    width: 44px;
+    height: 44px;
+  }
+
+  .experience-roadmap__canvas {
+    padding-top: 0;
+  }
+
+  .experience-roadmap__track {
+    left: 35px;
+  }
+
+  .experience-roadmap__stop {
+    grid-template-columns: 70px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .experience-roadmap__node {
+    width: 58px;
+    height: 58px;
+    border-radius: 15px;
+  }
+
+  .experience-roadmap__node img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .experience-roadmap__copy {
+    padding: 13px;
   }
 
   .hero-actions {
@@ -3400,6 +4001,31 @@
     grid-template-columns: 1fr;
   }
 
+  .experience-spotlight__identity,
+  .experience-detail__meta-row,
+  .experience-spotlight__actions {
+    flex-direction: column;
+  }
+
+  .experience-roadmap__stop {
+    grid-template-columns: 1fr;
+  }
+
+  .experience-roadmap__track {
+    display: none;
+  }
+
+  .experience-roadmap__node {
+    justify-self: start;
+    width: 54px;
+    height: 54px;
+  }
+
+  .experience-roadmap__copy {
+    border-left: 1px solid rgba(103, 215, 245, 0.32);
+    border-top: 0;
+  }
+
   .hero-avatar {
     width: clamp(150px, 45vw, 220px);
     height: clamp(150px, 45vw, 220px);
@@ -3532,5 +4158,116 @@
 
   .sculptor-markdown__table {
     min-width: 520px;
+  }
+}
+
+@media (max-width: 980px) {
+  .experience-spotlight__content,
+  .experience-detail__hero,
+  .experience-detail__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .experience-spotlight__chip-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .experience-roadmap__canvas {
+    min-height: 0;
+    padding: 22px 14px;
+  }
+
+  .experience-roadmap__track {
+    display: block;
+    inset: 32px auto 32px 61px;
+    width: 2px;
+    height: auto;
+    background: linear-gradient(rgba(103, 215, 245, 0.72), rgba(143, 223, 183, 0.38));
+  }
+
+  .experience-roadmap__track span {
+    inset: 0 auto auto -2px;
+    width: 6px;
+    height: 42%;
+    background: linear-gradient(180deg, transparent, rgba(215, 226, 245, 0.74), transparent);
+    animation: roadmap-pulse-mobile 3s ease-in-out infinite;
+  }
+
+  @keyframes roadmap-pulse-mobile {
+    0%,
+    100% {
+      transform: translateY(-16%);
+      opacity: 0.22;
+    }
+
+    50% {
+      transform: translateY(116%);
+      opacity: 0.66;
+    }
+  }
+
+  .experience-roadmap__list {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .experience-roadmap__stop,
+  .experience-roadmap__stop:nth-child(even) {
+    grid-template-columns: 96px minmax(0, 1fr);
+    align-items: center;
+    padding-top: 0;
+  }
+
+  .experience-roadmap__copy {
+    justify-items: start;
+    text-align: left;
+  }
+
+  .experience-roadmap__meta {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .experience-spotlight__panel,
+  .experience-detail__hero,
+  .experience-detail__panel {
+    border-radius: 14px;
+  }
+
+  .experience-spotlight__identity {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .experience-spotlight__orbital {
+    width: 120px;
+    height: 120px;
+    opacity: 0.32;
+  }
+
+  .experience-roadmap__track {
+    left: 45px;
+  }
+
+  .experience-roadmap__stop,
+  .experience-roadmap__stop:nth-child(even) {
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .experience-roadmap__node {
+    width: 72px;
+    height: 72px;
+    border-radius: 16px;
+    padding: 9px;
+  }
+
+  .experience-roadmap__copy h3 {
+    font-size: 1.02rem;
+  }
+
+  .experience-detail__logo-frame {
+    max-width: 260px;
   }
 }

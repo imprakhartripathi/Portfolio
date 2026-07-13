@@ -35,9 +35,53 @@ export const systemsDesignedCases: SystemCaseStudy[] = [
       "Offline-first flow",
       "System-aware backend services",
     ],
-    outcome: "Actively building production-ready architecture (Repository is private due to ongoing development of proprietary features).",
+    outcome:
+      "Actively building production-ready architecture (Repository is private due to ongoing development of proprietary features).",
     // githubUrl: "https://github.com/imprakhartripathi/Pharmetrix",
     liveUrl: "https://pharmetrix.imprakhartripathi.in",
+  },
+  {
+    id: "spendsmart",
+    name: "SpendSmart",
+    period: "Capgemini Fellowship",
+    icon: "/projects/spendsmart.svg",
+    bgcolor: null,
+    shortSummary:
+      "Enterprise-grade personal finance platform built as an 11-service microservices system during the Capgemini Fellowship.",
+    domain:
+      "Personal finance, budgeting, analytics, reporting, reminders, and notification workflows",
+    problem:
+      "Personal finance platforms need secure identity, bounded service ownership, reliable background messaging, and clear reporting flows as they grow beyond a simple expense tracker.",
+    architectureDecisions: [
+      "11-service Spring Boot microservices architecture",
+      "JWT authentication with OAuth2 and RBAC boundaries",
+      "PostgreSQL persistence for finance records",
+      "Redis session caching for faster authenticated flows",
+      "RabbitMQ messaging for notifications and scheduled workflows",
+      "Dockerized services deployed to AWS EC2",
+    ],
+    techStack: [
+      "Java",
+      "Spring Boot",
+      "React",
+      "PostgreSQL",
+      "Redis",
+      "RabbitMQ",
+      "Docker",
+      "AWS EC2",
+    ],
+    skillTags: [
+      "Microservices",
+      "JWT",
+      "OAuth2",
+      "RBAC",
+      "Message queues",
+      "Cloud deployment",
+    ],
+    outcome:
+      "Fellowship project demonstrating enterprise backend architecture across authentication, budget management, analytics, reporting, email notifications, and scheduled reminders.",
+    githubUrl:
+      "https://github.com/imprakhartripathi/SpendSmart-SpringBootMicroservices",
   },
   {
     id: "spendly",

@@ -127,10 +127,12 @@ export function MainShell({ children }: PropsWithChildren) {
   const [isPortalOpen, setIsPortalOpen] = useState(false)
   const [isProjectView, setIsProjectView] = useState(() => isProjectViewFromLocation())
   const [isSculptorGuideView, setIsSculptorGuideView] = useState(() => isSculptorGuideViewFromLocation())
+  const [currentPath, setCurrentPath] = useState(() => normalizePathname(window.location.pathname))
   const [isAtTop, setIsAtTop] = useState(() => window.scrollY <= 8)
   const [canGoBack, setCanGoBack] = useState(() => readInternalNavStack().length > 1)
   const [isGuideMapOpen, setIsGuideMapOpen] = useState(false)
-  const isHomeRoute = window.location.pathname === '/'
+  const isHomeRoute = currentPath === '/'
+  const isExperienceRoute = currentPath === '/experience' || currentPath.startsWith('/experience/')
 
   useEffect(() => {
     syncInternalNavStack(window.location.pathname)
@@ -140,6 +142,7 @@ export function MainShell({ children }: PropsWithChildren) {
       const nextIsSculptorGuideView = isSculptorGuideViewFromLocation()
       setIsProjectView(nextIsProjectView)
       setIsSculptorGuideView(nextIsSculptorGuideView)
+      setCurrentPath(normalizePathname(window.location.pathname))
       setCanGoBack(syncInternalNavStack(window.location.pathname).length > 1)
 
       if (nextIsProjectView) {
@@ -278,7 +281,8 @@ export function MainShell({ children }: PropsWithChildren) {
                   <a
                     key={item.href}
                     href={item.href}
-                    className="topbar__link"
+                    className={`topbar__link ${item.href === '#experience' && isExperienceRoute ? 'is-active' : ''}`}
+                    aria-current={item.href === '#experience' && isExperienceRoute ? 'page' : undefined}
                     onClick={(event) => handleNavClick(event, item)}
                   >
                     {item.label}
@@ -417,7 +421,8 @@ export function MainShell({ children }: PropsWithChildren) {
                   <a
                     key={`portal-section-${item.href}`}
                     href={item.href}
-                    className={`portal-nav__link ${item.tone === 'accent' ? 'portal-nav__link--accent' : ''}`}
+                    className={`portal-nav__link ${item.tone === 'accent' ? 'portal-nav__link--accent' : ''} ${item.href === '#experience' && isExperienceRoute ? 'is-active' : ''}`}
+                    aria-current={item.href === '#experience' && isExperienceRoute ? 'page' : undefined}
                     onClick={(event) => handleNavClick(event, item)}
                   >
                     {item.label}
