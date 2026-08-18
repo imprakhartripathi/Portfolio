@@ -47,7 +47,7 @@ export function TimelineItem({ entry, index, total, onOpenExperience }: Timeline
           <span>{entry.location}</span>
         </div>
         <a href={path} className="experience-roadmap__link" onClick={onExperienceLinkClick}>
-          Open case study <FaArrowRightLong />
+          Open experience <FaArrowRightLong />
         </a>
       </div>
     </motion.li>

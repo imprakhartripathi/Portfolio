@@ -17,9 +17,11 @@ export type ProductionWorkEntry = {
   company: string
   companyLogo: string
   position: string
+  roleFocus?: string
   experienceType: string
   duration: string
   location: string
+  stack?: string
   technologies: string[]
   skills: string[]
   summary: string

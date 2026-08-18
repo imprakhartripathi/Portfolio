@@ -116,7 +116,7 @@ const projectsDescription =
   'Domain-driven backend project portfolio covering Pharmetrix, Riwayat, Spendly, and Sahyogi with architecture decisions, outcomes, and production-focused stacks.'
 
 const experiencesDescription =
-  'Experience roadmap for Prakhar Tripathi, covering Capgemini fellowship work, enterprise Java microservices, and production-facing Ferth internships.'
+  'Experience roadmap for Prakhar Tripathi, covering full-time Software Engineer work at Capgemini, Java full-stack engineering, applied AI learning, the Capgemini fellowship, and production-facing Ferth internships.'
 
 const certificationsDescription =
   'Professional certifications from Google, DataCamp, Six Sigma, and Great Learning with credential IDs, verification links, and in-page PDF records.'
@@ -344,7 +344,7 @@ export function PortfolioRoutes() {
         description: experiencesDescription,
         path: '/experience',
         keywords:
-          'Prakhar Tripathi experience, Capgemini Fellowship, Software Engineer Trainee, Java, Spring Boot, microservices, Ferth internship',
+          'Prakhar Tripathi experience, Capgemini Software Engineer, Java full stack, React, Angular, Spring AI, OpenAI, RAG, Capgemini Fellowship, Ferth internship',
         structuredData: [
           {
             '@type': 'CollectionPage',

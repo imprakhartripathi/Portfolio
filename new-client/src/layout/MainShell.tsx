@@ -145,9 +145,7 @@ export function MainShell({ children }: PropsWithChildren) {
       setCurrentPath(normalizePathname(window.location.pathname))
       setCanGoBack(syncInternalNavStack(window.location.pathname).length > 1)
 
-      if (nextIsProjectView) {
-        setIsPortalOpen(false)
-      }
+      setIsPortalOpen(false)
     }
 
     const onEscapeClose = (event: KeyboardEvent) => {
@@ -374,28 +372,25 @@ export function MainShell({ children }: PropsWithChildren) {
               </motion.button>
             ) : null}
 
-            {!isProjectView ? (
-              <motion.button
-                key="open-portal"
-                type="button"
-                className="sculptor-fab-btn"
-                aria-label={isPortalOpen ? 'Close navigation portal' : 'Open navigation portal'}
-                aria-expanded={isPortalOpen}
-                onClick={openPortalThenCloseGuideMap}
-                initial={{ opacity: 0, y: 10, scale: 0.96 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 10, scale: 0.96 }}
-                transition={{ duration: 0.18, ease: 'easeOut' }}
-                layout
-              >
-                <FaMicrochip aria-hidden="true" />
-              </motion.button>
-            ) : null}
+            <motion.button
+              key="open-portal"
+              type="button"
+              className="sculptor-fab-btn"
+              aria-label={isPortalOpen ? 'Close navigation portal' : 'Open navigation portal'}
+              aria-expanded={isPortalOpen}
+              onClick={openPortalThenCloseGuideMap}
+              initial={{ opacity: 0, y: 10, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.96 }}
+              transition={{ duration: 0.18, ease: 'easeOut' }}
+              layout
+            >
+              <FaMicrochip aria-hidden="true" />
+            </motion.button>
           </AnimatePresence>
         </motion.div>
 
-        {!isProjectView ? (
-          <div className={`portal-nav ${isPortalOpen ? 'is-open' : ''}`} aria-hidden={!isPortalOpen}>
+        <div className={`portal-nav ${isPortalOpen ? 'is-open' : ''}`} aria-hidden={!isPortalOpen}>
             <button
               type="button"
               className="portal-nav__backdrop"
@@ -461,8 +456,7 @@ export function MainShell({ children }: PropsWithChildren) {
                 })}
               </div>
             </div>
-          </div>
-        ) : null}
+        </div>
 
         <main className="main-content">{children}</main>
 

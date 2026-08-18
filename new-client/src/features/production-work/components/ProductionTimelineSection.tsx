@@ -26,11 +26,15 @@ export function ProductionTimelineSection({
       id={sectionId}
       eyebrow="Experience"
       title="Experience Spotlight"
-      description="Latest role, fellowship project, and enterprise backend growth."
+      description="Current full-time role across Java full-stack engineering, enterprise delivery, and applied AI systems."
       className="production-work experience-spotlight"
       headerAction={
         onOpenExperiencesPage ? (
-          <button type="button" className="link-btn" onClick={onOpenExperiencesPage}>
+          <button
+            type="button"
+            className="link-btn"
+            onClick={onOpenExperiencesPage}
+          >
             View All Experiences
           </button>
         ) : null
@@ -40,7 +44,7 @@ export function ProductionTimelineSection({
         ref={ref}
         variants={revealContainer}
         initial="hidden"
-        animate={inView ? 'visible' : 'hidden'}
+        animate={inView ? "visible" : "hidden"}
         className="experience-spotlight__shell"
       >
         <motion.article
@@ -57,7 +61,11 @@ export function ProductionTimelineSection({
 
           <div className="experience-spotlight__identity">
             <div className="experience-spotlight__logo-frame">
-              <img src={experience.companyLogo} alt={`${experience.company} logo`} className="experience-spotlight__logo" />
+              <img
+                src={experience.companyLogo}
+                alt={`${experience.company} logo`}
+                className="experience-spotlight__logo"
+              />
             </div>
             <div>
               <p className="experience-spotlight__kicker">
@@ -75,18 +83,33 @@ export function ProductionTimelineSection({
                 <span>{experience.duration}</span>
                 <span>{experience.location}</span>
               </div>
-              <p className="experience-spotlight__summary">{experience.summary}</p>
+              <p className="experience-spotlight__summary">
+                {experience.summary}
+              </p>
               <div className="experience-spotlight__actions">
-                <button type="button" className="link-btn" onClick={() => onOpenExperience?.(experience.slug)}>
+                <button
+                  type="button"
+                  className="link-btn"
+                  onClick={() => onOpenExperience?.(experience.slug)}
+                >
                   View Full Experience <FaArrowRightLong />
                 </button>
                 {experience.certificate ? (
-                  <a href={experience.certificate.href} target="_blank" rel="noreferrer" className="link-btn link-btn--ghost">
+                  <a
+                    href={experience.certificate.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="link-btn link-btn--ghost"
+                  >
                     <FaAward /> Certificate
                   </a>
                 ) : null}
                 {onOpenExperiencesPage ? (
-                  <button type="button" className="link-btn link-btn--ghost" onClick={onOpenExperiencesPage}>
+                  <button
+                    type="button"
+                    className="link-btn link-btn--ghost"
+                    onClick={onOpenExperiencesPage}
+                  >
                     View All Experiences
                   </button>
                 ) : null}
@@ -95,16 +118,18 @@ export function ProductionTimelineSection({
 
             <div className="experience-spotlight__signal">
               <div>
-                <span>Project</span>
-                <strong>{experience.projects[0]?.name}</strong>
+                <span>Role</span>
+                <strong>
+                  {experience.position} ({experience.experienceType})
+                </strong>
               </div>
               <div>
-                <span>Architecture</span>
-                <strong>Distributed: 11 Microservices</strong>
+                <span>Stack</span>
+                <strong>{experience.stack}</strong>
               </div>
               <div>
                 <span>Focus</span>
-                <strong>Enterprise Backend Systems</strong>
+                <strong>{experience.roleFocus}</strong>
               </div>
             </div>
           </div>
@@ -130,5 +155,5 @@ export function ProductionTimelineSection({
         </motion.article>
       </motion.div>
     </SectionWrapper>
-  )
+  );
 }

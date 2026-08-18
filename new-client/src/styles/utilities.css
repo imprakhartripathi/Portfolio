@@ -1734,6 +1734,7 @@
 .experience-spotlight__identity h3,
 .experience-detail__hero-copy h2 {
   margin: 0;
+  /* margin-top: 2rem; */
   font-size: clamp(1.72rem, 3.5vw, 3.25rem);
   line-height: 1.05;
   letter-spacing: 0;
@@ -1764,6 +1765,11 @@
   flex-wrap: wrap;
   gap: 8px;
   align-items: center;
+}
+
+.experience-detail__meta-row span{
+  margin-left: 0.33rem;
+  margin-right: 0.33rem;
 }
 
 .experience-spotlight__meta-row span,
@@ -1874,8 +1880,8 @@
 
 .experience-roadmap__canvas {
   position: relative;
-  min-height: 430px;
-  padding: 32px 18px 26px;
+  min-height: 0;
+  padding: 34px 18px 30px;
   overflow: hidden;
   border: 1px solid rgba(103, 215, 245, 0.22);
   border-radius: 18px;
@@ -1888,8 +1894,8 @@
 .experience-roadmap__track {
   position: absolute;
   top: 80px;
-  right: calc(18px + (100% - 36px) / 6);
-  left: calc(18px + (100% - 36px) / 6);
+  right: calc(18px + (100% - 36px) / 8);
+  left: calc(18px + (100% - 36px) / 8);
   height: 2px;
   background: linear-gradient(90deg, rgba(103, 215, 245, 0.2), rgba(103, 215, 245, 0.72), rgba(143, 223, 183, 0.44));
   box-shadow: 0 0 22px rgba(103, 215, 245, 0.22);
@@ -1923,16 +1929,18 @@
   z-index: 1;
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(14px, 2vw, 24px);
   padding: 0;
   margin: 0;
 }
 
 .experience-roadmap__stop {
   display: grid;
-  gap: 14px;
+  grid-template-rows: 96px minmax(230px, auto);
+  gap: 16px;
   align-content: start;
+  min-width: 0;
 }
 
 .experience-roadmap__stop:nth-child(even) {
@@ -1980,11 +1988,13 @@
 
 .experience-roadmap__copy {
   display: grid;
-  gap: 7px;
+  grid-template-rows: 16px minmax(28px, auto) minmax(54px, auto) minmax(104px, auto) 22px;
+  align-content: start;
+  gap: 8px;
   justify-items: center;
   text-align: center;
-  min-height: 210px;
-  padding-top: 6px;
+  min-height: 230px;
+  padding: 8px 6px 0;
   transition: transform 180ms ease;
 }
 
@@ -2004,16 +2014,24 @@
 }
 
 .experience-roadmap__copy h3 {
-  font-size: 1.18rem;
+  font-size: clamp(1.02rem, 1.25vw, 1.18rem);
+  line-height: 1.2;
 }
 
 .experience-roadmap__copy p {
   color: var(--text-muted);
-  line-height: 1.45;
+  line-height: 1.35;
+  max-width: 22ch;
 }
 
 .experience-roadmap__meta {
   justify-content: center;
+  align-content: start;
+  min-height: 104px;
+}
+
+.experience-roadmap__meta span {
+  --experience-meta-pill-width: 176px;
 }
 
 .experience-roadmap__link {
@@ -2074,24 +2092,34 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
+  align-items: stretch;
 }
 
 .experience-detail__grid--dense {
-  align-items: start;
+  align-items: stretch;
 }
 
 .experience-detail__panel {
   display: grid;
+  align-content: start;
   gap: 10px;
   border: 1px solid rgba(140, 163, 199, 0.24);
   border-radius: 14px;
   padding: 16px;
   background: rgba(10, 22, 42, 0.72);
+  min-width: 0;
+  height: 100%;
 }
 
 .experience-detail__panel h3,
 .experience-detail__project h4 {
   margin: 0;
+}
+
+.experience-detail__panel p {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.62;
 }
 
 .experience-detail__panel ul,
@@ -2100,14 +2128,24 @@
   padding-left: 18px;
   color: var(--text-muted);
   display: grid;
-  gap: 4px;
-  line-height: 1.45;
+  gap: 8px;
+  line-height: 1.5;
 }
 
 .experience-detail__panel ul li,
 .experience-detail__project ul li {
   margin: 0;
   padding: 0;
+}
+
+.experience-detail__panel--list ul {
+  gap: 10px;
+}
+
+.experience-detail__panel--dense-list ul {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 24px;
+  row-gap: 8px;
 }
 
 .experience-detail__projects {
@@ -3709,6 +3747,7 @@
 
   .experience-roadmap__copy {
     padding: 13px;
+    padding-left: 1rem;
   }
 
   .hero-actions {
@@ -4223,6 +4262,10 @@
     max-width: 100%;
   }
 
+  .experience-detail__panel--dense-list ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .experience-spotlight__chip-columns {
     grid-template-columns: 1fr;
   }
@@ -4274,17 +4317,23 @@
   .experience-roadmap__stop,
   .experience-roadmap__stop:nth-child(even) {
     grid-template-columns: 96px minmax(0, 1fr);
+    grid-template-rows: auto;
     align-items: center;
     padding-top: 0;
   }
 
   .experience-roadmap__copy {
+    grid-template-rows: none;
+    min-height: 0;
+    padding: 8px 0;
+    padding-left: 1rem;
     justify-items: start;
     text-align: left;
   }
 
   .experience-roadmap__meta {
     justify-content: flex-start;
+    min-height: 0;
   }
 }
 
@@ -4330,8 +4379,20 @@
     font-size: 1.02rem;
   }
 
+  .experience-roadmap__copy p {
+    max-width: none;
+  }
+
+  .experience-roadmap__meta span {
+    inline-size: min(100%, 150px);
+  }
+
   .experience-detail__logo-frame {
     max-width: 260px;
+  }
+
+  .experience-detail__panel--dense-list ul {
+    grid-template-columns: 1fr;
   }
 
   .experience-roadmap__node img {
