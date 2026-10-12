@@ -110,13 +110,13 @@ const LazySculptorSpotlightSection = lazy(() =>
 )
 
 const homeDescription =
-  'Prakhar Tripathi is a backend-focused full-stack engineer and creator of SculptorTS, building TypeScript backend frameworks, npm tooling, and production-grade web systems.'
+  'Prakhar Tripathi is a Forward Deployed Software Engineer and creator of SculptorTS, building production AI systems and scalable architectures with TypeScript, Python, and enterprise Java foundations.'
 
 const projectsDescription =
-  'Domain-driven backend project portfolio covering Pharmetrix, Riwayat, Spendly, and Sahyogi with architecture decisions, outcomes, and production-focused stacks.'
+  'Domain-driven backend and AI systems portfolio covering Pharmetrix, Riwayat, Spendly, and Sahyogi with architecture decisions, outcomes, and production-focused stacks.'
 
 const experiencesDescription =
-  'Experience roadmap for Prakhar Tripathi, covering full-time Software Engineer work at Capgemini, Java full-stack engineering, applied AI learning, the Capgemini fellowship, and production-facing Ferth internships.'
+  'Experience roadmap for Prakhar Tripathi, covering full-time Software Engineer (FDE) work at Capgemini across production AI systems and multi-agent workflows, the Capgemini fellowship, and Ferth internships.'
 
 const certificationsDescription =
   'Professional certifications from Google, DataCamp, Six Sigma, and Great Learning with credential IDs, verification links, and in-page PDF records.'
@@ -250,13 +250,13 @@ export function PortfolioRoutes() {
 
     if (route.page === 'home') {
       applySeo({
-        title: 'Prakhar Tripathi | Software Engineer & Creator - SculptorTS',
+        title: 'Prakhar Tripathi | Forward Deployed Software Engineer & Creator - SculptorTS',
         description: homeDescription,
         path: '/',
         image: seoConstants.images.profile,
         priority: 'high',
         keywords:
-          'Prakhar Tripathi, SculptorTS, Backend Engineer, Full Stack Engineer, TypeScript, Express framework, Node.js, npm packages, CLI tooling, MongoDB, Docker, Portfolio',
+          'Prakhar Tripathi, Forward Deployed Engineer, FDE, Software Engineer, LangChain, LangGraph, LangSmith, FastAPI, Pydantic, Knowledge Graph, Multi-Agent Orchestration, RAG, Python, TypeScript, SculptorTS, Portfolio',
       })
       return
     }

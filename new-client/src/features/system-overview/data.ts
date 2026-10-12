@@ -5,9 +5,9 @@ export const resumeUrl = `/Prakhar-Tripathi-Resume.pdf?uAt=${resumeversion}`
 
 export const systemOverviewContent: SystemOverviewContent = {
   name: "PRAKHAR TRIPATHI",
-  title: "Backend-Focused Full-Stack Engineer",
+  title: "Forward Deployed Software Engineer",
   summary:
-    "I design production-grade backend systems with clear access boundaries, transactional safety, and real-world deployment constraints. I build systems meant to survive beyond localhost, and open-source tools like SculptorTS that make getting to localhost a little easier for everyone else.",
+    "Forward Deployed Software Engineer building production AI systems and resilient backends. Deep in TypeScript and Python with an enterprise Java foundation, shipping systems meant to survive beyond localhost—alongside open-source tools like SculptorTS.",
   avatarUrl: "/prakhar.jpeg",
   actions: [
     {

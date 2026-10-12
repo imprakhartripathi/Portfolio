@@ -1,5 +1,5 @@
 import { FaCloud, FaCode, FaDatabase, FaLayerGroup, FaTerminal } from 'react-icons/fa'
-import { FaBolt, FaBoxesStacked, FaBuilding, FaDiagramProject, FaUserShield } from 'react-icons/fa6'
+import { FaArrowsRotate, FaBolt, FaBoxesStacked, FaBuilding, FaCircleNodes, FaDiagramProject, FaRobot, FaUserShield } from 'react-icons/fa6'
 import {
   SiAngular,
   SiApachemaven,
@@ -9,6 +9,7 @@ import {
   SiDocker,
   SiDotnet,
   SiExpress,
+  SiFastapi,
   SiFramer,
   SiGooglecloud,
   SiGithubactions,
@@ -20,6 +21,8 @@ import {
   SiIntellijidea,
   SiJavascript,
   SiJunit5,
+  SiLangchain,
+  SiLanggraph,
   SiMongodb,
   SiMysql,
   SiRabbitmq,
@@ -30,9 +33,11 @@ import {
   SiNodedotjs,
   SiNpm,
   SiOpenapiinitiative,
+  SiOpenai,
   SiOpenjdk,
   SiPostgresql,
   SiPostman,
+  SiPydantic,
   SiPython,
   SiR,
   SiRazorpay,
@@ -47,11 +52,30 @@ import {
   SiTypescript,
   SiVscodium,
 } from 'react-icons/si'
-import { TbBrandCSharp, TbBrandVisualStudio, TbBrandVscode, TbMathFunction, TbSql } from 'react-icons/tb'
+import { TbActivity, TbBrandCSharp, TbBrandVisualStudio, TbBrandVscode, TbDatabaseSearch, TbMathFunction, TbNetwork, TbSql } from 'react-icons/tb'
 
 import type { CapabilityCategory } from './types'
 
 export const capabilityCategories: CapabilityCategory[] = [
+  {
+    id: 'ai-agentic-systems',
+    title: 'AI & Agentic Systems',
+    icon: FaRobot,
+    skillRows: [
+      [
+        { id: 'langchain', label: 'LangChain', icon: SiLangchain },
+        { id: 'langgraph', label: 'LangGraph', icon: SiLanggraph },
+        { id: 'langsmith', label: 'LangSmith', icon: TbActivity },
+        { id: 'multi-agent-orchestration', label: 'Multi-Agent Orchestration', icon: TbNetwork },
+        { id: 'rags', label: 'RAG / RAGs', icon: TbDatabaseSearch },
+        { id: 'knowledge-graph', label: 'Knowledge Graph', icon: FaCircleNodes },
+        { id: 'fastapi-ai', label: 'FastAPI', icon: SiFastapi },
+        { id: 'pydantic-ai', label: 'Pydantic', icon: SiPydantic },
+        { id: 'openai-llms', label: 'OpenAI / LLMs', icon: SiOpenai },
+        { id: 'vector-embeddings', label: 'Vector Stores / Embeddings', icon: FaDatabase },
+      ],
+    ],
+  },
   {
     id: 'core-programming',
     title: 'Core Programming',
@@ -59,33 +83,15 @@ export const capabilityCategories: CapabilityCategory[] = [
     skillRows: [
       [
         { id: 'typescript', label: 'TypeScript', icon: SiTypescript },
-        { id: 'javascript', label: 'JavaScript', icon: SiJavascript },
+        { id: 'python', label: 'Python', icon: SiPython },
         { id: 'java', label: 'Java', icon: SiOpenjdk },
+        { id: 'javascript', label: 'JavaScript', icon: SiJavascript },
         { id: 'csharp', label: 'C#', icon: TbBrandCSharp },
         { id: 'rust', label: 'Rust', icon: SiRust },
-        { id: 'python', label: 'Python', icon: SiPython },
         { id: 'c', label: 'C', icon: SiC },
         { id: 'shell-script', label: 'Shell Script', icon: SiGnubash },
         { id: 'z-shell', label: 'Z Shell', icon: FaTerminal },
         { id: 'r', label: 'R', icon: SiR },
-      ],
-    ],
-  },
-  {
-    id: 'engineering-paradigms',
-    title: 'Engineering Paradigms',
-    icon: FaLayerGroup,
-    skillRows: [
-      [
-        { id: 'dsa', label: 'Data Structures & Algorithms', icon: FaBolt },
-        { id: 'oops', label: 'OOPS', icon: FaBoxesStacked },
-        { id: 'rest-architecture', label: 'REST Architecture', icon: SiOpenapiinitiative },
-        { id: 'rbac', label: 'RBAC', icon: FaLayerGroup },
-        { id: 'jwt', label: 'JWT', icon: FaUserShield },
-        { id: 'oauth2', label: 'OAuth2', icon: FaUserShield },
-        { id: 'layered-architecture', label: 'Layered Architecture', icon: FaLayerGroup },
-        { id: 'microservices', label: 'Microservices', icon: FaDiagramProject },
-        { id: 'monolithic', label: 'Monolithic Architecture', icon: FaBuilding },
       ],
     ],
   },
@@ -97,14 +103,37 @@ export const capabilityCategories: CapabilityCategory[] = [
       [
         { id: 'nodejs', label: 'Node.js', icon: SiNodedotjs },
         { id: 'express', label: 'Express.js', icon: SiExpress },
+        { id: 'fastapi', label: 'FastAPI', icon: SiFastapi },
+        { id: 'spring-boot', label: 'Spring Boot', icon: SiSpringboot },
+        { id: 'pydantic', label: 'Pydantic', icon: SiPydantic },
         { id: 'deno', label: 'Deno', icon: SiDeno },
         { id: 'hono', label: 'Hono', icon: SiHono },
         { id: 'aspnet-core', label: 'ASP.NET Core', icon: SiDotnet },
-        { id: 'spring-boot', label: 'Spring Boot', icon: SiSpringboot },
         { id: 'spring-mvc', label: 'Spring MVC', icon: SiSpring },
         { id: 'spring-security', label: 'Spring Security', icon: FaUserShield },
         { id: 'restful-apis', label: 'RESTful APIs', icon: SiOpenapiinitiative },
         { id: 'rabbitmq', label: 'RabbitMQ', icon: SiRabbitmq },
+      ],
+    ],
+  },
+  {
+    id: 'engineering-paradigms',
+    title: 'Engineering Paradigms',
+    icon: FaLayerGroup,
+    skillRows: [
+      [
+        { id: 'multi-agent-orchestration-paradigm', label: 'Multi-Agent Orchestration', icon: TbNetwork },
+        { id: 'rag-architecture', label: 'RAG Architecture', icon: TbDatabaseSearch },
+        { id: 'knowledge-graph-paradigms', label: 'Knowledge Graph Modeling', icon: FaCircleNodes },
+        { id: 'dsa', label: 'Data Structures & Algorithms', icon: FaBolt },
+        { id: 'oops', label: 'OOPS', icon: FaBoxesStacked },
+        { id: 'rest-architecture', label: 'REST Architecture', icon: SiOpenapiinitiative },
+        { id: 'rbac', label: 'RBAC', icon: FaLayerGroup },
+        { id: 'jwt', label: 'JWT', icon: FaUserShield },
+        { id: 'oauth2', label: 'OAuth2', icon: FaUserShield },
+        { id: 'layered-architecture', label: 'Layered Architecture', icon: FaLayerGroup },
+        { id: 'microservices', label: 'Microservices', icon: FaDiagramProject },
+        { id: 'monolithic', label: 'Monolithic Architecture', icon: FaBuilding },
       ],
     ],
   },
@@ -132,6 +161,8 @@ export const capabilityCategories: CapabilityCategory[] = [
     skillRows: [
       [
         { id: 'postgresql', label: 'PostgreSQL', icon: SiPostgresql },
+        { id: 'knowledge-graphs-storage', label: 'Knowledge Graphs', icon: FaCircleNodes },
+        { id: 'vector-dbs', label: 'Vector Stores (Embeddings)', icon: FaDatabase },
         { id: 'mysql', label: 'MySQL', icon: SiMysql },
         { id: 'mongodb-atlas', label: 'MongoDB Atlas', icon: SiMongodb },
         { id: 'mongodb', label: 'MongoDB', icon: SiMongodb },
@@ -139,6 +170,23 @@ export const capabilityCategories: CapabilityCategory[] = [
         { id: 'redis', label: 'Redis (Basics)', icon: SiRedis },
         { id: 'sql', label: 'SQL', icon: TbSql },
         { id: 'nosql', label: 'NoSQL', icon: SiMongodb },
+      ],
+    ],
+  },
+  {
+    id: 'cloud-distributed',
+    title: 'Cloud & Distributed Systems',
+    icon: FaCloud,
+    skillRows: [
+      [
+        { id: 'aws', label: 'AWS (EC2, S3, IAM)', icon: FaCloud },
+        { id: 'google-cloud', label: 'Google Cloud (Cloud Run, GCE)', icon: SiGooglecloud },
+        { id: 'rabbitmq', label: 'RabbitMQ', icon: SiRabbitmq },
+        { id: 'microservices', label: 'Microservices Architecture', icon: FaDiagramProject },
+        { id: 'distributed-systems', label: 'Distributed Systems', icon: TbNetwork },
+        { id: 'edge-cloud-sync', label: 'Edge-Cloud Synchronization', icon: FaArrowsRotate },
+        { id: 'restful-apis-cloud', label: 'RESTful APIs', icon: SiOpenapiinitiative },
+        { id: 'reverse-proxy', label: 'Reverse Proxy (Nginx)', icon: SiNginx },
       ],
     ],
   },
@@ -154,10 +202,8 @@ export const capabilityCategories: CapabilityCategory[] = [
         { id: 'github', label: 'GitHub', icon: SiGithub },
         { id: 'npm', label: 'NPM', icon: SiNpm },
         { id: 'github-actions', label: 'GitHub Actions', icon: SiGithubactions },
-        { id: 'aws', label: 'AWS (EC2, S3, IAM)', icon: FaCloud },
-        { id: 'google-cloud', label: 'Google Cloud (Compute Engine, Cloud Run, IAM)', icon: SiGooglecloud },
-        { id: 'ci-cd', label: 'CI/CD', icon: FaDiagramProject },
-        { id: 'deployment-pipelines', label: 'Deployment Pipelines', icon: FaDiagramProject },
+        { id: 'ci-cd', label: 'CI/CD Pipelines', icon: FaDiagramProject },
+        { id: 'deployment-pipelines', label: 'Deployment Automation', icon: FaDiagramProject },
       ],
     ],
   },

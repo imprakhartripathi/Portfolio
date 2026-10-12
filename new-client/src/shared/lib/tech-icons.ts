@@ -1,17 +1,27 @@
 import type { IconType } from 'react-icons'
 import { FaCodeBranch, FaDatabase, FaLinux, FaServer } from 'react-icons/fa'
-import { FaArrowsRotate, FaCloud, FaHardDrive, FaShieldHalved } from 'react-icons/fa6'
+import { FaArrowsRotate, FaCircleNodes, FaCloud, FaHardDrive, FaRobot, FaShieldHalved } from 'react-icons/fa6'
 import {
   SiAngular,
   SiDocker,
   SiDotnet,
   SiExpress,
+  SiFastapi,
+  SiLangchain,
+  SiLanggraph,
   SiMongodb,
   SiMysql,
   SiNodedotjs,
+  SiOpenai,
+  SiOpenjdk,
+  SiPostgresql,
+  SiPydantic,
+  SiPython,
   SiRaspberrypi,
   SiReact,
+  SiSpringboot,
 } from 'react-icons/si'
+import { TbActivity, TbDatabaseSearch, TbNetwork } from 'react-icons/tb'
 
 const iconMap: Record<string, IconType> = {
   'node.js': SiNodedotjs,
@@ -33,6 +43,26 @@ const iconMap: Record<string, IconType> = {
   synchronization: FaArrowsRotate,
   database: FaDatabase,
   linux: FaLinux,
+  python: SiPython,
+  fastapi: SiFastapi,
+  pydantic: SiPydantic,
+  langchain: SiLangchain,
+  langgraph: SiLanggraph,
+  langsmith: TbActivity,
+  'knowledge graph': FaCircleNodes,
+  'knowledge graphs': FaCircleNodes,
+  'multi-agent orchestration': TbNetwork,
+  'multi agent orchestration': TbNetwork,
+  'agentic ai': FaRobot,
+  rag: TbDatabaseSearch,
+  rags: TbDatabaseSearch,
+  'retrieval-augmented generation': TbDatabaseSearch,
+  'retrieval-augmented generation (rag)': TbDatabaseSearch,
+  'vector databases': FaDatabase,
+  openai: SiOpenai,
+  postgresql: SiPostgresql,
+  'spring boot': SiSpringboot,
+  java: SiOpenjdk,
 }
 
 export function getTechIcon(label: string): IconType {
@@ -40,6 +70,16 @@ export function getTechIcon(label: string): IconType {
 
   return (
     iconMap[normalized] ??
+    (normalized.includes('fastapi') ? SiFastapi : undefined) ??
+    (normalized.includes('pydantic') ? SiPydantic : undefined) ??
+    (normalized.includes('langgraph') ? SiLanggraph : undefined) ??
+    (normalized.includes('langchain') ? SiLangchain : undefined) ??
+    (normalized.includes('langsmith') ? TbActivity : undefined) ??
+    (normalized.includes('python') ? SiPython : undefined) ??
+    (normalized.includes('graph') ? FaCircleNodes : undefined) ??
+    (normalized.includes('agent') ? TbNetwork : undefined) ??
+    (normalized.includes('rag') ? TbDatabaseSearch : undefined) ??
+    (normalized.includes('openai') ? SiOpenai : undefined) ??
     (normalized.includes('node') ? SiNodedotjs : undefined) ??
     (normalized.includes('express') ? SiExpress : undefined) ??
     (normalized.includes('mongo') ? SiMongodb : undefined) ??

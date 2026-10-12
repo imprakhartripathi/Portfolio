@@ -40,7 +40,7 @@ export function SystemsDesignedSection({
       id={sectionId}
       eyebrow="Projects"
       title="Projects"
-      description="Backend-focused systems delivered with production constraints and clear domain outcomes."
+      description="Production-grade systems and architectures delivered with real-world constraints and clear domain outcomes."
       className="systems-designed"
       titleAs={titleAs}
       headerAction={

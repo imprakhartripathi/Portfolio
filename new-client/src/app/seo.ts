@@ -90,7 +90,7 @@ export function applySeo(payload: SeoPayload) {
   document.title = payload.title
 
   upsertMetaByName('description', payload.description)
-  upsertMetaByName('keywords', payload.keywords ?? 'Prakhar Tripathi, Backend Engineer, Full Stack Engineer, Portfolio')
+  upsertMetaByName('keywords', payload.keywords ?? 'Prakhar Tripathi, Forward Deployed Engineer, Software Engineer, AI Systems, Portfolio')
   if (payload.priority) {
     upsertMetaByName('priority', payload.priority)
   } else {
